@@ -30,12 +30,26 @@ class M3uParser
         return $this->parse($str);
     }
 
+
+    /**
+     * @param string $str
+     */
+    protected function removeBom(&$str)
+    {
+        if (substr($str, 0, 3) === "\xEF\xBB\xBF") {
+            $str = substr($str, 3);
+        }
+    }
+
+
     /**
      * @param string $str
      * @return Entry[]
      */
     public function parse($str)
     {
+        $this->removeBom($str);
+
         $data = array();
         $lines = explode("\n", $str);
 

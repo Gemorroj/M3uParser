@@ -1,0 +1,11 @@
+#EXTM3U
+#EXTINF:233,Everclear - So Much For The Afterglow
+Alternative\everclear_SMFTA.mp3
+#EXTINF:227,Weird Al - Everything You Know Is Wrong
+Comedy\Weird_Al_Everything_You_Know_Is_Wrong.mp3
+#EXTINF:187,Weird Al Yankovic - This is the Life
+Weird_Al_This_Is_The_Life.mp3
+#EXTINF:129,Weird Al: Bad Hair Day - Gump
+http://www.site.com/~user/gump.mp3
+#EXTINF:-1,My Cool Stream
+http://www.site.com:8000/listen.pls

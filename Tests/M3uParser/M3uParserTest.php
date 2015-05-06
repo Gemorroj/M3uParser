@@ -17,6 +17,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile(__DIR__ . '/../1.m3u');
 
+        self::assertTrue(is_array($data));
+
         //var_dump($data);
     }
 
@@ -24,6 +26,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
     {
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile(__DIR__ . '/../2.m3u');
+
+        self::assertTrue(is_array($data));
 
         //var_dump($data);
     }
@@ -34,6 +38,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile(__DIR__ . '/../3.m3u');
 
+        self::assertTrue(is_array($data));
+
         //var_dump($data);
     }
 
@@ -41,6 +47,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
     {
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile(__DIR__ . '/../4.m3u');
+
+        self::assertTrue(is_array($data));
 
         //var_dump($data);
     }

@@ -60,6 +60,16 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
 
         self::assertTrue(is_array($data));
 
+        var_dump($data);
+    }
+
+    public function testParseFile6()
+    {
+        $m3uParser = new M3uParser();
+        $data = $m3uParser->parseFile(__DIR__ . '/../6.m3u');
+
+        self::assertTrue(is_array($data));
+
         //var_dump($data);
     }
 }

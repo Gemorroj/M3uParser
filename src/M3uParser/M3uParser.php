@@ -55,7 +55,7 @@ class M3uParser
 
         while (list(, $line) = each($lines)) {
             $line = trim($line);
-            if ($line === '' || strtoupper($line) === '#EXTM3U') {
+            if ($line === '' || strtoupper(substr($line, 0, 7)) === '#EXTM3U') {
                 continue;
             }
 
@@ -65,8 +65,7 @@ class M3uParser
                 $tmp = substr($line, 8);
 
                 $split = explode(',', $tmp, 2);
-                if (isset($split[1]) && preg_match('/^\-*[0-9]+$/', $split[0])) {
-                    $entry->setLength($split[0]);
+                if (isset($split[1])) {
                     $entry->setName($split[1]);
                 } else {
                     $entry->setName($tmp);

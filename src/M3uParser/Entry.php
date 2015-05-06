@@ -16,10 +16,6 @@ namespace M3uParser;
 class Entry
 {
     /**
-     * @var int
-     */
-    private $length;
-    /**
      * @var string
      */
     private $name;
@@ -66,25 +62,5 @@ class Entry
     public function getName()
     {
         return $this->name;
-    }
-
-
-    /**
-     * @param int $length
-     * @return Entry
-     */
-    public function setLength($length)
-    {
-        $this->length = $length;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getLength()
-    {
-        return $this->length;
     }
 }

@@ -60,7 +60,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
 
         self::assertTrue(is_array($data));
 
-        var_dump($data);
+        //var_dump($data);
     }
 
     public function testParseFile6()

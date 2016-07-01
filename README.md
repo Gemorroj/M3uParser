@@ -30,7 +30,7 @@ $ php composer.phar update gemorroj/m3u-parser
 
 ```php
 <?php
-$obj = new M3uParser();
+$obj = new M3uParser\M3uParser();
 $data = $obj->parseFile('path_to.m3u');
 
 foreach ($data as $entry) {

@@ -35,5 +35,6 @@ $data = $obj->parseFile('path_to.m3u');
 
 foreach ($data as $entry) {
     var_dump($entry);
+    echo $entry->getPath() . "<br />";
 }
 ```

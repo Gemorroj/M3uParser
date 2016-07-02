@@ -30,10 +30,23 @@ $ php composer.phar update gemorroj/m3u-parser
 
 ```php
 <?php
-$obj = new M3uParser\M3uParser();
-$data = $obj->parseFile('path_to.m3u');
+use M3uParser\M3uParser;
+
+$m3uParser = new M3uParser();
+$data = $m3uParser->parseFile('path_to.m3u');
 
 foreach ($data as $entry) {
     var_dump($entry);
+    /*
+    object(M3uParser\Entry)#2 (2) {
+      ["name":"M3uParser\Entry":private]=>
+      string(37) "Everclear - So Much For The Afterglow"
+      ["path":"M3uParser\Entry":private]=>
+      string(31) "Alternative\everclear_SMFTA.mp3"
+    }
+    */
+
+    echo $entry->getPath() . "\n"; // Путь к файлу в плейлисте
+    echo $entry->getName() . "\n"; // Назание файла в плейлисте
 }
 ```

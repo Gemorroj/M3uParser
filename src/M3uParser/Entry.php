@@ -36,6 +36,8 @@ class Entry
     }
 
     /**
+     * Path to file
+     *
      * @return string
      */
     public function getPath()
@@ -57,6 +59,8 @@ class Entry
 
 
     /**
+     * Tile file
+     *
      * @return string|null
      */
     public function getName()

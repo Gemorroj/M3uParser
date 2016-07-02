@@ -16,6 +16,8 @@ namespace M3uParser;
 class M3uParser
 {
     /**
+     * Parse m3u file
+     *
      * @param string $file
      * @return Entry[]
      * @throws Exception
@@ -24,7 +26,7 @@ class M3uParser
     {
         $str = @file_get_contents($file);
         if (false === $str) {
-            throw new Exception('Can\'t get file.');
+            throw new Exception('Can\'t read file.');
         }
 
         return $this->parse($str);
@@ -32,17 +34,8 @@ class M3uParser
 
 
     /**
-     * @param string $str
-     */
-    protected function removeBom(&$str)
-    {
-        if (substr($str, 0, 3) === "\xEF\xBB\xBF") {
-            $str = substr($str, 3);
-        }
-    }
-
-
-    /**
+     * Parse m3u string
+     *
      * @param string $str
      * @return Entry[]
      */
@@ -54,46 +47,65 @@ class M3uParser
         $lines = explode("\n", $str);
 
         while (list(, $line) = each($lines)) {
-            $line = trim($line);
-            if ($line === '' || strtoupper(substr($line, 0, 7)) === '#EXTM3U') {
+
+            $entry = $this->parseLine($line, $lines);
+            if (null === $entry) {
                 continue;
-            }
-
-            $entry = new Entry();
-
-            if (strtoupper(substr($line, 0, 8)) === '#EXTINF:') {
-                $tmp = substr($line, 8);
-
-                $split = explode(',', $tmp, 2);
-                if (isset($split[1])) {
-                    $entry->setName($split[1]);
-                } else {
-                    $entry->setName($tmp);
-                }
-
-                $path = $this->eachPath($lines);
-                if ($path !== null) {
-                    $entry->setPath($path);
-                }
-
-            } else if (substr($line, 0, 1) === '#') {
-                $tmp = trim(substr($line, 1));
-                if ($tmp !== '') {
-                    $entry->setName($tmp);
-                }
-
-                $path = $this->eachPath($lines);
-                if ($path !== null) {
-                    $entry->setPath($path);
-                }
-            } else {
-                $entry->setPath($line);
             }
 
             $data[] = $entry;
         }
 
         return $data;
+    }
+
+
+    /**
+     * Parse one line
+     *
+     * @param string $lineStr
+     * @param string[] $linesStr
+     * @return Entry|null
+     */
+    protected function parseLine($lineStr, array $linesStr)
+    {
+        $lineStr = trim($lineStr);
+        if ($lineStr === '' || strtoupper(substr($lineStr, 0, 7)) === '#EXTM3U') {
+            return null;
+        }
+
+        $entry = new Entry();
+
+        if (strtoupper(substr($lineStr, 0, 8)) === '#EXTINF:') {
+            $tmp = substr($lineStr, 8);
+
+            $split = explode(',', $tmp, 2);
+            if (isset($split[1])) {
+                $entry->setName($split[1]);
+            } else {
+                $entry->setName($tmp);
+            }
+
+            $path = $this->eachPath($linesStr);
+            if ($path !== null) {
+                $entry->setPath($path);
+            }
+
+        } else if (substr($lineStr, 0, 1) === '#') {
+            $tmp = trim(substr($lineStr, 1));
+            if ($tmp !== '') {
+                $entry->setName($tmp);
+            }
+
+            $path = $this->eachPath($linesStr);
+            if ($path !== null) {
+                $entry->setPath($path);
+            }
+        } else {
+            $entry->setPath($lineStr);
+        }
+
+        return $entry;
     }
 
 
@@ -113,5 +125,16 @@ class M3uParser
         }
 
         return null;
+    }
+
+
+    /**
+     * @param string $str
+     */
+    protected function removeBom(&$str)
+    {
+        if (substr($str, 0, 3) === "\xEF\xBB\xBF") {
+            $str = substr($str, 3);
+        }
     }
 }

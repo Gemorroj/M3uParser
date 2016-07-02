@@ -1,7 +1,7 @@
 {
     "name": "gemorroj/m3u-parser",
-    "description": "m3u parser",
-    "keywords": ["m3u","playlist"],
+    "description": "m3u playlist parser",
+    "keywords": ["m3u", "playlist"],
     "type": "library",
     "license": "GPLv3",
     "authors": [

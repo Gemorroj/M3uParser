@@ -12,7 +12,12 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
 
     public function testParseFileFail()
     {
-        $this->expectException('M3uParser\Exception');
+        if (method_exists($this, 'expectException')) {
+            $this->expectException('M3uParser\Exception');
+        } else {
+            $this->setExpectedException('M3uParser\Exception'); // for old phpunit
+        }
+
         $m3uParser = new M3uParser();
         $m3uParser->parseFile('fake_file');
     }

@@ -7,7 +7,7 @@
  * @copyright 2015 http://wapinet.ru
  * @license   http://www.gnu.org/licenses/gpl-3.0.txt
  * @link      https://github.com/Gemorroj/Archive7z
- * @version   0.1
+ * @version   0.2
  *
  */
 

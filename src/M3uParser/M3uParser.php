@@ -7,7 +7,7 @@
  * @copyright 2015 http://wapinet.ru
  * @license   http://www.gnu.org/licenses/gpl-3.0.txt
  * @link      https://github.com/Gemorroj/Archive7z
- * @version   0.1
+ * @version   0.2
  *
  */
 
@@ -46,9 +46,8 @@ class M3uParser
         $data = array();
         $lines = explode("\n", $str);
 
-        while (list(, $line) = each($lines)) {
-
-            $entry = $this->parseLine($line, $lines);
+        for ($i = 0, $l = count($lines); $i < $l; ++$i) {
+            $entry = $this->parseLine($i, $lines);
             if (null === $entry) {
                 continue;
             }
@@ -63,45 +62,23 @@ class M3uParser
     /**
      * Parse one line
      *
-     * @param string $lineStr
+     * @param int $lineNumber
      * @param string[] $linesStr
      * @return Entry|null
      */
-    protected function parseLine($lineStr, array $linesStr)
+    protected function parseLine(&$lineNumber, array $linesStr)
     {
+        $lineStr = $linesStr[$lineNumber];
         $lineStr = trim($lineStr);
-        if ($lineStr === '' || strtoupper(substr($lineStr, 0, 7)) === '#EXTM3U') {
+
+        if ($lineStr === '' || ($this->isComment($lineStr) && !$this->isExtInf($lineStr))) {
             return null;
         }
 
-        $entry = new Entry();
-
-        if (strtoupper(substr($lineStr, 0, 8)) === '#EXTINF:') {
-            $tmp = substr($lineStr, 8);
-
-            $split = explode(',', $tmp, 2);
-            if (isset($split[1])) {
-                $entry->setName($split[1]);
-            } else {
-                $entry->setName($tmp);
-            }
-
-            $path = $this->eachPath($linesStr);
-            if ($path !== null) {
-                $entry->setPath($path);
-            }
-
-        } else if (substr($lineStr, 0, 1) === '#') {
-            $tmp = trim(substr($lineStr, 1));
-            if ($tmp !== '') {
-                $entry->setName($tmp);
-            }
-
-            $path = $this->eachPath($linesStr);
-            if ($path !== null) {
-                $entry->setPath($path);
-            }
+        if ($this->isExtInf($lineStr)) {
+            $entry = $this->makeExtEntry($lineStr, $lineNumber, $linesStr);
         } else {
+            $entry = new Entry();
             $entry->setPath($lineStr);
         }
 
@@ -110,21 +87,53 @@ class M3uParser
 
 
     /**
-     * @param array $lines
-     * @return null|string
+     * @param string $lineStr
+     * @param int $lineNumber
+     * @param array $linesStr
+     * @return Entry
      */
-    protected function eachPath(array &$lines)
+    protected function makeExtEntry($lineStr, &$lineNumber, array $linesStr)
     {
-        while (list(, $line) = each($lines)) {
-            $line = trim($line);
-            if ($line === '') {
-                continue;
-            }
+        $entry = new Entry();
+        $tmp = substr($lineStr, 8);
 
-            return $line;
+        $split = explode(',', $tmp, 2);
+        if (isset($split[1])) {
+            $entry->setName($split[1]);
+        } else {
+            $entry->setName($tmp);
         }
 
-        return null;
+        for ($l = count($linesStr); $lineNumber < $l; ++$lineNumber) {
+            $nextLineStr = $linesStr[$lineNumber];
+            $nextLineStr = trim($nextLineStr);
+            if ($nextLineStr === '' || $this->isComment($nextLineStr)) {
+                continue;
+            }
+            $entry->setPath($nextLineStr);
+            break;
+        }
+
+        return $entry;
+    }
+
+
+    /**
+     * @param string $lineStr
+     * @return bool
+     */
+    protected function isExtInf($lineStr)
+    {
+        return strtoupper(substr($lineStr, 0, 8)) === '#EXTINF:';
+    }
+
+    /**
+     * @param string $lineStr
+     * @return bool
+     */
+    protected function isComment($lineStr)
+    {
+        return substr($lineStr, 0, 1) === '#';
     }
 
 

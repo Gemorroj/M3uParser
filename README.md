@@ -1,16 +1,16 @@
-# Работа с m3u файлами.
+# Parser for m3u playlists.
 
 [![Build Status](https://secure.travis-ci.org/Gemorroj/M3uParser.png?branch=master)](https://travis-ci.org/Gemorroj/M3uParser)
 
 
-### Требования:
+### Requirements:
 
 - PHP >= 5.3
 
 
-### Установка через composer:
+### Installation:
 
-- Добавьте проект в ваш файл composer.json:
+- Add to composer.json:
 
 ```json
 {
@@ -19,14 +19,14 @@
     }
 }
 ```
-- Установите проект:
+- install project:
 
 ```bash
-$ php composer.phar update gemorroj/m3u-parser
+$ composer update gemorroj/m3u-parser
 ```
 
 
-### Пример работы:
+### Example:
 
 ```php
 <?php
@@ -46,7 +46,7 @@ foreach ($data as $entry) {
     }
     */
 
-    echo $entry->getPath() . "\n"; // Путь к файлу в плейлисте
-    echo $entry->getName() . "\n"; // Назание файла в плейлисте
+    echo $entry->getPath() . "\n";
+    echo $entry->getName() . "\n";
 }
 ```

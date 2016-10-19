@@ -87,6 +87,20 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(47, $data);
 
-        //var_dump($data);
+        //print_r($data);
+    }
+
+    /**
+     * @see https://github.com/Gemorroj/M3uParser/issues/4
+     */
+    public function testParseFile7()
+    {
+        $m3uParser = new M3uParser();
+        $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/7.m3u');
+
+        self::assertTrue(is_array($data));
+        self::assertCount(269, $data);
+
+        //print_r($data);
     }
 }

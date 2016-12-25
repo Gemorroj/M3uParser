@@ -40,18 +40,25 @@ foreach ($data as $entry) {
     /*
 object(M3uParser\Entry)#402 (3) {
   ["extInf":"M3uParser\Entry":private]=>
-  object(M3uParser\Tag\ExtInf)#407 (1) {
-    ["name":"M3uParser\Tag\ExtInf":private]=>
+  object(M3uParser\Tag\ExtInf)#407 (2) {
+    ["title":"M3uParser\Tag\ExtInf":private]=>
     string(11) "TV SLO 1 HD"
+    ["duration":"M3uParser\Tag\ExtInf":private]=>
+    int(1)
   }
   ["extTv":"M3uParser\Entry":private]=>
   object(M3uParser\Tag\ExtTv)#404 (4) {
     ["tags":"M3uParser\Tag\ExtTv":private]=>
-    NULL
+    array(2) {
+      [0]=>
+      string(9) "Slovenski"
+      [1]=>
+      string(2) "HD"
+    }
     ["language":"M3uParser\Tag\ExtTv":private]=>
-    NULL
+    string(3) "slv"
     ["xmlTvId":"M3uParser\Tag\ExtTv":private]=>
-    NULL
+    string(6) "SLO1HD"
     ["iconUrl":"M3uParser\Tag\ExtTv":private]=>
     NULL
   }
@@ -62,7 +69,8 @@ object(M3uParser\Entry)#402 (3) {
 
     echo $entry->getPath() . "\n";
     if ($entry->getExtInf()) {
-        echo $entry->getExtInf()->getName() . "\n";
+        echo $entry->getExtInf()->getTitle() . "\n";
+        echo $entry->getExtInf()->getDuration() . "\n";
     }
     if ($entry->getExtTv()) {
         echo $entry->getExtTv()->getXmlTvId() . "\n";

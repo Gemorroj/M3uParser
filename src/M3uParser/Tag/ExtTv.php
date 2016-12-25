@@ -20,11 +20,11 @@ class ExtTv
      */
     private $tags;
     /**
-     * @var string|null
+     * @var string
      */
     private $language;
     /**
-     * @var string|null
+     * @var string
      */
     private $xmlTvId;
     /**
@@ -42,10 +42,26 @@ class ExtTv
 
     /**
      * @param string $lineStr
+     * @see https://github.com/Gemorroj/M3uParser/issues/5
      */
     protected function makeData($lineStr)
     {
-        //todo
+        /*
+EXTTV format:
+#EXTTV:tag[,tag,tag...];language;XMLTV id[;icon URL]
+example:
+#EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png
+         */
+
+        $tmp = substr($lineStr, 7);
+        $split = explode(';', $tmp, 4);
+
+        $this->setTags(array_map('trim', explode(',', $split[0])));
+        $this->setLanguage(trim($split[1]));
+        $this->setXmlTvId(trim($split[2]));
+        if (isset($split[3])) {
+            $this->setIconUrl(trim($split[3]));
+        }
     }
 
     /**
@@ -67,7 +83,7 @@ class ExtTv
     }
 
     /**
-     * @return null|string
+     * @return string
      */
     public function getLanguage()
     {
@@ -85,7 +101,7 @@ class ExtTv
     }
 
     /**
-     * @return null|string
+     * @return string
      */
     public function getXmlTvId()
     {

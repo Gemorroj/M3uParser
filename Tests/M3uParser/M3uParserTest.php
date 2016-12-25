@@ -2,7 +2,6 @@
 namespace Tests\M3uParser;
 
 use M3uParser\M3uParser;
-use M3uParser\Tag;
 
 class M3uParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +35,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('Alternative\everclear_SMFTA.mp3', $data[0]->getPath());
         self::assertNull($data[0]->getExtTv());
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
-        self::assertEquals('Everclear - So Much For The Afterglow', $data[0]->getExtInf()->getName());
+        self::assertEquals('Everclear - So Much For The Afterglow', $data[0]->getExtInf()->getTitle());
+        self::assertEquals(233, $data[0]->getExtInf()->getDuration());
     }
 
     public function testParseFile2()
@@ -52,7 +52,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('http://nsk-ru.l.nullwave.fm:8000/club', $data[0]->getPath());
         self::assertNull($data[0]->getExtTv());
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
-        self::assertEquals('club', $data[0]->getExtInf()->getName());
+        self::assertEquals('club', $data[0]->getExtInf()->getTitle());
+        self::assertEquals(0, $data[0]->getExtInf()->getDuration());
     }
 
     public function testParseFile3()
@@ -98,7 +99,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('http://176.51.55.8:1234/udp/233.7.70.200:5000', $data[0]->getPath());
         self::assertNull($data[0]->getExtTv());
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
-        self::assertEquals('Первый канал HD', $data[0]->getExtInf()->getName());
+        self::assertEquals('Первый канал HD', $data[0]->getExtInf()->getTitle());
+        self::assertEquals(-1, $data[0]->getExtInf()->getDuration());
     }
 
     public function testParseFile6()
@@ -114,7 +116,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('http://109.225.233.1:30000/udp/239.255.10.160:5500', $data[0]->getPath());
         self::assertNull($data[0]->getExtTv());
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
-        self::assertEquals('Первый канал HD', $data[0]->getExtInf()->getName());
+        self::assertEquals('Первый канал HD', $data[0]->getExtInf()->getTitle());
+        self::assertEquals(-1, $data[0]->getExtInf()->getDuration());
     }
 
     public function testParseFile7()
@@ -129,12 +132,13 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
 
         self::assertEquals('rtp://@232.2.201.53:5003', $data[0]->getPath());
         self::assertInstanceOf('M3uParser\Tag\ExtTv', $data[0]->getExtTv());
-        //todo
-
+        self::assertEquals(array('Slovenski', 'HD'), $data[0]->getExtTv()->getTags());
+        self::assertEquals('slv', $data[0]->getExtTv()->getLanguage());
+        self::assertEquals('SLO1HD', $data[0]->getExtTv()->getXmlTvId());
+        self::assertNull($data[0]->getExtTv()->getIconUrl());
 
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
-        self::assertEquals('TV SLO 1 HD', $data[0]->getExtInf()->getName());
-
-        var_dump($data[0]);
+        self::assertEquals('TV SLO 1 HD', $data[0]->getExtInf()->getTitle());
+        self::assertEquals(1, $data[0]->getExtInf()->getDuration());
     }
 }

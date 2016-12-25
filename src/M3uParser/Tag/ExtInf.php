@@ -18,7 +18,11 @@ class ExtInf
     /**
      * @var string
      */
-    private $name;
+    private $title;
+    /**
+     * @var int
+     */
+    private $duration;
 
     /**
      * @param string $lineStr
@@ -30,37 +34,62 @@ class ExtInf
 
     /**
      * @param string $lineStr
+     * @see http://l189-238-14.cn.ru/api-doc/m3u-extending.html
      */
     protected function makeData($lineStr)
     {
+        /*
+EXTINF format:
+#EXTINF:<duration> [<attributes-list>], <title>
+example:
+#EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
+         */
         $tmp = substr($lineStr, 8);
 
         $split = explode(',', $tmp, 2);
-        if (isset($split[1])) {
-            $this->setName($split[1]);
-        } else {
-            $this->setName($tmp);
-        }
+        $this->setTitle(trim($split[1]));
+        $this->setDuration((int)$split[0]);
     }
 
     /**
-     * @param string $name
+     * @param string $title
      * @return ExtInf
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Tile file
+     * Title
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
+    }
+
+    /**
+     * @param int $duration
+     * @return ExtInf
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Duration
+     *
+     * @return int
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 }

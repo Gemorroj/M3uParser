@@ -10,7 +10,8 @@ php:
   - 5.3
 
 before_script:
-  - composer self-update && composer install --dev --prefer-source --no-interaction
+  - composer self-update
+  - composer install --dev --prefer-source --no-interaction
 
 script: phpunit --configuration phpunit.xml
 

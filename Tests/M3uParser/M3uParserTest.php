@@ -2,6 +2,7 @@
 namespace Tests\M3uParser;
 
 use M3uParser\M3uParser;
+use M3uParser\Tag;
 
 class M3uParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,11 +28,10 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/1.m3u');
 
-        //print_r($data);
         self::assertTrue(is_array($data));
         self::assertCount(5, $data);
 
-        //var_dump($data);
+        self::assertContainsOnlyInstancesOf(Tag::class, $data);
     }
 
     public function testParseFile2()
@@ -42,20 +42,18 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(9, $data);
 
-        //var_dump($data);
+        self::assertContainsOnlyInstancesOf(Tag::class, $data);
     }
-
 
     public function testParseFile3()
     {
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/3.m3u');
 
-        //print_r($data);
         self::assertTrue(is_array($data));
         self::assertCount(22, $data);
 
-        //var_dump($data);
+        self::assertContainsOnlyInstancesOf(Tag::class, $data);
     }
 
     public function testParseFile4()
@@ -63,9 +61,10 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/4.m3u');
 
-        //print_r($data);
         self::assertTrue(is_array($data));
         self::assertCount(7, $data);
+
+        self::assertContainsOnlyInstancesOf(Tag::class, $data);
     }
 
     public function testParseFile5()
@@ -76,7 +75,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(234, $data);
 
-        //var_dump($data);
+        self::assertContainsOnlyInstancesOf(Tag::class, $data);
     }
 
     public function testParseFile6()
@@ -87,7 +86,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(47, $data);
 
-        //print_r($data);
+        self::assertContainsOnlyInstancesOf(Tag::class, $data);
     }
 
     /**
@@ -101,6 +100,6 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(269, $data);
 
-        //print_r($data);
+        self::assertContainsOnlyInstancesOf(Tag::class, $data);
     }
 }

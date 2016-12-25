@@ -38,15 +38,30 @@ $data = $m3uParser->parseFile('path_to.m3u');
 foreach ($data as $entry) {
     var_dump($entry);
     /*
-    object(M3uParser\Entry)#2 (2) {
-      ["name":"M3uParser\Entry":private]=>
+    object(M3uParser\Tag\ExtInf)#277 (2) {
+      ["name":"M3uParser\Tag\ExtInf":private]=>
       string(37) "Everclear - So Much For The Afterglow"
-      ["path":"M3uParser\Entry":private]=>
+      ["path":protected]=>
       string(31) "Alternative\everclear_SMFTA.mp3"
+    }
+    
+   or
+    
+    object(M3uParser\Tag)#23 (1) {
+      ["path":protected]=>
+      string(52) "http://scfire-ntc-aa07.stream.aol.com:80/stream/1048"
     }
     */
 
-    echo $entry->getPath() . "\n";
-    echo $entry->getName() . "\n";
+    switch ($entry) {
+        case $entry instanceof \M3uParser\Tag\ExtInf:
+            echo $entry->getPath() . "\n";
+            echo $entry->getName() . "\n";
+            break;
+
+        case $entry instanceof \M3uParser\Tag:
+            echo $entry->getPath() . "\n";
+            break;
+    }
 }
 ```

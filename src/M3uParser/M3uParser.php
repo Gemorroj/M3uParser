@@ -6,12 +6,13 @@
  * @author    Gemorroj
  * @copyright 2015 http://wapinet.ru
  * @license   http://www.gnu.org/licenses/gpl-3.0.txt
- * @link      https://github.com/Gemorroj/Archive7z
- * @version   0.2
+ * @link      https://github.com/Gemorroj/M3uParser
  *
  */
 
 namespace M3uParser;
+
+use M3uParser\Tag\ExtInf;
 
 class M3uParser
 {
@@ -19,7 +20,7 @@ class M3uParser
      * Parse m3u file
      *
      * @param string $file
-     * @return Entry[]
+     * @return Tag[]|ExtInf[]
      * @throws Exception
      */
     public function parseFile($file)
@@ -32,12 +33,11 @@ class M3uParser
         return $this->parse($str);
     }
 
-
     /**
      * Parse m3u string
      *
      * @param string $str
-     * @return Entry[]
+     * @return Tag[]|ExtInf[]
      */
     public function parse($str)
     {
@@ -58,92 +58,57 @@ class M3uParser
         return $data;
     }
 
-
     /**
      * Parse one line
      *
      * @param int $lineNumber
      * @param string[] $linesStr
-     * @return Entry|null
+     * @return Tag|ExtInf|null
      */
     protected function parseLine(&$lineNumber, array $linesStr)
     {
         $lineStr = $linesStr[$lineNumber];
         $lineStr = trim($lineStr);
 
-        if ($lineStr === '' || ($this->isComment($lineStr) && !$this->isExtInf($lineStr))) {
+        if ('' === $lineStr || (self::isComment($lineStr) && !self::isExtInf($lineStr))) {
             return null;
         }
 
-        if ($this->isExtInf($lineStr)) {
-            $entry = $this->makeExtEntry($lineStr, $lineNumber, $linesStr);
+        if (self::isExtInf($lineStr)) {
+            $entry = new ExtInf($lineStr, $lineNumber, $linesStr);
         } else {
-            $entry = new Entry();
+            $entry = new Tag();
             $entry->setPath($lineStr);
         }
 
         return $entry;
     }
 
-
-    /**
-     * @param string $lineStr
-     * @param int $lineNumber
-     * @param array $linesStr
-     * @return Entry
-     */
-    protected function makeExtEntry($lineStr, &$lineNumber, array $linesStr)
-    {
-        $entry = new Entry();
-        $tmp = substr($lineStr, 8);
-
-        $split = explode(',', $tmp, 2);
-        if (isset($split[1])) {
-            $entry->setName($split[1]);
-        } else {
-            $entry->setName($tmp);
-        }
-
-        for ($l = count($linesStr); $lineNumber < $l; ++$lineNumber) {
-            $nextLineStr = $linesStr[$lineNumber];
-            $nextLineStr = trim($nextLineStr);
-            if ($nextLineStr === '' || $this->isComment($nextLineStr)) {
-                continue;
-            }
-            $entry->setPath($nextLineStr);
-            break;
-        }
-
-        return $entry;
-    }
-
-
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
-    protected function isExtInf($lineStr)
-    {
-        return strtoupper(substr($lineStr, 0, 8)) === '#EXTINF:';
-    }
-
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
-    protected function isComment($lineStr)
-    {
-        return substr($lineStr, 0, 1) === '#';
-    }
-
-
     /**
      * @param string $str
      */
     protected function removeBom(&$str)
     {
-        if (substr($str, 0, 3) === "\xEF\xBB\xBF") {
+        if ("\xEF\xBB\xBF" === substr($str, 0, 3)) {
             $str = substr($str, 3);
         }
+    }
+
+    /**
+     * @param string $lineStr
+     * @return bool
+     */
+    public static function isExtInf($lineStr)
+    {
+        return '#EXTINF:' === strtoupper(substr($lineStr, 0, 8));
+    }
+
+    /**
+     * @param string $lineStr
+     * @return bool
+     */
+    public static function isComment($lineStr)
+    {
+        return '#' === substr($lineStr, 0, 1);
     }
 }

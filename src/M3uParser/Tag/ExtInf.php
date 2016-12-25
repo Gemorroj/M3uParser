@@ -12,10 +12,8 @@
 
 namespace M3uParser\Tag;
 
-use M3uParser\M3uParser;
-use M3uParser\Tag;
 
-class ExtInf extends Tag
+class ExtInf
 {
     /**
      * @var string
@@ -24,20 +22,16 @@ class ExtInf extends Tag
 
     /**
      * @param string $lineStr
-     * @param int $lineNumber
-     * @param string[] $linesStr
      */
-    public function __construct($lineStr, &$lineNumber, array $linesStr)
+    public function __construct($lineStr)
     {
-        $this->makeData($lineStr, $lineNumber, $linesStr);
+        $this->makeData($lineStr);
     }
 
     /**
      * @param string $lineStr
-     * @param int $lineNumber
-     * @param string[] $linesStr
      */
-    protected function makeData($lineStr, &$lineNumber, array $linesStr)
+    protected function makeData($lineStr)
     {
         $tmp = substr($lineStr, 8);
 
@@ -46,16 +40,6 @@ class ExtInf extends Tag
             $this->setName($split[1]);
         } else {
             $this->setName($tmp);
-        }
-
-        for ($l = count($linesStr); $lineNumber < $l; ++$lineNumber) {
-            $nextLineStr = $linesStr[$lineNumber];
-            $nextLineStr = trim($nextLineStr);
-            if ('' === $nextLineStr || M3uParser::isComment($nextLineStr)) {
-                continue;
-            }
-            $this->setPath($nextLineStr);
-            break;
         }
     }
 

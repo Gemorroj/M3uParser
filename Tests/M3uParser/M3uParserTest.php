@@ -31,7 +31,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(5, $data);
 
-        self::assertContainsOnlyInstancesOf(Tag::class, $data);
+        self::assertContainsOnlyInstancesOf('M3uParser\Tag', $data);
     }
 
     public function testParseFile2()
@@ -42,7 +42,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(9, $data);
 
-        self::assertContainsOnlyInstancesOf(Tag::class, $data);
+        self::assertContainsOnlyInstancesOf('M3uParser\Tag', $data);
     }
 
     public function testParseFile3()
@@ -53,7 +53,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(22, $data);
 
-        self::assertContainsOnlyInstancesOf(Tag::class, $data);
+        self::assertContainsOnlyInstancesOf('M3uParser\Tag', $data);
     }
 
     public function testParseFile4()
@@ -64,7 +64,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(7, $data);
 
-        self::assertContainsOnlyInstancesOf(Tag::class, $data);
+        self::assertContainsOnlyInstancesOf('M3uParser\Tag', $data);
     }
 
     public function testParseFile5()
@@ -75,7 +75,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(234, $data);
 
-        self::assertContainsOnlyInstancesOf(Tag::class, $data);
+        self::assertContainsOnlyInstancesOf('M3uParser\Tag', $data);
     }
 
     public function testParseFile6()
@@ -86,7 +86,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(47, $data);
 
-        self::assertContainsOnlyInstancesOf(Tag::class, $data);
+        self::assertContainsOnlyInstancesOf('M3uParser\Tag', $data);
     }
 
     /**
@@ -100,6 +100,6 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(is_array($data));
         self::assertCount(269, $data);
 
-        self::assertContainsOnlyInstancesOf(Tag::class, $data);
+        self::assertContainsOnlyInstancesOf('M3uParser\Tag', $data);
     }
 }

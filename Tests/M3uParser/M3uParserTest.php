@@ -37,6 +37,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
         self::assertEquals('Everclear - So Much For The Afterglow', $data[0]->getExtInf()->getTitle());
         self::assertEquals(233, $data[0]->getExtInf()->getDuration());
+
+        self::assertEquals(array(), $data[0]->getExtInf()->getAttributes());
     }
 
     public function testParseFile2()
@@ -54,6 +56,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
         self::assertEquals('club', $data[0]->getExtInf()->getTitle());
         self::assertEquals(0, $data[0]->getExtInf()->getDuration());
+
+        self::assertEquals(array(), $data[0]->getExtInf()->getAttributes());
     }
 
     public function testParseFile3()
@@ -101,6 +105,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
         self::assertEquals('Первый канал HD', $data[0]->getExtInf()->getTitle());
         self::assertEquals(-1, $data[0]->getExtInf()->getDuration());
+
+        self::assertEquals(array(), $data[0]->getExtInf()->getAttributes());
     }
 
     public function testParseFile6()
@@ -118,6 +124,13 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
         self::assertEquals('Первый канал HD', $data[0]->getExtInf()->getTitle());
         self::assertEquals(-1, $data[0]->getExtInf()->getDuration());
+
+        self::assertEquals(array(
+            'tvg-logo' => 'Первый канал',
+            'group-title' => 'Эфирные каналы',
+            'tvg-name' => 'Первый_HD',
+            'deinterlace' => '4',
+        ), $data[0]->getExtInf()->getAttributes());
     }
 
     public function testParseFile7()
@@ -140,5 +153,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertInstanceOf('M3uParser\Tag\ExtInf', $data[0]->getExtInf());
         self::assertEquals('TV SLO 1 HD', $data[0]->getExtInf()->getTitle());
         self::assertEquals(1, $data[0]->getExtInf()->getDuration());
+
+        self::assertEquals(array(), $data[0]->getExtInf()->getAttributes());
     }
 }

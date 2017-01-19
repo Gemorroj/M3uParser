@@ -2,9 +2,12 @@
 
 namespace M3uParser\Tag;
 
+use M3uParser\TagAttributesTrait;
 
 class ExtInf
 {
+    use TagAttributesTrait;
+
     /**
      * @var string
      */
@@ -20,6 +23,25 @@ class ExtInf
     public function __construct($lineStr)
     {
         $this->makeData($lineStr);
+        $this->makeAttributes($lineStr);
+    }
+
+    /**
+     * @param string $lineStr
+     */
+    protected function makeAttributes($lineStr)
+    {
+        /*
+#EXTINF:-1,My Cool Stream
+#EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
+         */
+        $tmp = substr($lineStr, 8);
+        $split = explode(',', $tmp, 2);
+        $splitAttributes = explode(' ', $split[0], 2);
+
+        if (isset($splitAttributes[1]) && trim($splitAttributes[1])) {
+            $this->initAttributes(trim($splitAttributes[1]));
+        }
     }
 
     /**

@@ -5,7 +5,7 @@
 
 ### Requirements:
 
-- PHP >= 5.3
+- PHP >= 5.4
 
 
 ### Installation:
@@ -15,7 +15,7 @@
 ```json
 {
     "require": {
-        "gemorroj/m3u-parser": "dev-master"
+        "gemorroj/m3u-parser": "*"
     }
 }
 ```
@@ -36,43 +36,53 @@ $m3uParser = new M3uParser();
 $data = $m3uParser->parseFile('path_to.m3u');
 
 foreach ($data as $entry) {
-    var_dump($entry);
+    print_r($entry);
     /*
-object(M3uParser\Entry)#402 (3) {
-  ["extInf":"M3uParser\Entry":private]=>
-  object(M3uParser\Tag\ExtInf)#407 (2) {
-    ["title":"M3uParser\Tag\ExtInf":private]=>
-    string(11) "TV SLO 1 HD"
-    ["duration":"M3uParser\Tag\ExtInf":private]=>
-    int(1)
-  }
-  ["extTv":"M3uParser\Entry":private]=>
-  object(M3uParser\Tag\ExtTv)#404 (4) {
-    ["tags":"M3uParser\Tag\ExtTv":private]=>
-    array(2) {
-      [0]=>
-      string(9) "Slovenski"
-      [1]=>
-      string(2) "HD"
-    }
-    ["language":"M3uParser\Tag\ExtTv":private]=>
-    string(3) "slv"
-    ["xmlTvId":"M3uParser\Tag\ExtTv":private]=>
-    string(6) "SLO1HD"
-    ["iconUrl":"M3uParser\Tag\ExtTv":private]=>
-    NULL
-  }
-  ["path":"M3uParser\Entry":private]=>
-  string(24) "rtp://@232.2.201.53:5003"
-}
+M3uParser\Entry Object
+(
+    [extInf:M3uParser\Entry:private] => M3uParser\Tag\ExtInf Object
+        (
+            [title:M3uParser\Tag\ExtInf:private] => TV SLO 1 HD
+            [duration:M3uParser\Tag\ExtInf:private] => 1
+            [attributes:M3uParser\Tag\ExtInf:private] => Array
+                (
+                    [tvg-logo] => Первый канал
+                    [group-title] => Эфирные каналы
+                    [tvg-name] => Первый_HD
+                    [deinterlace] => 4
+                )
+
+        )
+
+    [extTv:M3uParser\Entry:private] => M3uParser\Tag\ExtTv Object
+        (
+            [tags:M3uParser\Tag\ExtTv:private] => Array
+                (
+                    [0] => Slovenski
+                    [1] => HD
+                )
+
+            [language:M3uParser\Tag\ExtTv:private] => slv
+            [xmlTvId:M3uParser\Tag\ExtTv:private] => SLO1HD
+            [iconUrl:M3uParser\Tag\ExtTv:private] => 
+        )
+
+    [path:M3uParser\Entry:private] => rtp://@232.2.201.53:5003
+)
     */
 
     echo $entry->getPath() . "\n";
-    if ($entry->getExtInf()) {
+
+    if ($entry->getExtInf()) { // If EXTINF tag
         echo $entry->getExtInf()->getTitle() . "\n";
         echo $entry->getExtInf()->getDuration() . "\n";
+
+        if ($entry->getExtInf()->getAttribute('tvg-name')) { // If tvg-name attribute in EXTINF tag
+            echo $entry->getExtInf()->getAttribute('tvg-name') . "\n";
+        }
     }
-    if ($entry->getExtTv()) {
+
+    if ($entry->getExtTv()) { // If EXTTV tag
         echo $entry->getExtTv()->getXmlTvId() . "\n";
         echo $entry->getExtTv()->getIconUrl() . "\n";
         echo $entry->getExtTv()->getLanguage() . "\n";

@@ -16,7 +16,7 @@ class M3uParser
      */
     public function parseFile($file)
     {
-        $str = @file_get_contents($file);
+        $str = @\file_get_contents($file);
         if (false === $str) {
             throw new Exception('Can\'t read file.');
         }
@@ -35,16 +35,16 @@ class M3uParser
         $this->removeBom($str);
 
         $data = new Data();
-        $lines = explode("\n", $str);
+        $lines = \explode("\n", $str);
 
-        for ($i = 0, $l = count($lines); $i < $l; $i++) {
-            $lineStr = trim($lines[$i]);
+        for ($i = 0, $l = \count($lines); $i < $l; ++$i) {
+            $lineStr = \trim($lines[$i]);
             if ('' === $lineStr || static::isComment($lineStr)) {
                 continue;
             }
 
             if (static::isExtM3u($lineStr)) {
-                $this->makeAttributes($lineStr, $data);
+                $data->makeAttributes($lineStr);
                 continue;
             }
 
@@ -54,20 +54,7 @@ class M3uParser
         return $data;
     }
 
-    /**
-     * @param string $lineStr
-     * @param Data $data
-     */
-    protected function makeAttributes($lineStr, Data $data)
-    {
-        $tmp = substr($lineStr, 7);
-        $split = explode(',', $tmp, 2);
-        $splitAttributes = explode(' ', $split[0], 2);
 
-        if (isset($splitAttributes[1]) && trim($splitAttributes[1])) {
-            $data->initAttributes(trim($splitAttributes[1]));
-        }
-    }
 
     /**
      * Parse one line
@@ -80,9 +67,9 @@ class M3uParser
     {
         $entry = new Entry();
 
-        for ($l = count($linesStr); $lineNumber < $l; $lineNumber++) {
+        for ($l = \count($linesStr); $lineNumber < $l; ++$lineNumber) {
             $nextLineStr = $linesStr[$lineNumber];
-            $nextLineStr = trim($nextLineStr);
+            $nextLineStr = \trim($nextLineStr);
 
             if ('' === $nextLineStr || static::isComment($nextLineStr) || static::isExtM3u($nextLineStr)) {
                 continue;
@@ -109,8 +96,8 @@ class M3uParser
      */
     protected function removeBom(&$str)
     {
-        if ("\xEF\xBB\xBF" === substr($str, 0, 3)) {
-            $str = substr($str, 3);
+        if ("\xEF\xBB\xBF" === \substr($str, 0, 3)) {
+            $str = \substr($str, 3);
         }
     }
 
@@ -120,7 +107,7 @@ class M3uParser
      */
     protected static function isExtInf($lineStr)
     {
-        return '#EXTINF:' === strtoupper(substr($lineStr, 0, 8));
+        return '#EXTINF:' === \strtoupper(\substr($lineStr, 0, 8));
     }
 
     /**
@@ -129,7 +116,7 @@ class M3uParser
      */
     protected static function isExtTv($lineStr)
     {
-        return '#EXTTV:' === strtoupper(substr($lineStr, 0, 7));
+        return '#EXTTV:' === \strtoupper(\substr($lineStr, 0, 7));
     }
 
     /**
@@ -138,7 +125,7 @@ class M3uParser
      */
     protected static function isExtM3u($lineStr)
     {
-        return '#EXTM3U' === strtoupper(substr($lineStr, 0, 7));
+        return '#EXTM3U' === \strtoupper(\substr($lineStr, 0, 7));
     }
 
     /**
@@ -147,6 +134,6 @@ class M3uParser
      */
     protected static function isComment($lineStr)
     {
-        return '#' === substr($lineStr, 0, 1) && !static::isExtInf($lineStr) && !static::isExtTv($lineStr) && !static::isExtM3u($lineStr);
+        return '#' === \substr($lineStr, 0, 1) && !static::isExtInf($lineStr) && !static::isExtTv($lineStr) && !static::isExtM3u($lineStr);
     }
 }

@@ -35,12 +35,12 @@ class ExtInf
 #EXTINF:-1,My Cool Stream
 #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
          */
-        $tmp = substr($lineStr, 8);
-        $split = explode(',', $tmp, 2);
-        $splitAttributes = explode(' ', $split[0], 2);
+        $tmp = \substr($lineStr, 8);
+        $split = \explode(',', $tmp, 2);
+        $splitAttributes = \explode(' ', $split[0], 2);
 
-        if (isset($splitAttributes[1]) && trim($splitAttributes[1])) {
-            $this->initAttributes(trim($splitAttributes[1]));
+        if (isset($splitAttributes[1]) && \trim($splitAttributes[1])) {
+            $this->initAttributes(\trim($splitAttributes[1]));
         }
     }
 
@@ -56,10 +56,10 @@ EXTINF format:
 example:
 #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
          */
-        $tmp = substr($lineStr, 8);
+        $tmp = \substr($lineStr, 8);
 
-        $split = explode(',', $tmp, 2);
-        $this->setTitle(trim($split[1]));
+        $split = \explode(',', $tmp, 2);
+        $this->setTitle(\trim($split[1]));
         $this->setDuration((int)$split[0]);
     }
 

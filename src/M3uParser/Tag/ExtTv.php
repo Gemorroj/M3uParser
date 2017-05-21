@@ -43,14 +43,14 @@ example:
 #EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png
          */
 
-        $tmp = substr($lineStr, 7);
-        $split = explode(';', $tmp, 4);
+        $tmp = \substr($lineStr, 7);
+        $split = \explode(';', $tmp, 4);
 
-        $this->setTags(array_map('trim', explode(',', $split[0])));
-        $this->setLanguage(trim($split[1]));
-        $this->setXmlTvId(trim($split[2]));
+        $this->setTags(\array_map('trim', \explode(',', $split[0])));
+        $this->setLanguage(\trim($split[1]));
+        $this->setXmlTvId(\trim($split[2]));
         if (isset($split[3])) {
-            $this->setIconUrl(trim($split[3]));
+            $this->setIconUrl(\trim($split[3]));
         }
     }
 

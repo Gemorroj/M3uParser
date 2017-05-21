@@ -44,7 +44,10 @@ class M3uParser
             }
 
             if (static::isExtM3u($lineStr)) {
-                $data->makeAttributes($lineStr);
+                $tmp = \trim(\substr($lineStr, 7));
+                if ($tmp) {
+                    $data->initAttributes($tmp);
+                }
                 continue;
             }
 

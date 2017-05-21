@@ -12,45 +12,35 @@ trait TagAttributesTrait
      *
      * @param string $attrString
      */
-    protected function initAttributes($attrString)
+    public function initAttributes($attrString)
     {
-        $this->attributes = \array_merge(
-            $this->parseQuotedAttributes($attrString),
-            $this->parseNotQuotedAttributes($attrString)
-        );
+        $this->parseQuotedAttributes($attrString);
+        $this->parseNotQuotedAttributes($attrString);
     }
 
     /**
      * @param string $attrString
-     * @return array
      */
     private function parseQuotedAttributes($attrString)
     {
         \preg_match_all('/([a-zA-Z0-9\-]+)="([^"]*)"/', $attrString, $matches, \PREG_SET_ORDER);
 
-        $result = array();
         foreach ($matches as $match) {
-            $result[$match[1]] = $match[2];
+            $this->setAttribute($match[1], $match[2]);
         }
-
-        return $result;
     }
 
 
     /**
      * @param string $attrString
-     * @return array
      */
     private function parseNotQuotedAttributes($attrString)
     {
         \preg_match_all('/([a-zA-Z0-9\-]+)=([^ "]+)/', $attrString, $matches, \PREG_SET_ORDER);
 
-        $result = array();
         foreach ($matches as $match) {
-            $result[$match[1]] = $match[2];
+            $this->setAttribute($match[1], $match[2]);
         }
-
-        return $result;
     }
 
     /**
@@ -68,5 +58,22 @@ trait TagAttributesTrait
     public function getAttribute($name)
     {
         return isset($this->attributes[$name]) ? $this->attributes[$name] : null;
+    }
+
+    /**
+     * @param array $attributes
+     */
+    public function setAttributes(array $attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     */
+    public function setAttribute($name, $value)
+    {
+        $this->attributes[$name] = $value;
     }
 }

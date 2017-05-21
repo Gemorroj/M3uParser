@@ -1,4 +1,4 @@
-# Parser for m3u playlists.
+# Parser/Generator m3u playlists.
 
 [![Build Status](https://secure.travis-ci.org/Gemorroj/M3uParser.png?branch=master)](https://travis-ci.org/Gemorroj/M3uParser)
 
@@ -26,7 +26,7 @@ $ composer update gemorroj/m3u-parser
 ```
 
 
-### Example:
+### Example parser:
 
 ```php
 <?php
@@ -102,4 +102,39 @@ M3uParser\Entry Object
         }
     }
 }
+```
+
+### Example generator:
+
+```php
+<?php
+use M3uParser\Data;
+use M3uParser\Entry;
+use M3uParser\Tag\ExtInf;
+use M3uParser\Tag\ExtTv;
+
+$data = new Data();
+$data->setAttribute('test-name', 'test-value');
+$data->append((new Entry())->setExtInf(
+    (new ExtInf())
+        ->setDuration(123)
+        ->setTitle('extinf-title')
+        ->setAttribute('test-attr', 'test-attrname')
+));
+$data->append((new Entry())->setExtTv(
+    (new ExtTv())
+        ->setIconUrl('https://example.org/icon.png')
+        ->setLanguage('ru')
+        ->setXmlTvId('xml-tv-id')
+        ->setTags(array('hd', 'sd'))
+));
+$data->append((new Entry())->setPath('test-path'));
+
+echo $data;
+/*
+#EXTM3U test-name="test-value"
+#EXTINF: 123 test-attr="test-attrname", extinf-title
+#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png
+test-path
+*/
 ```

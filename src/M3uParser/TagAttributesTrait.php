@@ -62,18 +62,36 @@ trait TagAttributesTrait
 
     /**
      * @param array $attributes
+     * @return $this
      */
     public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
+        return $this;
     }
 
     /**
      * @param string $name
      * @param string $value
+     * @return $this
      */
     public function setAttribute($name, $value)
     {
         $this->attributes[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getAttributesString()
+    {
+        $out = '';
+
+        foreach ($this->getAttributes() as $name => $value) {
+            $out .= $name . '="' . $value . '" '; //todo: quote
+        }
+
+        return \rtrim($out);
     }
 }

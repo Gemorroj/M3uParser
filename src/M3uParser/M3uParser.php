@@ -8,6 +8,22 @@ use M3uParser\Tag\ExtTv;
 class M3uParser
 {
     /**
+     * @return Entry
+     */
+    protected function createEntry()
+    {
+        return new Entry();
+    }
+
+    /**
+     * @return Data
+     */
+    protected function createData()
+    {
+        return new Data();
+    }
+
+    /**
      * Parse m3u file
      *
      * @param string $file
@@ -34,7 +50,7 @@ class M3uParser
     {
         $this->removeBom($str);
 
-        $data = new Data();
+        $data = $this->createData();
         $lines = \explode("\n", $str);
 
         for ($i = 0, $l = \count($lines); $i < $l; ++$i) {
@@ -57,8 +73,6 @@ class M3uParser
         return $data;
     }
 
-
-
     /**
      * Parse one line
      *
@@ -68,7 +82,7 @@ class M3uParser
      */
     protected function parseLine(&$lineNumber, array $linesStr)
     {
-        $entry = new Entry();
+        $entry = $this->createEntry();
 
         for ($l = \count($linesStr); $lineNumber < $l; ++$lineNumber) {
             $nextLineStr = $linesStr[$lineNumber];

@@ -23,11 +23,14 @@ class ExtTv
     private $iconUrl;
 
     /**
+     * #EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png
      * @param string $lineStr
      */
-    public function __construct($lineStr)
+    public function __construct($lineStr = null)
     {
-        $this->makeData($lineStr);
+        if (null !== $lineStr) {
+            $this->makeData($lineStr);
+        }
     }
 
     /**
@@ -64,7 +67,7 @@ example:
 
     /**
      * @param string[] $tags
-     * @return ExtTv
+     * @return $this
      */
     public function setTags(array $tags)
     {
@@ -82,7 +85,7 @@ example:
 
     /**
      * @param string $language
-     * @return ExtTv
+     * @return $this
      */
     public function setLanguage($language)
     {
@@ -100,7 +103,7 @@ example:
 
     /**
      * @param string $xmlTvId
-     * @return ExtTv
+     * @return $this
      */
     public function setXmlTvId($xmlTvId)
     {
@@ -118,11 +121,19 @@ example:
 
     /**
      * @param string $iconUrl
-     * @return ExtTv
+     * @return $this
      */
     public function setIconUrl($iconUrl)
     {
         $this->iconUrl = $iconUrl;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return '#EXTTV: ' . \implode(',', $this->getTags()) . ';' . $this->getLanguage() . ';' . $this->getXmlTvId() . ($this->getIconUrl() ? ';' . $this->getIconUrl() : '');
     }
 }

@@ -30,7 +30,7 @@ class Entry
 
     /**
      * @param ExtInf $extInf
-     * @return Entry
+     * @return $this
      */
     public function setExtInf(ExtInf $extInf)
     {
@@ -48,7 +48,7 @@ class Entry
 
     /**
      * @param ExtTv $extTv
-     * @return Entry
+     * @return $this
      */
     public function setExtTv(ExtTv $extTv)
     {
@@ -66,11 +66,26 @@ class Entry
 
     /**
      * @param string $path
-     * @return Entry
+     * @return $this
      */
     public function setPath($path)
     {
         $this->path = $path;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        if ($this->getExtInf()) {
+            return (string)$this->getExtInf();
+        }
+        if ($this->getExtTv()) {
+            return (string)$this->getExtTv();
+        }
+
+        return (string)$this->getPath();
     }
 }

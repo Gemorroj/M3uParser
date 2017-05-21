@@ -18,12 +18,16 @@ class ExtInf
     private $duration;
 
     /**
+     * #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
+     *
      * @param string $lineStr
      */
-    public function __construct($lineStr)
+    public function __construct($lineStr = null)
     {
-        $this->makeData($lineStr);
-        $this->makeAttributes($lineStr);
+        if (null !== $lineStr) {
+            $this->makeData($lineStr);
+            $this->makeAttributes($lineStr);
+        }
     }
 
     /**
@@ -65,7 +69,7 @@ example:
 
     /**
      * @param string $title
-     * @return ExtInf
+     * @return $this
      */
     public function setTitle($title)
     {
@@ -86,7 +90,7 @@ example:
 
     /**
      * @param int $duration
-     * @return ExtInf
+     * @return $this
      */
     public function setDuration($duration)
     {
@@ -103,5 +107,13 @@ example:
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return '#EXTINF: ' . (int)$this->getDuration() . ' ' . $this->getAttributesString() . ', ' . $this->getTitle();
     }
 }

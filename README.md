@@ -35,6 +35,17 @@ use M3uParser\M3uParser;
 $m3uParser = new M3uParser();
 $data = $m3uParser->parseFile('path_to.m3u');
 
+print_r($data->getAttributes());
+/*
+Array
+(
+    [url-tvg] => http://www.teleguide.info/download/new3/jtv.zip
+    [m3uautoload] => 1
+    [deinterlace] => 8
+    [cache] => 500
+)
+*/
+
 foreach ($data as $entry) {
     print_r($entry);
     /*

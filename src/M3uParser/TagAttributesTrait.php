@@ -12,7 +12,7 @@ trait TagAttributesTrait
      *
      * @param string $attrString
      */
-    protected function initAttributes($attrString)
+    public function initAttributes($attrString)
     {
         $this->attributes = array_merge(
             $this->parseQuotedAttributes($attrString),

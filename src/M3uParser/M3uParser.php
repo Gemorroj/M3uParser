@@ -11,7 +11,7 @@ class M3uParser
      * Parse m3u file
      *
      * @param string $file
-     * @return Entry[]
+     * @return Data entries
      * @throws Exception
      */
     public function parseFile($file)
@@ -28,25 +28,45 @@ class M3uParser
      * Parse m3u string
      *
      * @param string $str
-     * @return Entry[]
+     * @return Data entries
      */
     public function parse($str)
     {
         $this->removeBom($str);
 
-        $data = array();
+        $data = new Data();
         $lines = explode("\n", $str);
 
         for ($i = 0, $l = count($lines); $i < $l; $i++) {
             $lineStr = trim($lines[$i]);
-            if ('' === $lineStr || self::isComment($lineStr)) {
+            if ('' === $lineStr || static::isComment($lineStr)) {
                 continue;
             }
 
-            $data[] = $this->parseLine($i, $lines);
+            if (static::isExtM3u($lineStr)) {
+                $this->makeAttributes($lineStr, $data);
+                continue;
+            }
+
+            $data->append($this->parseLine($i, $lines));
         }
 
         return $data;
+    }
+
+    /**
+     * @param string $lineStr
+     * @param Data $data
+     */
+    protected function makeAttributes($lineStr, Data $data)
+    {
+        $tmp = substr($lineStr, 7);
+        $split = explode(',', $tmp, 2);
+        $splitAttributes = explode(' ', $split[0], 2);
+
+        if (isset($splitAttributes[1]) && trim($splitAttributes[1])) {
+            $data->initAttributes(trim($splitAttributes[1]));
+        }
     }
 
     /**
@@ -63,15 +83,16 @@ class M3uParser
         for ($l = count($linesStr); $lineNumber < $l; $lineNumber++) {
             $nextLineStr = $linesStr[$lineNumber];
             $nextLineStr = trim($nextLineStr);
-            if ('' === $nextLineStr || self::isComment($nextLineStr)) {
+
+            if ('' === $nextLineStr || static::isComment($nextLineStr) || static::isExtM3u($nextLineStr)) {
                 continue;
             }
 
-            if (self::isExtInf($nextLineStr)) {
+            if (static::isExtInf($nextLineStr)) {
                 $entry->setExtInf(new ExtInf($nextLineStr));
                 continue;
             }
-            if (self::isExtTv($nextLineStr)) {
+            if (static::isExtTv($nextLineStr)) {
                 $entry->setExtTv(new ExtTv($nextLineStr));
                 continue;
             }
@@ -115,8 +136,17 @@ class M3uParser
      * @param string $lineStr
      * @return bool
      */
+    protected static function isExtM3u($lineStr)
+    {
+        return '#EXTM3U' === strtoupper(substr($lineStr, 0, 7));
+    }
+
+    /**
+     * @param string $lineStr
+     * @return bool
+     */
     protected static function isComment($lineStr)
     {
-        return '#' === substr($lineStr, 0, 1) && !self::isExtInf($lineStr) && !self::isExtTv($lineStr);
+        return '#' === substr($lineStr, 0, 1) && !static::isExtInf($lineStr) && !static::isExtTv($lineStr) && !static::isExtM3u($lineStr);
     }
 }

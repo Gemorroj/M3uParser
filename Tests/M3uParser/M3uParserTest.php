@@ -27,7 +27,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/1.m3u');
 
-        self::assertInternalType('array', $data);
+        self::assertInstanceOf('M3uParser\Data', $data);
         self::assertCount(5, $data);
 
         self::assertContainsOnlyInstancesOf('M3uParser\Entry', $data);
@@ -46,7 +46,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/2.m3u');
 
-        self::assertInternalType('array', $data);
+        self::assertInstanceOf('M3uParser\Data', $data);
         self::assertCount(9, $data);
 
         self::assertContainsOnlyInstancesOf('M3uParser\Entry', $data);
@@ -65,7 +65,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/3.m3u');
 
-        self::assertInternalType('array', $data);
+        self::assertInstanceOf('M3uParser\Data', $data);
         self::assertCount(22, $data);
 
         self::assertContainsOnlyInstancesOf('M3uParser\Entry', $data);
@@ -80,7 +80,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/4.m3u');
 
-        self::assertInternalType('array', $data);
+        self::assertInstanceOf('M3uParser\Data', $data);
         self::assertCount(7, $data);
 
         self::assertContainsOnlyInstancesOf('M3uParser\Entry', $data);
@@ -95,7 +95,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/5.m3u');
 
-        self::assertInternalType('array', $data);
+        self::assertInstanceOf('M3uParser\Data', $data);
         self::assertCount(234, $data);
 
         self::assertContainsOnlyInstancesOf('M3uParser\Entry', $data);
@@ -114,7 +114,15 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/6.m3u');
 
-        self::assertInternalType('array', $data);
+        self::assertEquals(array(
+            'url-tvg' => 'http://www.teleguide.info/download/new3/jtv.zip',
+            'm3uautoload' => '1',
+            'deinterlace' => '8',
+            'cache' => '500',
+        ), $data->getAttributes());
+        self::assertEquals('http://www.teleguide.info/download/new3/jtv.zip', $data->getAttribute('url-tvg'));
+
+        self::assertInstanceOf('M3uParser\Data', $data);
         self::assertCount(47, $data);
 
         self::assertContainsOnlyInstancesOf('M3uParser\Entry', $data);
@@ -138,7 +146,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $m3uParser = new M3uParser();
         $data = $m3uParser->parseFile($this->getFixturesDirectory() . '/7.m3u');
 
-        self::assertInternalType('array', $data);
+        self::assertInstanceOf('M3uParser\Data', $data);
         self::assertCount(269, $data);
 
         self::assertContainsOnlyInstancesOf('M3uParser\Entry', $data);

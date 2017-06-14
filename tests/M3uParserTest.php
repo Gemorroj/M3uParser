@@ -7,7 +7,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
 {
     protected function getFixturesDirectory()
     {
-        return __DIR__ . '/../fixtures';
+        return __DIR__ . '/fixtures';
     }
 
     public function testParseFileFail()

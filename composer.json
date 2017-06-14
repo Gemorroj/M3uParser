@@ -17,7 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "M3uParser\\": "src/M3uParser"
+            "M3uParser\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "M3uParser\\Tests\\": "tests/"
         }
     }
 }

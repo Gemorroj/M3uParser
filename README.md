@@ -5,7 +5,7 @@
 
 ### Requirements:
 
-- PHP >= 5.4
+- PHP >= 5.6
 
 
 ### Installation:
@@ -33,7 +33,7 @@ $ composer update gemorroj/m3u-parser
 use M3uParser\M3uParser;
 
 $m3uParser = new M3uParser();
-$data = $m3uParser->parseFile('path_to.m3u');
+$data = $m3uParser->parseFile('path_to_file.m3u');
 
 print_r($data->getAttributes());
 /*
@@ -46,59 +46,66 @@ Array
 )
 */
 
+/** @var \M3uParser\Entry $entry */
 foreach ($data as $entry) {
     print_r($entry);
     /*
-M3uParser\Entry Object
-(
-    [extInf:M3uParser\Entry:private] => M3uParser\Tag\ExtInf Object
+        M3uParser\Entry Object
         (
-            [title:M3uParser\Tag\ExtInf:private] => TV SLO 1 HD
-            [duration:M3uParser\Tag\ExtInf:private] => 1
-            [attributes:M3uParser\Tag\ExtInf:private] => Array
+            [lineDelimiter:protected] =>
+
+            [extTags:M3uParser\Entry:private] => Array
                 (
-                    [tvg-logo] => Первый канал
-                    [group-title] => Эфирные каналы
-                    [tvg-name] => Первый_HD
-                    [deinterlace] => 4
+                    [0] => M3uParser\Tag\ExtInf Object
+                        (
+                            [title:M3uParser\Tag\ExtInf:private] => TV SLO 1 HD
+                            [duration:M3uParser\Tag\ExtInf:private] => 1
+                            [attributes:M3uParser\Tag\ExtInf:private] => Array
+                                (
+                                )
+
+                        )
+
+                    [1] => M3uParser\Tag\ExtTv Object
+                        (
+                            [tags:M3uParser\Tag\ExtTv:private] => Array
+                                (
+                                    [0] => Slovenski
+                                    [1] => HD
+                                )
+
+                            [language:M3uParser\Tag\ExtTv:private] => slv
+                            [xmlTvId:M3uParser\Tag\ExtTv:private] => SLO1HD
+                            [iconUrl:M3uParser\Tag\ExtTv:private] =>
+                        )
+
                 )
 
+            [path:M3uParser\Entry:private] => rtp://@232.2.201.53:5003
         )
-
-    [extTv:M3uParser\Entry:private] => M3uParser\Tag\ExtTv Object
-        (
-            [tags:M3uParser\Tag\ExtTv:private] => Array
-                (
-                    [0] => Slovenski
-                    [1] => HD
-                )
-
-            [language:M3uParser\Tag\ExtTv:private] => slv
-            [xmlTvId:M3uParser\Tag\ExtTv:private] => SLO1HD
-            [iconUrl:M3uParser\Tag\ExtTv:private] => 
-        )
-
-    [path:M3uParser\Entry:private] => rtp://@232.2.201.53:5003
-)
     */
 
     echo $entry->getPath() . "\n";
 
-    if ($entry->getExtInf()) { // If EXTINF tag
-        echo $entry->getExtInf()->getTitle() . "\n";
-        echo $entry->getExtInf()->getDuration() . "\n";
+    foreach ($entry->getExtTags() as $extTag) {
+        switch ($extTag) {
+            case $extTag instanceof \M3uParser\Tag\ExtInf: // If EXTINF tag
+                echo $extTag->getTitle() . "\n";
+                echo $extTag->getDuration() . "\n";
 
-        if ($entry->getExtInf()->getAttribute('tvg-name')) { // If tvg-name attribute in EXTINF tag
-            echo $entry->getExtInf()->getAttribute('tvg-name') . "\n";
-        }
-    }
+                if ($extTag->getAttribute('tvg-name')) { // If tvg-name attribute in EXTINF tag
+                    echo $extTag->getAttribute('tvg-name') . "\n";
+                }
+                break;
 
-    if ($entry->getExtTv()) { // If EXTTV tag
-        echo $entry->getExtTv()->getXmlTvId() . "\n";
-        echo $entry->getExtTv()->getIconUrl() . "\n";
-        echo $entry->getExtTv()->getLanguage() . "\n";
-        foreach ($entry->getExtTv()->getTags() as $tag) {
-            echo $tag . "\n";
+            case $extTag instanceof \M3uParser\Tag\ExtTv: // If EXTTV tag
+                echo $extTag->getXmlTvId() . "\n";
+                echo $extTag->getIconUrl() . "\n";
+                echo $extTag->getLanguage() . "\n";
+                foreach ($extTag->getTags() as $tag) {
+                    echo $tag . "\n";
+                }
+                break;
         }
     }
 }
@@ -113,22 +120,25 @@ use M3uParser\Entry;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTv;
 
-$data = new Data();
-$data->setAttribute('test-name', 'test-value');
-$data->append((new Entry())->setExtInf(
+$entry = new Entry();
+$entry->setPath('test-path');
+$entry->addExtTag(
     (new ExtInf())
         ->setDuration(123)
         ->setTitle('extinf-title')
         ->setAttribute('test-attr', 'test-attrname')
-));
-$data->append((new Entry())->setExtTv(
+);
+$entry->addExtTag(
     (new ExtTv())
         ->setIconUrl('https://example.org/icon.png')
         ->setLanguage('ru')
         ->setXmlTvId('xml-tv-id')
-        ->setTags(array('hd', 'sd'))
-));
-$data->append((new Entry())->setPath('test-path'));
+        ->setTags(['hd', 'sd'])
+);
+
+$data = new Data();
+$data->setAttribute('test-name', 'test-value');
+$data->append($entry);
 
 echo $data;
 /*
@@ -136,5 +146,125 @@ echo $data;
 #EXTINF: 123 test-attr="test-attrname", extinf-title
 #EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png
 test-path
+*/
+```
+
+### Example custom tag:
+```
+#EXTM3U
+#EXTCUSTOMTAG:123
+http://nullwave.barricade.lan:8000/club
+```
+
+```php
+<?php
+
+use M3uParser\M3uParser;
+use M3uParser\Tag\ExtTagInterface;
+
+class ExtCustomTag implements ExtTagInterface
+{
+    /**
+     * @var string
+     */
+    private $data;
+
+    /**
+     * #EXTCUSTOMTAG:data
+     * @param string $lineStr
+     */
+    public function __construct($lineStr = null)
+    {
+        if (null !== $lineStr) {
+            $this->makeData($lineStr);
+        }
+    }
+
+    /**
+     * @param string $lineStr
+     */
+    protected function makeData($lineStr)
+    {
+        /*
+EXTCUSTOMTAG format:
+#EXTCUSTOMTAG:data
+example:
+#EXTCUSTOMTAG:123
+         */
+
+        $data = \substr($lineStr, \strlen('#EXTCUSTOMTAG:'));
+
+        $this->setData(\trim($data));
+    }
+
+    /**
+     * @return string
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param string $data
+     * @return $this
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return '#EXTCUSTOMTAG: ' . $this->getData();
+    }
+
+    /**
+     * @param string $lineStr
+     * @return bool
+     */
+    public static function isMatch($lineStr)
+    {
+        return '#EXTCUSTOMTAG:' === \strtoupper(\substr($lineStr, 0, \strlen('#EXTCUSTOMTAG:')));
+    }
+}
+
+
+$m3uParser = new M3uParser([ExtCustomTag::class]);
+$data = $m3uParser->parseFile('path_to_file.m3u');
+
+print_r($data);
+/*
+M3uParser\Data Object
+(
+    [attributes:M3uParser\Data:private] => Array
+        (
+        )
+
+    [storage:ArrayIterator:private] => Array
+        (
+            [0] => M3uParser\Entry Object
+                (
+                    [lineDelimiter:protected] =>
+
+                    [extTags:M3uParser\Entry:private] => Array
+                        (
+                            [0] => M3uParser\Tests\ExtCustomTag Object
+                                (
+                                    [data:M3uParser\Tests\ExtCustomTag:private] => 123
+                                )
+
+                        )
+
+                    [path:M3uParser\Entry:private] => http://nullwave.barricade.lan:8000/club
+                )
+
+        )
+
+)
 */
 ```

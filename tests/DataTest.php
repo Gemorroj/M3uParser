@@ -1,5 +1,5 @@
 <?php
-namespace Tests\M3uParser;
+namespace M3uParser\Tests;
 
 use M3uParser\Data;
 use M3uParser\Entry;
@@ -8,11 +8,6 @@ use M3uParser\Tag\ExtTv;
 
 class DataTest extends \PHPUnit_Framework_TestCase
 {
-    protected function getFixturesDirectory()
-    {
-        return __DIR__ . '/fixtures';
-    }
-
     public function testToString()
     {
         $expectedString = '#EXTM3U test-name="test-value"' . "\n";
@@ -20,22 +15,26 @@ class DataTest extends \PHPUnit_Framework_TestCase
         $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png' . "\n";
         $expectedString .= 'test-path';
 
-        $data = new Data();
-        $data->setAttribute('test-name', 'test-value');
-        $data->append((new Entry())->setExtInf(
+
+        $entry = new Entry();
+        $entry->setPath('test-path');
+        $entry->addExtTag(
             (new ExtInf())
                 ->setDuration(123)
                 ->setTitle('extinf-title')
                 ->setAttribute('test-attr', 'test-attrname')
-        ));
-        $data->append((new Entry())->setExtTv(
+        );
+        $entry->addExtTag(
             (new ExtTv())
                 ->setIconUrl('https://example.org/icon.png')
                 ->setLanguage('ru')
                 ->setXmlTvId('xml-tv-id')
-                ->setTags(array('hd', 'sd'))
-        ));
-        $data->append((new Entry())->setPath('test-path'));
+                ->setTags(['hd', 'sd'])
+        );
+
+        $data = new Data();
+        $data->setAttribute('test-name', 'test-value');
+        $data->append($entry);
 
         self::assertEquals($expectedString, (string)$data);
     }

@@ -7,6 +7,8 @@ use M3uParser\Tag\ExtTv;
 
 class M3uParser
 {
+    protected $availableTags = [];
+
     /**
      * @return Entry
      */
@@ -21,6 +23,14 @@ class M3uParser
     protected function createData()
     {
         return new Data();
+    }
+
+    /**
+     * @param string[] $availableTags
+     */
+    public function __construct(array $availableTags = [ExtInf::class, ExtTv::class])
+    {
+        $this->availableTags = $availableTags;
     }
 
     /**
@@ -55,11 +65,11 @@ class M3uParser
 
         for ($i = 0, $l = \count($lines); $i < $l; ++$i) {
             $lineStr = \trim($lines[$i]);
-            if ('' === $lineStr || static::isComment($lineStr)) {
+            if ('' === $lineStr || $this->isComment($lineStr)) {
                 continue;
             }
 
-            if (static::isExtM3u($lineStr)) {
+            if ($this->isExtM3u($lineStr)) {
                 $tmp = \trim(\substr($lineStr, 7));
                 if ($tmp) {
                     $data->initAttributes($tmp);
@@ -88,21 +98,23 @@ class M3uParser
             $nextLineStr = $linesStr[$lineNumber];
             $nextLineStr = \trim($nextLineStr);
 
-            if ('' === $nextLineStr || static::isComment($nextLineStr) || static::isExtM3u($nextLineStr)) {
+            if ('' === $nextLineStr || $this->isComment($nextLineStr) || $this->isExtM3u($nextLineStr)) {
                 continue;
             }
 
-            if (static::isExtInf($nextLineStr)) {
-                $entry->setExtInf(new ExtInf($nextLineStr));
-                continue;
-            }
-            if (static::isExtTv($nextLineStr)) {
-                $entry->setExtTv(new ExtTv($nextLineStr));
-                continue;
+            $matched = false;
+            foreach ($this->availableTags as $availableTag) {
+                if ($availableTag::isMatch($nextLineStr)) {
+                    $matched = true;
+                    $entry->addExtTag(new $availableTag($nextLineStr));
+                    break;
+                }
             }
 
-            $entry->setPath($nextLineStr);
-            break;
+            if (!$matched) {
+                $entry->setPath($nextLineStr);
+                break;
+            }
         }
 
         return $entry;
@@ -122,25 +134,7 @@ class M3uParser
      * @param string $lineStr
      * @return bool
      */
-    protected static function isExtInf($lineStr)
-    {
-        return '#EXTINF:' === \strtoupper(\substr($lineStr, 0, 8));
-    }
-
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
-    protected static function isExtTv($lineStr)
-    {
-        return '#EXTTV:' === \strtoupper(\substr($lineStr, 0, 7));
-    }
-
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
-    protected static function isExtM3u($lineStr)
+    protected function isExtM3u($lineStr)
     {
         return '#EXTM3U' === \strtoupper(\substr($lineStr, 0, 7));
     }
@@ -149,8 +143,16 @@ class M3uParser
      * @param string $lineStr
      * @return bool
      */
-    protected static function isComment($lineStr)
+    protected function isComment($lineStr)
     {
-        return '#' === \substr($lineStr, 0, 1) && !static::isExtInf($lineStr) && !static::isExtTv($lineStr) && !static::isExtM3u($lineStr);
+        $matched = false;
+        foreach ($this->availableTags as $availableTag) {
+            if ($availableTag::isMatch($lineStr)) {
+                $matched = true;
+                break;
+            }
+        }
+
+        return '#' === \substr($lineStr, 0, 1) && !$matched && !static::isExtM3u($lineStr);
     }
 }

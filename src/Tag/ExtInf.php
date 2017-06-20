@@ -4,7 +4,7 @@ namespace M3uParser\Tag;
 
 use M3uParser\TagAttributesTrait;
 
-class ExtInf
+class ExtInf implements ExtTagInterface
 {
     use TagAttributesTrait;
 
@@ -115,5 +115,14 @@ example:
     public function __toString()
     {
         return '#EXTINF: ' . (int)$this->getDuration() . ' ' . $this->getAttributesString() . ', ' . $this->getTitle();
+    }
+
+    /**
+     * @param string $lineStr
+     * @return bool
+     */
+    public static function isMatch($lineStr)
+    {
+        return '#EXTINF:' === \strtoupper(\substr($lineStr, 0, 8));
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Tests\M3uParser;
+namespace M3uParser\Tests;
 
 use M3uParser\Exception;
 

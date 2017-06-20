@@ -5,7 +5,7 @@ namespace M3uParser;
 
 trait TagAttributesTrait
 {
-    private $attributes = array();
+    private $attributes = [];
 
     /**
      * example string: tvg-ID="" tvg-name="MEDI 1 SAT" tvg-logo="" group-title="ARABIC"

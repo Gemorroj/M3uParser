@@ -2,57 +2,43 @@
 
 namespace M3uParser;
 
-use M3uParser\Tag\ExtInf;
-use M3uParser\Tag\ExtTv;
+use M3uParser\Tag\ExtTagInterface;
 
 class Entry
 {
+    protected $lineDelimiter = "\n";
     /**
-     * @var ExtInf|null
+     * @var ExtTagInterface[]
      */
-    private $extInf;
+    private $extTags = [];
     /**
-     * @var ExtTv|null
-     */
-    private $extTv;
-    /**
-     * @var string
+     * @var string|null
      */
     private $path;
 
     /**
-     * @return ExtInf|null
+     * @return string
      */
-    public function getExtInf()
+    protected function getLineDelimiter()
     {
-        return $this->extInf;
+        return "\n";
     }
 
     /**
-     * @param ExtInf $extInf
+     * @return ExtTagInterface[]
+     */
+    public function getExtTags()
+    {
+        return $this->extTags;
+    }
+
+    /**
+     * @param ExtTagInterface $extTag
      * @return $this
      */
-    public function setExtInf(ExtInf $extInf)
+    public function addExtTag(ExtTagInterface $extTag)
     {
-        $this->extInf = $extInf;
-        return $this;
-    }
-
-    /**
-     * @return ExtTv|null
-     */
-    public function getExtTv()
-    {
-        return $this->extTv;
-    }
-
-    /**
-     * @param ExtTv $extTv
-     * @return $this
-     */
-    public function setExtTv(ExtTv $extTv)
-    {
-        $this->extTv = $extTv;
+        $this->extTags[] = $extTag;
         return $this;
     }
 
@@ -79,13 +65,13 @@ class Entry
      */
     public function __toString()
     {
-        if ($this->getExtInf()) {
-            return (string)$this->getExtInf();
-        }
-        if ($this->getExtTv()) {
-            return (string)$this->getExtTv();
+        $out = '';
+        foreach ($this->getExtTags() as $extTag) {
+            $out .= (string)$extTag . $this->lineDelimiter;
         }
 
-        return (string)$this->getPath();
+        $out .= (string)$this->getPath();
+
+        return \rtrim($out);
     }
 }

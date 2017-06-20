@@ -3,7 +3,7 @@
 namespace M3uParser\Tag;
 
 
-class ExtTv
+class ExtTv implements ExtTagInterface
 {
     /**
      * @var string[]
@@ -135,5 +135,14 @@ example:
     public function __toString()
     {
         return '#EXTTV: ' . \implode(',', $this->getTags()) . ';' . $this->getLanguage() . ';' . $this->getXmlTvId() . ($this->getIconUrl() ? ';' . $this->getIconUrl() : '');
+    }
+
+    /**
+     * @param string $lineStr
+     * @return bool
+     */
+    public static function isMatch($lineStr)
+    {
+        return '#EXTTV:' === \strtoupper(\substr($lineStr, 0, 7));
     }
 }

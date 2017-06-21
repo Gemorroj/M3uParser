@@ -61,6 +61,15 @@ trait TagAttributesTrait
     }
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasAttribute($name)
+    {
+        return isset($this->attributes[$name]);
+    }
+
+    /**
      * @param array $attributes
      * @return $this
      */

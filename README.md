@@ -93,7 +93,7 @@ foreach ($data as $entry) {
                 echo $extTag->getTitle() . "\n";
                 echo $extTag->getDuration() . "\n";
 
-                if ($extTag->getAttribute('tvg-name')) { // If tvg-name attribute in EXTINF tag
+                if ($extTag->hasAttribute('tvg-name')) { // If tvg-name attribute in EXTINF tag
                     echo $extTag->getAttribute('tvg-name') . "\n";
                 }
                 break;
@@ -156,6 +156,7 @@ test-path
 http://nullwave.barricade.lan:8000/club
 ```
 
+implement `ExtTagInterface` interface
 ```php
 <?php
 
@@ -233,7 +234,7 @@ example:
     }
 }
 
-
+// send implemented tag to M3uParser constructor
 $m3uParser = new M3uParser([ExtCustomTag::class]);
 $data = $m3uParser->parseFile('path_to_file.m3u');
 

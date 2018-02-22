@@ -25,7 +25,7 @@ install:
     - php -v
     - IF %PHP%==0 (composer --version) ELSE (composer self-update)
     - cd %APPVEYOR_BUILD_FOLDER%
-    - composer install --no-progres
+    - composer install
 
 test_script:
     - cd %APPVEYOR_BUILD_FOLDER%

@@ -6,7 +6,7 @@ init:
     - SET PATH=C:\tools\php71;%PATH%
 
 install:
-  - cinst -y php
+  - cinst php -y
   - cd c:\tools\php71
   - copy php.ini-production php.ini
   - echo date.timezone="UTC" >> php.ini

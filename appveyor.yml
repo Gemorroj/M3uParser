@@ -1,33 +1,26 @@
 build: false
+
 clone_depth: 1
 clone_folder: c:\projects\m3uparser
 
 environment:
-    PHP_CHOCO_VERSION: 7.2.1
-    PHP_CACHE_DIR: C:\tools\php
-
-cache:
-    - '%PHP_CACHE_DIR% -> appveyor.yml'
+    PHP_DIR: C:\tools\php
 
 init:
-    - SET PATH=%PHP_CACHE_DIR%;%PATH%
-    - SET COMPOSER_CACHE_DIR=%PHP_CACHE_DIR%
+    - SET PATH=%PHP_DIR%;%PATH%
     - SET COMPOSER_NO_INTERACTION=1
-    - SET PHP=0
     - SET ANSICON=121x90 (121x90)
 
 
 install:
     - ps: Set-Service wuauserv -StartupType Manual
-    - IF EXIST %PHP_CACHE_DIR% (SET PHP=1)
-    #- IF %PHP%==0 cinst php -y --version %PHP_CHOCO_VERSION% --params "/InstallDir:%PHP_CACHE_DIR%"
-    - IF %PHP%==0 cinst php -y --params "/InstallDir:%PHP_CACHE_DIR%"
-    - IF %PHP%==0 cinst composer -y --ia "/DEV=%PHP_CACHE_DIR%"
+    - cinst php -y --params "/InstallDir:%PHP_DIR%"
+    - cinst composer -y --ia "/DEV=%PHP_DIR%"
     - php -v
-    - IF %PHP%==0 (composer --version) ELSE (composer self-update)
+    - ccomposer self-update
     - cd %APPVEYOR_BUILD_FOLDER%
     - composer install
 
 test_script:
     - cd %APPVEYOR_BUILD_FOLDER%
-    - vendor\bin\phpunit --colors=always
+    - vendor\bin\phpunit

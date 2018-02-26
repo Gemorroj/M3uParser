@@ -244,11 +244,33 @@ $m3uParser->addTag(ExtCustomTag::class);
 $data = $m3uParser->parseFile('path_to_file.m3u');
 
 print_r($data);
-M3uData
+/*
+M3uParser\M3uData Object
+(
+    [attributes:M3uParser\M3uData:private] => Array
+        (
+        )
 
+    [storage:ArrayIterator:private] => Array
+        (
+            [0] => M3uParser\M3uEntry Object
+                (
+                    [lineDelimiter:protected] =>
 
+                    [extTags:M3uParser\M3uEntry:private] => Array
+                        (
+                            [0] => M3uParser\Tests\ExtCustomTag Object
+                                (
+                                    [data:M3uParser\Tests\ExtCustomTag:private] => 123
+                                )
 
+                        )
+ 
+                    [path:M3uParser\M3uEntry:private] => http://nullwave.barricade.lan:8000/club
+                )
+ 
+        )
 
-
-
-```
+)
+*/
+ ```

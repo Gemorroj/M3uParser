@@ -14,11 +14,11 @@ install:
     - ps: Set-Service wuauserv -StartupType Manual
     - cinst php -y --params "/InstallDir:%PHP_DIR%"
     - cinst composer -y --ia "/DEV=%PHP_DIR%"
+    - refreshenv
     - php -v
-    - ccomposer self-update
+    - composer self-update
     - cd %APPVEYOR_BUILD_FOLDER%
     - composer install
-    - refreshenv
 
 test_script:
     - cd %APPVEYOR_BUILD_FOLDER%

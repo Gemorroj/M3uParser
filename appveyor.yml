@@ -18,6 +18,7 @@ install:
     - ccomposer self-update
     - cd %APPVEYOR_BUILD_FOLDER%
     - composer install
+    - refreshenv
 
 test_script:
     - cd %APPVEYOR_BUILD_FOLDER%

@@ -1,6 +1,9 @@
 # Parser/Generator m3u playlists.
 
-[![Build Status](https://secure.travis-ci.org/Gemorroj/M3uParser.png?branch=master)](https://travis-ci.org/Gemorroj/M3uParser)
+[![License](https://poser.pugx.org/gemorroj/m3u-parser/license)](https://packagist.org/packages/gemorroj/m3u-parser)
+[![Latest Stable Version](https://poser.pugx.org/gemorroj/m3u-parser/v/stable)](https://packagist.org/packages/gemorroj/m3u-parser)
+[![Build Status Travis](https://secure.travis-ci.org/Gemorroj/M3uParser.png?branch=master)](https://travis-ci.org/Gemorroj/M3uParser)
+[![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva)](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva)
 
 
 ### Requirements:

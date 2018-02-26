@@ -1,4 +1,4 @@
-# Parser/Generator m3u playlists.
+# Parser/Generator m3u playlists
 
 [![License](https://poser.pugx.org/gemorroj/m3u-parser/license)](https://packagist.org/packages/gemorroj/m3u-parser)
 [![Latest Stable Version](https://poser.pugx.org/gemorroj/m3u-parser/v/stable)](https://packagist.org/packages/gemorroj/m3u-parser)

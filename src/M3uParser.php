@@ -2,42 +2,31 @@
 
 namespace M3uParser;
 
-use M3uParser\Tag\ExtInf;
-use M3uParser\Tag\ExtTv;
-
 class M3uParser
 {
-    protected $availableTags = [];
+    use TagsManagerTrait;
 
     /**
-     * @return Entry
+     * @return M3uEntry
      */
-    protected function createEntry()
+    protected function createM3uEntry()
     {
-        return new Entry();
+        return new M3uEntry();
     }
 
     /**
-     * @return Data
+     * @return M3uData
      */
-    protected function createData()
+    protected function createM3uData()
     {
-        return new Data();
-    }
-
-    /**
-     * @param string[] $availableTags
-     */
-    public function __construct(array $availableTags = [ExtInf::class, ExtTv::class])
-    {
-        $this->availableTags = $availableTags;
+        return new M3uData();
     }
 
     /**
      * Parse m3u file
      *
      * @param string $file
-     * @return Data entries
+     * @return M3uData entries
      * @throws Exception
      */
     public function parseFile($file)
@@ -54,13 +43,13 @@ class M3uParser
      * Parse m3u string
      *
      * @param string $str
-     * @return Data entries
+     * @return M3uData entries
      */
     public function parse($str)
     {
         $this->removeBom($str);
 
-        $data = $this->createData();
+        $data = $this->createM3uData();
         $lines = \explode("\n", $str);
 
         for ($i = 0, $l = \count($lines); $i < $l; ++$i) {
@@ -88,11 +77,11 @@ class M3uParser
      *
      * @param int $lineNumber
      * @param string[] $linesStr
-     * @return Entry
+     * @return M3uEntry
      */
     protected function parseLine(&$lineNumber, array $linesStr)
     {
-        $entry = $this->createEntry();
+        $entry = $this->createM3uEntry();
 
         for ($l = \count($linesStr); $lineNumber < $l; ++$lineNumber) {
             $nextLineStr = $linesStr[$lineNumber];
@@ -103,7 +92,7 @@ class M3uParser
             }
 
             $matched = false;
-            foreach ($this->availableTags as $availableTag) {
+            foreach ($this->getTags() as $availableTag) {
                 if ($availableTag::isMatch($nextLineStr)) {
                     $matched = true;
                     $entry->addExtTag(new $availableTag($nextLineStr));
@@ -146,7 +135,7 @@ class M3uParser
     protected function isComment($lineStr)
     {
         $matched = false;
-        foreach ($this->availableTags as $availableTag) {
+        foreach ($this->getTags() as $availableTag) {
             if ($availableTag::isMatch($lineStr)) {
                 $matched = true;
                 break;

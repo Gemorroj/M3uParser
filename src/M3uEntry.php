@@ -4,7 +4,7 @@ namespace M3uParser;
 
 use M3uParser\Tag\ExtTagInterface;
 
-class Entry
+class M3uEntry
 {
     protected $lineDelimiter = "\n";
     /**

@@ -36,6 +36,7 @@ $ composer update gemorroj/m3u-parser
 use M3uParser\M3uParser;
 
 $m3uParser = new M3uParser();
+$m3uParser->addDefaultTags();
 $data = $m3uParser->parseFile('path_to_file.m3u');
 
 print_r($data->getAttributes());
@@ -49,15 +50,15 @@ Array
 )
 */
 
-/** @var \M3uParser\Entry $entry */
+/** @var \M3uParser\M3uEntry $entry */
 foreach ($data as $entry) {
     print_r($entry);
     /*
-        M3uParser\Entry Object
+        M3uParser\M3uEntry Object
         (
             [lineDelimiter:protected] =>
 
-            [extTags:M3uParser\Entry:private] => Array
+            [extTags:M3uParser\M3uEntry:private] => Array
                 (
                     [0] => M3uParser\Tag\ExtInf Object
                         (
@@ -84,7 +85,7 @@ foreach ($data as $entry) {
 
                 )
 
-            [path:M3uParser\Entry:private] => rtp://@232.2.201.53:5003
+            [path:M3uParser\M3uEntry:private] => rtp://@232.2.201.53:5003
         )
     */
 
@@ -118,12 +119,12 @@ foreach ($data as $entry) {
 
 ```php
 <?php
-use M3uParser\Data;
-use M3uParser\Entry;
+use M3uParser\M3uData;
+use M3uParser\M3uEntry;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTv;
 
-$entry = new Entry();
+$entry = new M3uEntry();
 $entry->setPath('test-path');
 $entry->addExtTag(
     (new ExtInf())
@@ -139,7 +140,7 @@ $entry->addExtTag(
         ->setTags(['hd', 'sd'])
 );
 
-$data = new Data();
+$data = new M3uData();
 $data->setAttribute('test-name', 'test-value');
 $data->append($entry);
 
@@ -237,38 +238,17 @@ example:
     }
 }
 
-// send implemented tag to M3uParser constructor
-$m3uParser = new M3uParser([ExtCustomTag::class]);
+$m3uParser = new M3uParser();
+// add custom tag
+$m3uParser->addTag(ExtCustomTag::class);
 $data = $m3uParser->parseFile('path_to_file.m3u');
 
 print_r($data);
-/*
-M3uParser\Data Object
-(
-    [attributes:M3uParser\Data:private] => Array
-        (
-        )
+M3uData
 
-    [storage:ArrayIterator:private] => Array
-        (
-            [0] => M3uParser\Entry Object
-                (
-                    [lineDelimiter:protected] =>
 
-                    [extTags:M3uParser\Entry:private] => Array
-                        (
-                            [0] => M3uParser\Tests\ExtCustomTag Object
-                                (
-                                    [data:M3uParser\Tests\ExtCustomTag:private] => 123
-                                )
 
-                        )
 
-                    [path:M3uParser\Entry:private] => http://nullwave.barricade.lan:8000/club
-                )
 
-        )
 
-)
-*/
 ```

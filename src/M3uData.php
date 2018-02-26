@@ -2,7 +2,7 @@
 
 namespace M3uParser;
 
-class Data extends \ArrayIterator
+class M3uData extends \ArrayIterator
 {
     use TagAttributesTrait;
 

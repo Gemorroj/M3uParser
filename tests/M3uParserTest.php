@@ -3,8 +3,8 @@ namespace M3uParser\Tests;
 
 use M3uParser\M3uParser;
 use M3uParser\Exception as M3uParserException;
-use M3uParser\Data as M3uParserData;
-use M3uParser\Entry as M3uParserEntry;
+use M3uParser\M3uData as M3uParserData;
+use M3uParser\M3uEntry as M3uParserEntry;
 use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTv;
@@ -16,12 +16,14 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $this->expectException(M3uParserException::class);
 
         $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
         $m3uParser->parseFile('fake_file');
     }
 
     public function testParseFileExtInf()
     {
         $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__ . '/fixtures/extinf.m3u');
 
         self::assertInstanceOf(M3uParserData::class, $data);
@@ -98,6 +100,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
     public function testParseFileExtM3u()
     {
         $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__ . '/fixtures/extm3u.m3u');
 
         self::assertEquals([
@@ -113,6 +116,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
     public function testParseFileComment()
     {
         $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__ . '/fixtures/comment.m3u');
 
         /** @var M3uParserEntry $entry */
@@ -125,6 +129,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
     public function testParseFileNoTags()
     {
         $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__ . '/fixtures/notags.m3u');
 
         /** @var M3uParserEntry $entry */
@@ -138,6 +143,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
     public function testParseFileExtTv()
     {
         $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__ . '/fixtures/exttv.m3u');
 
         /** @var M3uParserEntry $entry */
@@ -162,6 +168,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
     public function testParseFileCombinedExtTags()
     {
         $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__ . '/fixtures/combined.m3u');
 
         /** @var M3uParserEntry $entry */
@@ -179,7 +186,8 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
 
     public function testParseFileExtCustomTag()
     {
-        $m3uParser = new M3uParser([ExtCustomTag::class]);
+        $m3uParser = new M3uParser();
+        $m3uParser->addTag(ExtCustomTag::class);
         $data = $m3uParser->parseFile(__DIR__ . '/fixtures/customtag.m3u');
 
         /** @var M3uParserEntry $entry */

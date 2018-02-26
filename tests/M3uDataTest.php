@@ -1,12 +1,12 @@
 <?php
 namespace M3uParser\Tests;
 
-use M3uParser\Data;
-use M3uParser\Entry;
+use M3uParser\M3uData;
+use M3uParser\M3uEntry;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTv;
 
-class DataTest extends \PHPUnit_Framework_TestCase
+class M3uDataTest extends \PHPUnit_Framework_TestCase
 {
     public function testToString()
     {
@@ -16,7 +16,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
         $expectedString .= 'test-path';
 
 
-        $entry = new Entry();
+        $entry = new M3uEntry();
         $entry->setPath('test-path');
         $entry->addExtTag(
             (new ExtInf())
@@ -32,7 +32,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
                 ->setTags(['hd', 'sd'])
         );
 
-        $data = new Data();
+        $data = new M3uData();
         $data->setAttribute('test-name', 'test-value');
         $data->append($entry);
 

@@ -12,20 +12,8 @@
 
 
 ### Installation:
-
-- Add to composer.json:
-
-```json
-{
-    "require": {
-        "gemorroj/m3u-parser": "*"
-    }
-}
-```
-- install project:
-
 ```bash
-$ composer update gemorroj/m3u-parser
+composer require gemorroj/m3u-parser
 ```
 
 

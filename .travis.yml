@@ -6,6 +6,11 @@ php:
     - 7.2
     - nightly
 
+matrix:
+    allow_failures:
+        - php: nightly
+    fast_finish: true
+
 env:
     matrix:
         - DEPENDENCIES="high"
@@ -13,17 +18,19 @@ env:
     global:
         - DEFAULT_COMPOSER_FLAGS="--no-interaction --no-ansi --no-progress --no-suggest"
 
+cache:
+    directories:
+        - $HOME/.composer/cache/files
+
 before_install:
-    # Update composer
-    - composer self-update
-    - composer clear-cache
+    - composer validate
 
 install:
     - if [[ "$DEPENDENCIES" = 'high' ]]; then travis_retry composer update $DEFAULT_COMPOSER_FLAGS; fi
     - if [[ "$DEPENDENCIES" = 'low' ]]; then travis_retry composer update $DEFAULT_COMPOSER_FLAGS --prefer-lowest; fi
 
 script:
-    - vendor/bin/phpunit --configuration phpunit.xml
+    - vendor/bin/phpunit --configuration phpunit.xml.dist
 
 notifications:
     email:

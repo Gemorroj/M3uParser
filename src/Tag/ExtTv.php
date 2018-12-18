@@ -21,6 +21,10 @@ class ExtTv implements ExtTagInterface
      * @var string|null
      */
     private $iconUrl;
+    /**
+     * @var string
+     */
+    private $patch;
 
     /**
      * #EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png
@@ -39,11 +43,11 @@ class ExtTv implements ExtTagInterface
      */
     protected function makeData($lineStr)
     {
-        /*
-EXTTV format:
-#EXTTV:tag[,tag,tag...];language;XMLTV id[;icon URL]
-example:
-#EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png
+        /**
+         * EXTTV format:
+         * #EXTTV:tag[,tag,tag...];language;XMLTV id[;icon URL]
+         * example:
+         * #EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png
          */
 
         $tmp = \substr($lineStr, 7);
@@ -130,11 +134,32 @@ example:
     }
 
     /**
+     * @param string $patch
+     * @return $this
+     */
+    public function setPatch($patch)
+    {
+        $this->patch = $patch;
+
+        return $this;
+    }
+
+    /**
+     * Patch in this case, url
+     *
+     * @return string
+     */
+    public function getPatch()
+    {
+        return $this->patch;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        return '#EXTTV: ' . \implode(',', $this->getTags()) . ';' . $this->getLanguage() . ';' . $this->getXmlTvId() . ($this->getIconUrl() ? ';' . $this->getIconUrl() : '');
+        return '#EXTTV: ' . \implode(',', $this->getTags()) . ';' . $this->getLanguage() . ';' . $this->getXmlTvId() . ($this->getIconUrl() ? ';' . $this->getIconUrl() : '') . ( (!empty($this->getPatch())) ? "\n" . $this->getPatch() : '' );
     }
 
     /**

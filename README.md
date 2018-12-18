@@ -118,6 +118,7 @@ $entry->addExtTag(
     (new ExtInf())
         ->setDuration(123)
         ->setTitle('extinf-title')
+        ->setPatch('http://srv.test-tvchannel.vip:8880/101525')
         ->setAttribute('test-attr', 'test-attrname')
 );
 $entry->addExtTag(
@@ -125,6 +126,7 @@ $entry->addExtTag(
         ->setIconUrl('https://example.org/icon.png')
         ->setLanguage('ru')
         ->setXmlTvId('xml-tv-id')
+        ->setPatch('http://srv.test-tvchannel.vip:8880/101525')
         ->setTags(['hd', 'sd'])
 );
 
@@ -136,7 +138,9 @@ echo $data;
 /*
 #EXTM3U test-name="test-value"
 #EXTINF: 123 test-attr="test-attrname", extinf-title
+http://srv.test-tvchannel.vip:8880/101525
 #EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png
+http://srv.test-tvchannel.vip:8880/101525
 test-path
 */
 ```
@@ -178,11 +182,11 @@ class ExtCustomTag implements ExtTagInterface
      */
     protected function makeData($lineStr)
     {
-        /*
-EXTCUSTOMTAG format:
-#EXTCUSTOMTAG:data
-example:
-#EXTCUSTOMTAG:123
+        /**
+         * EXTCUSTOMTAG format:
+         * #EXTCUSTOMTAG:data
+         * example:
+         * #EXTCUSTOMTAG:123
          */
 
         $data = \substr($lineStr, \strlen('#EXTCUSTOMTAG:'));

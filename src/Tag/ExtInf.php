@@ -18,6 +18,11 @@ class ExtInf implements ExtTagInterface
     private $duration;
 
     /**
+     * @var string
+     */
+    private $patch;
+
+    /**
      * #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
      *
      * @param string $lineStr
@@ -35,10 +40,11 @@ class ExtInf implements ExtTagInterface
      */
     protected function makeAttributes($lineStr)
     {
-        /*
-#EXTINF:-1,My Cool Stream
-#EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
+        /**
+         * #EXTINF:-1,My Cool Stream
+         * #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
          */
+
         $tmp = \substr($lineStr, 8);
         $split = \explode(',', $tmp, 2);
         $splitAttributes = \explode(' ', $split[0], 2);
@@ -54,11 +60,11 @@ class ExtInf implements ExtTagInterface
      */
     protected function makeData($lineStr)
     {
-        /*
-EXTINF format:
-#EXTINF:<duration> [<attributes-list>], <title>
-example:
-#EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
+        /**
+         * EXTINF format:
+         * #EXTINF:<duration> [<attributes-list>], <title>
+         * example:
+         * #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
          */
         $tmp = \substr($lineStr, 8);
 
@@ -89,6 +95,27 @@ example:
     }
 
     /**
+     * @param string $patch
+     * @return $this
+     */
+    public function setPatch($patch)
+    {
+        $this->patch = $patch;
+
+        return $this;
+    }
+
+    /**
+     * Patch in this case, url
+     *
+     * @return string
+     */
+    public function getPatch()
+    {
+        return $this->patch;
+    }
+
+    /**
      * @param int $duration
      * @return $this
      */
@@ -114,7 +141,7 @@ example:
      */
     public function __toString()
     {
-        return '#EXTINF: ' . (int)$this->getDuration() . ' ' . $this->getAttributesString() . ', ' . $this->getTitle();
+        return '#EXTINF: ' . (int)$this->getDuration() . ' ' . $this->getAttributesString() . ', ' . $this->getTitle() . ( (!empty($this->getPatch())) ? "\n" . $this->getPatch() : '' ) ;
     }
 
     /**

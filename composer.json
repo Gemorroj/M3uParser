@@ -1,10 +1,13 @@
 {
-    "name": "gemorroj/m3u-parser",
+    "name": "tschope/m3u-parser",
     "description": "m3u playlist parser/generator",
     "keywords": ["m3u", "m3u8", "playlist"],
     "type": "library",
     "license": "LGPL-3.0",
     "authors": [
+        {
+            "name": "tschope"
+        },
         {
             "name": "Gemorroj"
         }

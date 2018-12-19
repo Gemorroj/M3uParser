@@ -1,9 +1,15 @@
+# Original Project
+
+The original project is from gemorroj but he didn't accept my merge requst, so, I made my changes and create a new repo with my changes.
+
+- My big update is accept a patch each line of the m3u
+
 # Parser/Generator m3u playlists
 
-[![License](https://poser.pugx.org/gemorroj/m3u-parser/license)](https://packagist.org/packages/gemorroj/m3u-parser)
-[![Latest Stable Version](https://poser.pugx.org/gemorroj/m3u-parser/v/stable)](https://packagist.org/packages/gemorroj/m3u-parser)
-[![Build Status Travis](https://secure.travis-ci.org/Gemorroj/M3uParser.png?branch=master)](https://travis-ci.org/Gemorroj/M3uParser)
-[![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/elqxwcdihjhu0gvp)](https://ci.appveyor.com/project/Gemorroj/m3uparser)
+[![License](https://poser.pugx.org/tschope/m3u-parser/license)](https://packagist.org/packages/tschope/m3u-parser)
+[![Latest Stable Version](https://poser.pugx.org/tschope/m3u-parser/v/stable)](https://packagist.org/packages/tschope/m3u-parser)
+[![Build Status Travis](https://secure.travis-ci.org/tschope/M3uParser.png?branch=master)](https://travis-ci.org/tschope/M3uParser)
+[![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/elqxwcdihjhu0gvp)](https://ci.appveyor.com/project/tschope/m3uparser)
 
 
 ### Requirements:
@@ -13,7 +19,7 @@
 
 ### Installation:
 ```bash
-composer require gemorroj/m3u-parser
+composer require tschope/m3u-parser
 ```
 
 

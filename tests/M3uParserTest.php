@@ -183,7 +183,6 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertContainsOnlyInstancesOf(ExtTagInterface::class, $extTags);
     }
 
-
     public function testParseFileExtCustomTag()
     {
         $m3uParser = new M3uParser();
@@ -204,5 +203,18 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         self::assertInstanceOf(ExtCustomTag::class, $extCustomTag);
 
         self::assertEquals('123', $extCustomTag->getData());
+    }
+
+    public function testPr14()
+    {
+        $m3uParser = new M3uParser();
+        $data = $m3uParser->parseFile(__DIR__ . '/fixtures/github/pr14.m3u');
+        self::assertCount(3, $data);
+
+        foreach ($data as $entry) {
+            self::assertInstanceOf(M3uParserEntry::class, $entry);
+        }
+
+        self::assertEquals('http://srv.test-channel.vip:8880/veLMOIkQ2l/10634', $data[2]->getPath());
     }
 }

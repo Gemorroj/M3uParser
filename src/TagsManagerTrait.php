@@ -15,8 +15,8 @@ trait TagsManagerTrait
      * Add tag
      *
      * @param string $tag class name must be implement ExtTagInterface interface
-     * @return $this
      * @throws Exception
+     * @return $this
      */
     public function addTag($tag)
     {
@@ -31,8 +31,8 @@ trait TagsManagerTrait
     /**
      * Add default tags (EXTINF and EXTTV)
      *
-     * @return $this
      * @throws Exception
+     * @return $this
      */
     public function addDefaultTags()
     {

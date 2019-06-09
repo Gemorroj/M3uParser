@@ -26,8 +26,8 @@ class M3uParser
      * Parse m3u file
      *
      * @param string $file
-     * @return M3uData entries
      * @throws Exception
+     * @return M3uData entries
      */
     public function parseFile($file)
     {

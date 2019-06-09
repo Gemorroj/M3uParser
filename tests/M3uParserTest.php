@@ -1,12 +1,12 @@
 <?php
 namespace M3uParser\Tests;
 
-use M3uParser\M3uParser;
 use M3uParser\Exception as M3uParserException;
 use M3uParser\M3uData as M3uParserData;
 use M3uParser\M3uEntry as M3uParserEntry;
-use M3uParser\Tag\ExtTagInterface;
+use M3uParser\M3uParser;
 use M3uParser\Tag\ExtInf;
+use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtTv;
 
 class M3uParserTest extends \PHPUnit_Framework_TestCase

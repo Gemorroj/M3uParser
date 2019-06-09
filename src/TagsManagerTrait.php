@@ -2,7 +2,6 @@
 
 namespace M3uParser;
 
-
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtTv;

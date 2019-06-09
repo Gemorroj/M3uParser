@@ -2,7 +2,6 @@
 
 namespace M3uParser\Tag;
 
-
 class ExtTv implements ExtTagInterface
 {
     /**

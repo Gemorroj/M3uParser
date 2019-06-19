@@ -1,7 +1,0 @@
-#EXTM3U x-tvg-url="http://"
-#EXTINF: -1 tvg-id="SPORTFHD.br" tvg-name="SPORT FHD" tvg-logo="https://4.bp.blogspot.com/-iDygr9PU0yo/XAh6QW80EtI/AAAAAAAACoE/K7zUw7IvW4IEMrJXmqYl94-80m9ANl_gACLcBGAs/s1600/bbb2019.png" group-title="CANAIS GLOBO", BBB FHD AQUECIMENTO
-http://srv.test-channel.vip:8880/veLMOIkQ2l/10633
-#EXTINF: -1 tvg-id="SPORTHD.br" tvg-name="SPORT HD" tvg-logo="https://4.bp.blogspot.com/-iDygr9PU0yo/XAh6QW80EtI/AAAAAAAACoE/K7zUw7IvW4IEMrJXmqYl94-80m9ANl_gACLcBGAs/s1600/bbb2019.png" group-title="CANAIS GLOBO", BBB HD AQUECIMENTO
-http://srv.test-channel.vip:8880/veLMOIkQ2l/10632
-#EXTINF: -1 tvg-id="SPORTSD.br" tvg-name="SPORT SD" tvg-logo="https://4.bp.blogspot.com/-iDygr9PU0yo/XAh6QW80EtI/AAAAAAAACoE/K7zUw7IvW4IEMrJXmqYl94-80m9ANl_gACLcBGAs/s1600/bbb2019.png" group-title="CANAIS GLOBO", BBB HD AQUECIMENTO
-http://srv.test-channel.vip:8880/veLMOIkQ2l/10634

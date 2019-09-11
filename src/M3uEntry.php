@@ -41,6 +41,17 @@ class M3uEntry
         $this->extTags[] = $extTag;
         return $this;
     }
+    
+    /**
+     * Remove all previously defined tags
+     *
+     * @return $this
+     */
+    public function clearExtTags()
+    {
+        $this->extTags = [];
+        return $this;
+    }
 
     /**
      * @return string

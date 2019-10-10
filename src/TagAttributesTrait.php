@@ -4,6 +4,9 @@ namespace M3uParser;
 
 trait TagAttributesTrait
 {
+    /**
+     * @var array
+     */
     private $attributes = [];
 
     /**

@@ -8,6 +8,9 @@ use M3uParser\Tag\ExtTv;
 
 trait TagsManagerTrait
 {
+    /**
+     * @var array
+     */
     private $tags = [];
 
     /**

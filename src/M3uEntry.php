@@ -6,6 +6,9 @@ use M3uParser\Tag\ExtTagInterface;
 
 class M3uEntry
 {
+    /**
+     * @var string
+     */
     protected $lineDelimiter = "\n";
     /**
      * @var ExtTagInterface[]
@@ -15,14 +18,6 @@ class M3uEntry
      * @var string|null
      */
     private $path;
-
-    /**
-     * @return string
-     */
-    protected function getLineDelimiter()
-    {
-        return "\n";
-    }
 
     /**
      * @return ExtTagInterface[]

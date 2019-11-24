@@ -25,26 +25,7 @@ class ExtInf implements ExtTagInterface
     public function __construct($lineStr = null)
     {
         if (null !== $lineStr) {
-            $this->makeData($lineStr);
-            $this->makeAttributes($lineStr);
-        }
-    }
-
-    /**
-     * @param string $lineStr
-     */
-    protected function makeAttributes($lineStr)
-    {
-        /*
-#EXTINF:-1,My Cool Stream
-#EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
-         */
-        $tmp = \substr($lineStr, 8);
-        $split = \explode(',', $tmp, 2);
-        $splitAttributes = \explode(' ', $split[0], 2);
-
-        if (isset($splitAttributes[1]) && \trim($splitAttributes[1])) {
-            $this->initAttributes(\trim($splitAttributes[1]));
+            $this->make($lineStr);
         }
     }
 
@@ -52,7 +33,7 @@ class ExtInf implements ExtTagInterface
      * @param string $lineStr
      * @see http://l189-238-14.cn.ru/api-doc/m3u-extending.html
      */
-    protected function makeData($lineStr)
+    protected function make($lineStr)
     {
         /*
 EXTINF format:
@@ -62,9 +43,23 @@ example:
          */
         $tmp = \substr($lineStr, 8);
 
-        $split = \explode(',', $tmp, 2);
-        $this->setTitle(\trim($split[1]));
-        $this->setDuration((int)$split[0]);
+        // Parse duration and title with regex
+        preg_match('/^(-?\d+)\s*(?:(?:[^=]+=["\'][^"\']*["\'])|(?:[^=]+=[^ ]*))*,(.*)$/', $tmp, $matches);
+
+        $duration = (int)$matches[1];
+        $title = \trim($matches[2]);
+
+        $this->setTitle($title);
+        $this->setDuration($duration);
+
+        // Attributes are remaining string after remove duration and title
+        $attributes = preg_replace('#^'.preg_quote($matches[1]).'(.*)'.preg_quote($matches[2]).'$#', '$1', $tmp);
+
+        $splitAttributes = \explode(' ', $attributes, 2);
+
+        if (isset($splitAttributes[1]) && \trim($splitAttributes[1])) {
+            $this->initAttributes(\trim($splitAttributes[1]));
+        }
     }
 
     /**

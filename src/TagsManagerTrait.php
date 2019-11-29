@@ -20,7 +20,7 @@ trait TagsManagerTrait
      * @throws Exception
      * @return $this
      */
-    public function addTag($tag)
+    public function addTag(string $tag): self
     {
         if (!\in_array(ExtTagInterface::class, \class_implements($tag), true)) {
             throw new Exception(\sprintf('The class %s must be implement interface %s', $tag, ExtTagInterface::class));
@@ -36,7 +36,7 @@ trait TagsManagerTrait
      * @throws Exception
      * @return $this
      */
-    public function addDefaultTags()
+    public function addDefaultTags(): self
     {
         $this->addTag(ExtInf::class);
         $this->addTag(ExtTv::class);
@@ -48,7 +48,7 @@ trait TagsManagerTrait
      *
      * @return $this
      */
-    public function clearTags()
+    public function clearTags(): self
     {
         $this->tags = [];
         return $this;
@@ -59,7 +59,7 @@ trait TagsManagerTrait
      *
      * @return string[]
      */
-    protected function getTags()
+    protected function getTags(): array
     {
         return $this->tags;
     }

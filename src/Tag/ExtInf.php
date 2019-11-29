@@ -22,7 +22,7 @@ class ExtInf implements ExtTagInterface
      *
      * @param string $lineStr
      */
-    public function __construct($lineStr = null)
+    public function __construct(?string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->make($lineStr);
@@ -33,7 +33,7 @@ class ExtInf implements ExtTagInterface
      * @param string $lineStr
      * @see http://l189-238-14.cn.ru/api-doc/m3u-extending.html
      */
-    protected function make($lineStr)
+    protected function make(string $lineStr): void
     {
         /*
 EXTINF format:
@@ -41,24 +41,21 @@ EXTINF format:
 example:
 #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
          */
-        $tmp = \substr($lineStr, 8);
+        $dataLineStr = \substr($lineStr, 8);
 
         // Parse duration and title with regex
-        preg_match('/^(-?\d+)\s*(?:(?:[^=]+=["\'][^"\']*["\'])|(?:[^=]+=[^ ]*))*,(.*)$/', $tmp, $matches);
+        \preg_match('/^(-?\d+)\s*(?:(?:[^=]+=["\'][^"\']*["\'])|(?:[^=]+=[^ ]*))*,(.*)$/', $dataLineStr, $matches);
 
-        $duration = (int)$matches[1];
-        $title = \trim($matches[2]);
-
-        $this->setTitle($title);
-        $this->setDuration($duration);
+        $this->setDuration((int)$matches[1]);
+        $this->setTitle(\trim($matches[2]));
 
         // Attributes are remaining string after remove duration and title
-        $attributes = preg_replace('#^'.preg_quote($matches[1]).'(.*)'.preg_quote($matches[2]).'$#', '$1', $tmp);
+        $attributes = \preg_replace('/^'.\preg_quote($matches[1], '/').'(.*)'.\preg_quote($matches[2], '/').'$/', '$1', $dataLineStr);
 
         $splitAttributes = \explode(' ', $attributes, 2);
 
-        if (isset($splitAttributes[1]) && \trim($splitAttributes[1])) {
-            $this->initAttributes(\trim($splitAttributes[1]));
+        if (isset($splitAttributes[1]) && $trimmedAttributes = \trim($splitAttributes[1])) {
+            $this->initAttributes($trimmedAttributes);
         }
     }
 
@@ -66,7 +63,7 @@ example:
      * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -78,7 +75,7 @@ example:
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -87,7 +84,7 @@ example:
      * @param int $duration
      * @return $this
      */
-    public function setDuration($duration)
+    public function setDuration(int $duration): self
     {
         $this->duration = $duration;
 
@@ -99,7 +96,7 @@ example:
      *
      * @return int
      */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
@@ -107,17 +104,17 @@ example:
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return '#EXTINF: ' . (int)$this->getDuration() . ' ' . $this->getAttributesString() . ', ' . $this->getTitle();
+        return '#EXTINF: ' . $this->getDuration() . ' ' . $this->getAttributesString() . ', ' . $this->getTitle();
     }
 
     /**
      * @param string $lineStr
      * @return bool
      */
-    public static function isMatch($lineStr)
+    public static function isMatch(string $lineStr): bool
     {
-        return '#EXTINF:' === \strtoupper(\substr($lineStr, 0, 8));
+        return 0 === \stripos($lineStr, '#EXTINF:');
     }
 }

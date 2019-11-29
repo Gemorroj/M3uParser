@@ -9,7 +9,7 @@ class M3uParser
     /**
      * @return M3uEntry
      */
-    protected function createM3uEntry()
+    protected function createM3uEntry(): M3uEntry
     {
         return new M3uEntry();
     }
@@ -17,7 +17,7 @@ class M3uParser
     /**
      * @return M3uData
      */
-    protected function createM3uData()
+    protected function createM3uData(): M3uData
     {
         return new M3uData();
     }
@@ -29,7 +29,7 @@ class M3uParser
      * @throws Exception
      * @return M3uData entries
      */
-    public function parseFile($file)
+    public function parseFile(string $file): M3uData
     {
         $str = @\file_get_contents($file);
         if (false === $str) {
@@ -45,7 +45,7 @@ class M3uParser
      * @param string $str
      * @return M3uData entries
      */
-    public function parse($str)
+    public function parse(string $str): M3uData
     {
         $this->removeBom($str);
 
@@ -79,7 +79,7 @@ class M3uParser
      * @param string[] $linesStr
      * @return M3uEntry
      */
-    protected function parseLine(&$lineNumber, array $linesStr)
+    protected function parseLine(int &$lineNumber, array $linesStr): M3uEntry
     {
         $entry = $this->createM3uEntry();
 
@@ -112,9 +112,9 @@ class M3uParser
     /**
      * @param string $str
      */
-    protected function removeBom(&$str)
+    protected function removeBom(string &$str): void
     {
-        if ("\xEF\xBB\xBF" === \substr($str, 0, 3)) {
+        if (0 === \strpos($str, "\xEF\xBB\xBF")) {
             $str = \substr($str, 3);
         }
     }
@@ -123,16 +123,16 @@ class M3uParser
      * @param string $lineStr
      * @return bool
      */
-    protected function isExtM3u($lineStr)
+    protected function isExtM3u(string $lineStr): bool
     {
-        return '#EXTM3U' === \strtoupper(\substr($lineStr, 0, 7));
+        return 0 === \stripos($lineStr, '#EXTM3U');
     }
 
     /**
      * @param string $lineStr
      * @return bool
      */
-    protected function isComment($lineStr)
+    protected function isComment(string $lineStr): bool
     {
         $matched = false;
         foreach ($this->getTags() as $availableTag) {
@@ -142,6 +142,6 @@ class M3uParser
             }
         }
 
-        return '#' === \substr($lineStr, 0, 1) && !$matched && !static::isExtM3u($lineStr);
+        return !$matched && 0 === \strpos($lineStr, '#') && !$this->isExtM3u($lineStr);
     }
 }

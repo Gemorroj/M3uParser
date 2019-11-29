@@ -5,8 +5,9 @@ use M3uParser\M3uData;
 use M3uParser\M3uEntry;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTv;
+use PHPUnit\Framework\TestCase;
 
-class M3uDataTest extends \PHPUnit_Framework_TestCase
+class M3uDataTest extends TestCase
 {
     public function testEntryToString()
     {

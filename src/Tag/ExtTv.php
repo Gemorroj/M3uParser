@@ -25,7 +25,7 @@ class ExtTv implements ExtTagInterface
      * #EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png
      * @param string $lineStr
      */
-    public function __construct($lineStr = null)
+    public function __construct(?string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->makeData($lineStr);
@@ -36,7 +36,7 @@ class ExtTv implements ExtTagInterface
      * @param string $lineStr
      * @see https://github.com/Gemorroj/M3uParser/issues/5
      */
-    protected function makeData($lineStr)
+    protected function makeData(string $lineStr): void
     {
         /*
 EXTTV format:
@@ -59,7 +59,7 @@ example:
     /**
      * @return string[]
      */
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }
@@ -68,7 +68,7 @@ example:
      * @param string[] $tags
      * @return $this
      */
-    public function setTags(array $tags)
+    public function setTags(array $tags): self
     {
         $this->tags = $tags;
         return $this;
@@ -77,7 +77,7 @@ example:
     /**
      * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
@@ -86,7 +86,7 @@ example:
      * @param string $language
      * @return $this
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): self
     {
         $this->language = $language;
         return $this;
@@ -95,7 +95,7 @@ example:
     /**
      * @return string
      */
-    public function getXmlTvId()
+    public function getXmlTvId(): string
     {
         return $this->xmlTvId;
     }
@@ -104,7 +104,7 @@ example:
      * @param string $xmlTvId
      * @return $this
      */
-    public function setXmlTvId($xmlTvId)
+    public function setXmlTvId(string $xmlTvId): self
     {
         $this->xmlTvId = $xmlTvId;
         return $this;
@@ -113,7 +113,7 @@ example:
     /**
      * @return null|string
      */
-    public function getIconUrl()
+    public function getIconUrl(): ?string
     {
         return $this->iconUrl;
     }
@@ -122,7 +122,7 @@ example:
      * @param string $iconUrl
      * @return $this
      */
-    public function setIconUrl($iconUrl)
+    public function setIconUrl(?string $iconUrl): self
     {
         $this->iconUrl = $iconUrl;
         return $this;
@@ -131,7 +131,7 @@ example:
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '#EXTTV: ' . \implode(',', $this->getTags()) . ';' . $this->getLanguage() . ';' . $this->getXmlTvId() . ($this->getIconUrl() ? ';' . $this->getIconUrl() : '');
     }
@@ -140,8 +140,8 @@ example:
      * @param string $lineStr
      * @return bool
      */
-    public static function isMatch($lineStr)
+    public static function isMatch(string $lineStr): bool
     {
-        return '#EXTTV:' === \strtoupper(\substr($lineStr, 0, 7));
+        return 0 === \stripos($lineStr, '#EXTTV:');
     }
 }

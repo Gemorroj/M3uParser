@@ -14,7 +14,7 @@ trait TagAttributesTrait
      *
      * @param string $attrString
      */
-    public function initAttributes($attrString)
+    public function initAttributes(string $attrString): void
     {
         $this->parseQuotedAttributes($attrString);
         $this->parseNotQuotedAttributes($attrString);
@@ -23,7 +23,7 @@ trait TagAttributesTrait
     /**
      * @param string $attrString
      */
-    private function parseQuotedAttributes($attrString)
+    private function parseQuotedAttributes(string $attrString): void
     {
         \preg_match_all('/([a-zA-Z0-9\-]+)="([^"]*)"/', $attrString, $matches, \PREG_SET_ORDER);
 
@@ -36,7 +36,7 @@ trait TagAttributesTrait
     /**
      * @param string $attrString
      */
-    private function parseNotQuotedAttributes($attrString)
+    private function parseNotQuotedAttributes(string $attrString): void
     {
         \preg_match_all('/([a-zA-Z0-9\-]+)=([^ "]+)/', $attrString, $matches, \PREG_SET_ORDER);
 
@@ -48,7 +48,7 @@ trait TagAttributesTrait
     /**
      * @return array
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
@@ -57,16 +57,16 @@ trait TagAttributesTrait
      * @param string $name
      * @return string|null
      */
-    public function getAttribute($name)
+    public function getAttribute(string $name): ?string
     {
-        return isset($this->attributes[$name]) ? $this->attributes[$name] : null;
+        return $this->attributes[$name] ?? null;
     }
 
     /**
      * @param string $name
      * @return bool
      */
-    public function hasAttribute($name)
+    public function hasAttribute(string $name): bool
     {
         return isset($this->attributes[$name]);
     }
@@ -75,7 +75,7 @@ trait TagAttributesTrait
      * @param array $attributes
      * @return $this
      */
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes): self
     {
         $this->attributes = $attributes;
         return $this;
@@ -86,7 +86,7 @@ trait TagAttributesTrait
      * @param string $value
      * @return $this
      */
-    public function setAttribute($name, $value)
+    public function setAttribute(string $name, string $value): self
     {
         $this->attributes[$name] = $value;
         return $this;
@@ -95,7 +95,7 @@ trait TagAttributesTrait
     /**
      * @return string
      */
-    protected function getAttributesString()
+    protected function getAttributesString(): string
     {
         $out = '';
 

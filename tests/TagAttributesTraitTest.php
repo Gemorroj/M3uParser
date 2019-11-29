@@ -2,8 +2,9 @@
 namespace M3uParser\Tests;
 
 use M3uParser\TagAttributesTrait;
+use PHPUnit\Framework\TestCase;
 
-class TagAttributesTraitTest extends \PHPUnit_Framework_TestCase
+class TagAttributesTraitTest extends TestCase
 {
     use TagAttributesTrait;
 
@@ -13,7 +14,7 @@ class TagAttributesTraitTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->getAttributes();
 
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         self::assertEquals([
             'tvg-ID' => '',
             'tvg-name' => 'MEDI 1 SAT',

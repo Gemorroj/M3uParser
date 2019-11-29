@@ -22,7 +22,7 @@ class M3uEntry
     /**
      * @return ExtTagInterface[]
      */
-    public function getExtTags()
+    public function getExtTags(): array
     {
         return $this->extTags;
     }
@@ -31,7 +31,7 @@ class M3uEntry
      * @param ExtTagInterface $extTag
      * @return $this
      */
-    public function addExtTag(ExtTagInterface $extTag)
+    public function addExtTag(ExtTagInterface $extTag): self
     {
         $this->extTags[] = $extTag;
         return $this;
@@ -42,7 +42,7 @@ class M3uEntry
      *
      * @return $this
      */
-    public function clearExtTags()
+    public function clearExtTags(): self
     {
         $this->extTags = [];
         return $this;
@@ -51,7 +51,7 @@ class M3uEntry
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -60,7 +60,7 @@ class M3uEntry
      * @param string $path
      * @return $this
      */
-    public function setPath($path)
+    public function setPath(string $path): self
     {
         $this->path = $path;
         return $this;
@@ -69,14 +69,14 @@ class M3uEntry
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $out = '';
         foreach ($this->getExtTags() as $extTag) {
-            $out .= (string)$extTag . $this->lineDelimiter;
+            $out .= $extTag . $this->lineDelimiter;
         }
 
-        $out .= (string)$this->getPath();
+        $out .= $this->getPath();
 
         return \rtrim($out);
     }

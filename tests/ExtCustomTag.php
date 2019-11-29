@@ -15,7 +15,7 @@ class ExtCustomTag implements ExtTagInterface
      * #EXTCUSTOMTAG:data
      * @param string $lineStr
      */
-    public function __construct($lineStr = null)
+    public function __construct(?string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->makeData($lineStr);
@@ -60,7 +60,7 @@ example:
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '#EXTCUSTOMTAG: ' . $this->getData();
     }
@@ -69,8 +69,8 @@ example:
      * @param string $lineStr
      * @return bool
      */
-    public static function isMatch($lineStr)
+    public static function isMatch(string $lineStr): bool
     {
-        return '#EXTCUSTOMTAG:' === \strtoupper(\substr($lineStr, 0, \strlen('#EXTCUSTOMTAG:')));
+        return 0 === \stripos($lineStr, '#EXTCUSTOMTAG:');
     }
 }

@@ -4,19 +4,9 @@ namespace M3uParser\Tag;
 
 interface ExtTagInterface
 {
-    /**
-     * @param string|null $lineStr
-     */
-    public function __construct($lineStr = null);
+    public function __construct(?string $lineStr = null);
 
-    /**
-     * @return string
-     */
-    public function __toString();
+    public function __toString(): string;
 
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
-    public static function isMatch($lineStr);
+    public static function isMatch(string $lineStr): bool;
 }

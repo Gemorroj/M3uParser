@@ -8,8 +8,9 @@ use M3uParser\M3uParser;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtTv;
+use PHPUnit\Framework\TestCase;
 
-class M3uParserTest extends \PHPUnit_Framework_TestCase
+class M3uParserTest extends TestCase
 {
     public function testParseFileFail()
     {

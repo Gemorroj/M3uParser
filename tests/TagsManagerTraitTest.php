@@ -4,8 +4,9 @@ namespace M3uParser\Tests;
 use M3uParser\Exception;
 use M3uParser\Tag\ExtInf;
 use M3uParser\TagsManagerTrait;
+use PHPUnit\Framework\TestCase;
 
-class TagsManagerTraitTest extends \PHPUnit_Framework_TestCase
+class TagsManagerTraitTest extends TestCase
 {
     use TagsManagerTrait;
 
@@ -15,7 +16,7 @@ class TagsManagerTraitTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->getTags();
 
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         self::assertEquals([ExtInf::class], $result);
     }
 
@@ -27,7 +28,7 @@ class TagsManagerTraitTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->getTags();
 
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         self::assertEquals([], $result);
     }
 

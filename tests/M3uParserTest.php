@@ -27,7 +27,7 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
         $data = $m3uParser->parseFile(__DIR__ . '/fixtures/extinf.m3u');
 
         self::assertInstanceOf(M3uParserData::class, $data);
-        self::assertCount(3, $data);
+        self::assertCount(4, $data);
 
         self::assertContainsOnlyInstancesOf(M3uParserEntry::class, $data);
 
@@ -93,6 +93,29 @@ class M3uParserTest extends \PHPUnit_Framework_TestCase
             'group-title' => 'Эфирные каналы',
             'tvg-name' => 'Первый_HD',
             'deinterlace' => '4',
+        ], $extInf->getAttributes());
+
+        // Comma in attribute value or title
+        /** @var M3uParserEntry $fourthEntry */
+        $fourthEntry = $data[3];
+
+        self::assertEquals('http://117.210.233.1:3000/tcp/2', $fourthEntry->getPath());
+
+        /** @var ExtTagInterface[] $extTags */
+        $extTags = $fourthEntry->getExtTags();
+        self::assertCount(1, $extTags);
+
+        /** @var ExtInf $extInf */
+        $extInf = $extTags[0];
+        self::assertInstanceOf(ExtInf::class, $extInf);
+
+        self::assertEquals('Test with, comma 1/2', $extInf->getTitle());
+        self::assertEquals(-1, $extInf->getDuration());
+
+        self::assertEquals([
+            'tvg-logo' => 'https://pngimage.net/wp-content/uploads/2018/05/iptv-png.png',
+            'group-title' => '===test group title 1/2',
+            'tvg-name' => 'Test with, comma 1/2'
         ], $extInf->getAttributes());
     }
 

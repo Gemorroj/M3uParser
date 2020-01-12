@@ -1,19 +1,26 @@
 <?php
+
 namespace M3uParser\Tests\Tag;
 
+use M3uParser\M3uData;
+use M3uParser\M3uEntry;
 use M3uParser\M3uEntry as M3uParserEntry;
 use M3uParser\M3uParser;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class ExtInfTest extends TestCase
 {
-    public function testParseFileExtInf(): void
+    public function testParseExtInf(): void
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
-        $data = $m3uParser->parseFile(__DIR__ . '/../fixtures/extinf.m3u');
+        $data = $m3uParser->parseFile(__DIR__.'/../fixtures/extinf.m3u');
 
         self::assertCount(4, $data);
 
@@ -38,7 +45,6 @@ class ExtInfTest extends TestCase
 
         self::assertEquals([], $extInf->getAttributes());
 
-
         // cyrillic
         /** @var M3uParserEntry $secondEntry */
         $secondEntry = $data[1];
@@ -57,7 +63,6 @@ class ExtInfTest extends TestCase
         self::assertEquals(-1, $extInf->getDuration());
 
         self::assertEquals([], $extInf->getAttributes());
-
 
         // attributes
         /** @var M3uParserEntry $thirdEntry */
@@ -103,7 +108,28 @@ class ExtInfTest extends TestCase
         self::assertEquals([
             'tvg-logo' => 'https://pngimage.net/wp-content/uploads/2018/05/iptv-png.png',
             'group-title' => '===test group title 1/2',
-            'tvg-name' => 'Test with, comma 1/2'
+            'tvg-name' => 'Test with, comma 1/2',
         ], $extInf->getAttributes());
+    }
+
+    public function testGenerateExtInf(): void
+    {
+        $expectedString = '#EXTM3U'."\n";
+        $expectedString .= '#EXTINF: 123 test-attr="test-attrname", extinf-title'."\n";
+        $expectedString .= 'test-path';
+
+        $entry = new M3uEntry();
+        $entry->setPath('test-path');
+        $entry->addExtTag(
+            (new ExtInf())
+                ->setDuration(123)
+                ->setTitle('extinf-title')
+                ->setAttribute('test-attr', 'test-attrname')
+        );
+
+        $data = new M3uData();
+        $data->append($entry);
+
+        self::assertEquals($expectedString, (string) $data);
     }
 }

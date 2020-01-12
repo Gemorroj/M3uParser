@@ -1,9 +1,14 @@
 <?php
+
 namespace M3uParser\Tests;
 
 use M3uParser\TagAttributesTrait;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class TagAttributesTraitTest extends TestCase
 {
     use TagAttributesTrait;

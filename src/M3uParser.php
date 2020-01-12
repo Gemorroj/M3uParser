@@ -7,27 +7,7 @@ class M3uParser
     use TagsManagerTrait;
 
     /**
-     * @return M3uEntry
-     */
-    protected function createM3uEntry(): M3uEntry
-    {
-        return new M3uEntry();
-    }
-
-    /**
-     * @return M3uData
-     */
-    protected function createM3uData(): M3uData
-    {
-        return new M3uData();
-    }
-
-    /**
-     * Parse m3u file
-     *
-     * @param string $file
-     * @throws Exception
-     * @return M3uData entries
+     * Parse m3u file.
      */
     public function parseFile(string $file): M3uData
     {
@@ -40,10 +20,7 @@ class M3uParser
     }
 
     /**
-     * Parse m3u string
-     *
-     * @param string $str
-     * @return M3uData entries
+     * Parse m3u string.
      */
     public function parse(string $str): M3uData
     {
@@ -63,6 +40,7 @@ class M3uParser
                 if ($tmp) {
                     $data->initAttributes($tmp);
                 }
+
                 continue;
             }
 
@@ -72,12 +50,20 @@ class M3uParser
         return $data;
     }
 
+    protected function createM3uEntry(): M3uEntry
+    {
+        return new M3uEntry();
+    }
+
+    protected function createM3uData(): M3uData
+    {
+        return new M3uData();
+    }
+
     /**
-     * Parse one line
+     * Parse one line.
      *
-     * @param int $lineNumber
      * @param string[] $linesStr
-     * @return M3uEntry
      */
     protected function parseLine(int &$lineNumber, array $linesStr): M3uEntry
     {
@@ -96,12 +82,14 @@ class M3uParser
                 if ($availableTag::isMatch($nextLineStr)) {
                     $matched = true;
                     $entry->addExtTag(new $availableTag($nextLineStr));
+
                     break;
                 }
             }
 
             if (!$matched) {
                 $entry->setPath($nextLineStr);
+
                 break;
             }
         }
@@ -109,9 +97,6 @@ class M3uParser
         return $entry;
     }
 
-    /**
-     * @param string $str
-     */
     protected function removeBom(string &$str): void
     {
         if (0 === \strpos($str, "\xEF\xBB\xBF")) {
@@ -119,25 +104,18 @@ class M3uParser
         }
     }
 
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
     protected function isExtM3u(string $lineStr): bool
     {
         return 0 === \stripos($lineStr, '#EXTM3U');
     }
 
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
     protected function isComment(string $lineStr): bool
     {
         $matched = false;
         foreach ($this->getTags() as $availableTag) {
             if ($availableTag::isMatch($lineStr)) {
                 $matched = true;
+
                 break;
             }
         }

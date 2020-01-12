@@ -12,7 +12,8 @@ class ExtCustomTag implements ExtTagInterface
     private $data;
 
     /**
-     * #EXTCUSTOMTAG:data
+     * #EXTCUSTOMTAG:data.
+     *
      * @param string $lineStr
      */
     public function __construct(?string $lineStr = null)
@@ -22,9 +23,31 @@ class ExtCustomTag implements ExtTagInterface
         }
     }
 
+    public function __toString(): string
+    {
+        return '#EXTCUSTOMTAG: '.$this->getData();
+    }
+
+    public function getData(): string
+    {
+        return $this->data;
+    }
+
     /**
-     * @param string $lineStr
+     * @return $this
      */
+    public function setData(string $data): self
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    public static function isMatch(string $lineStr): bool
+    {
+        return 0 === \stripos($lineStr, '#EXTCUSTOMTAG:');
+    }
+
     protected function makeData(string $lineStr): void
     {
         /*
@@ -37,40 +60,5 @@ example:
         $data = \substr($lineStr, \strlen('#EXTCUSTOMTAG:'));
 
         $this->setData(\trim($data));
-    }
-
-    /**
-     * @return string
-     */
-    public function getData(): string
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param string $data
-     * @return $this
-     */
-    public function setData(string $data): self
-    {
-        $this->data = $data;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return '#EXTCUSTOMTAG: ' . $this->getData();
-    }
-
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
-    public static function isMatch(string $lineStr): bool
-    {
-        return 0 === \stripos($lineStr, '#EXTCUSTOMTAG:');
     }
 }

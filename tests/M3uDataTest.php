@@ -1,21 +1,27 @@
 <?php
+
 namespace M3uParser\Tests;
 
 use M3uParser\M3uData;
 use M3uParser\M3uEntry;
 use M3uParser\Tag\ExtInf;
+use M3uParser\Tag\ExtLogo;
 use M3uParser\Tag\ExtTv;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class M3uDataTest extends TestCase
 {
-    public function testEntryToString(): void
+    public function testComplexDefaultEntryToString(): void
     {
-        $expectedString = '#EXTM3U test-name="test-value"' . "\n";
-        $expectedString .= '#EXTINF: 123 test-attr="test-attrname", extinf-title' . "\n";
-        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png' . "\n";
+        $expectedString = '#EXTM3U test-name="test-value"'."\n";
+        $expectedString .= '#EXTINF: 123 test-attr="test-attrname", extinf-title'."\n";
+        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
+        $expectedString .= '#EXTLOGO: https://example.org/logo.png'."\n";
         $expectedString .= 'test-path';
-
 
         $entry = new M3uEntry();
         $entry->setPath('test-path');
@@ -32,26 +38,31 @@ class M3uDataTest extends TestCase
                 ->setXmlTvId('xml-tv-id')
                 ->setTags(['hd', 'sd'])
         );
+        $entry->addExtTag(
+            (new ExtLogo())
+                ->setLogo('https://example.org/logo.png')
+        );
 
         $data = new M3uData();
         $data->setAttribute('test-name', 'test-value');
         $data->append($entry);
 
-        self::assertEquals($expectedString, (string)$data);
+        self::assertEquals($expectedString, (string) $data);
     }
-
 
     /**
      * @see https://github.com/Gemorroj/M3uParser/pull/14
      */
-    public function testEntriesToString(): void
+    public function testComplexDefaultEntriesToString(): void
     {
-        $expectedString = '#EXTM3U test-name="test-value"' . "\n";
-        $expectedString .= '#EXTINF: 123 test-attr="test-attrname1", extinf-title1' . "\n";
-        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png' . "\n";
-        $expectedString .= 'test-path1' . "\n";
-        $expectedString .= '#EXTINF: 123 test-attr="test-attrname2", extinf-title2' . "\n";
-        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png' . "\n";
+        $expectedString = '#EXTM3U test-name="test-value"'."\n";
+        $expectedString .= '#EXTINF: 123 test-attr="test-attrname1", extinf-title1'."\n";
+        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
+        $expectedString .= '#EXTLOGO: https://example.org/logo.png'."\n";
+        $expectedString .= 'test-path1'."\n";
+        $expectedString .= '#EXTINF: 123 test-attr="test-attrname2", extinf-title2'."\n";
+        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
+        $expectedString .= '#EXTLOGO: https://example.org/logo.png'."\n";
         $expectedString .= 'test-path2';
 
         $entry1 = new M3uEntry();
@@ -69,6 +80,10 @@ class M3uDataTest extends TestCase
                 ->setXmlTvId('xml-tv-id')
                 ->setTags(['hd', 'sd'])
         );
+        $entry1->addExtTag(
+            (new ExtLogo())
+                ->setLogo('https://example.org/logo.png')
+        );
 
         $entry2 = new M3uEntry();
         $entry2->setPath('test-path2');
@@ -85,10 +100,14 @@ class M3uDataTest extends TestCase
                 ->setXmlTvId('xml-tv-id')
                 ->setTags(['hd', 'sd'])
         );
+        $entry2->addExtTag(
+            (new ExtLogo())
+                ->setLogo('https://example.org/logo.png')
+        );
 
         $data = new M3uData([$entry1, $entry2]);
         $data->setAttribute('test-name', 'test-value');
 
-        self::assertEquals($expectedString, (string)$data);
+        self::assertEquals($expectedString, (string) $data);
     }
 }

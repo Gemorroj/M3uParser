@@ -15,10 +15,10 @@ trait TagsManagerTrait
     private $tags = [];
 
     /**
-     * Add tag
+     * Add tag.
      *
      * @param string $tag class name must be implement ExtTagInterface interface
-     * @throws Exception
+     *
      * @return $this
      */
     public function addTag(string $tag): self
@@ -28,13 +28,13 @@ trait TagsManagerTrait
         }
 
         $this->tags[] = $tag;
+
         return $this;
     }
 
     /**
-     * Add default tags (EXTINF, EXTTV, EXTLOGO)
+     * Add default tags (EXTINF, EXTTV, EXTLOGO).
      *
-     * @throws Exception
      * @return $this
      */
     public function addDefaultTags(): self
@@ -42,22 +42,24 @@ trait TagsManagerTrait
         $this->addTag(ExtInf::class);
         $this->addTag(ExtTv::class);
         $this->addTag(ExtLogo::class);
+
         return $this;
     }
 
     /**
-     * Remove all previously defined tags
+     * Remove all previously defined tags.
      *
      * @return $this
      */
     public function clearTags(): self
     {
         $this->tags = [];
+
         return $this;
     }
 
     /**
-     * Get all active tags
+     * Get all active tags.
      *
      * @return string[]
      */

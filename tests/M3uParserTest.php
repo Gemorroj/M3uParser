@@ -1,4 +1,5 @@
 <?php
+
 namespace M3uParser\Tests;
 
 use M3uParser\Exception as M3uParserException;
@@ -7,6 +8,10 @@ use M3uParser\M3uParser;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class M3uParserTest extends TestCase
 {
     public function testParseFileFail(): void
@@ -22,7 +27,7 @@ class M3uParserTest extends TestCase
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
-        $data = $m3uParser->parseFile(__DIR__ . '/fixtures/extm3u.m3u');
+        $data = $m3uParser->parseFile(__DIR__.'/fixtures/extm3u.m3u');
 
         self::assertEquals([
             'url-tvg' => 'http://www.teleguide.info/download/new3/jtv.zip',
@@ -33,12 +38,11 @@ class M3uParserTest extends TestCase
         self::assertEquals('http://www.teleguide.info/download/new3/jtv.zip', $data->getAttribute('url-tvg'));
     }
 
-
     public function testParseFileComment(): void
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
-        $data = $m3uParser->parseFile(__DIR__ . '/fixtures/comment.m3u');
+        $data = $m3uParser->parseFile(__DIR__.'/fixtures/comment.m3u');
 
         /** @var M3uParserEntry $entry */
         $entry = $data[0];
@@ -51,7 +55,7 @@ class M3uParserTest extends TestCase
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
-        $data = $m3uParser->parseFile(__DIR__ . '/fixtures/notags.m3u');
+        $data = $m3uParser->parseFile(__DIR__.'/fixtures/notags.m3u');
 
         /** @var M3uParserEntry $entry */
         $entry = $data[0];
@@ -64,7 +68,7 @@ class M3uParserTest extends TestCase
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
-        $data = $m3uParser->parseFile(__DIR__ . '/fixtures/combined.m3u');
+        $data = $m3uParser->parseFile(__DIR__.'/fixtures/combined.m3u');
 
         /** @var M3uParserEntry $entry */
         $entry = $data[0];
@@ -82,7 +86,7 @@ class M3uParserTest extends TestCase
     {
         $m3uParser = new M3uParser();
         $m3uParser->addTag(ExtCustomTag::class);
-        $data = $m3uParser->parseFile(__DIR__ . '/fixtures/customtag.m3u');
+        $data = $m3uParser->parseFile(__DIR__.'/fixtures/customtag.m3u');
 
         /** @var M3uParserEntry $entry */
         $entry = $data[0];

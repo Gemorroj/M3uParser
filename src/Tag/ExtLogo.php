@@ -13,8 +13,7 @@ class ExtLogo implements ExtTagInterface
     private $logo;
 
     /**
-     * #EXTLOGO:http://cdn1.siol.tv/logo/93x78/slo2.png
-     * @param string $lineStr
+     * #EXTLOGO:http://cdn1.siol.tv/logo/93x78/slo2.png.
      */
     public function __construct(?string $lineStr = null)
     {
@@ -23,9 +22,31 @@ class ExtLogo implements ExtTagInterface
         }
     }
 
+    public function __toString(): string
+    {
+        return '#EXTLOGO: '.$this->getLogo();
+    }
+
+    public function getLogo(): string
+    {
+        return $this->logo;
+    }
+
     /**
-     * @param string $lineStr
+     * @return $this
      */
+    public function setLogo(string $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    public static function isMatch(string $lineStr): bool
+    {
+        return 0 === \stripos($lineStr, '#EXTLOGO:');
+    }
+
     protected function makeData(string $lineStr): void
     {
         /*
@@ -39,40 +60,5 @@ example:
         $logo = \trim($tmp);
 
         $this->setLogo($logo);
-    }
-
-    /**
-     * @return string
-     */
-    public function getLogo(): string
-    {
-        return $this->logo;
-    }
-
-    /**
-     * @param string $logo
-     * @return $this
-     */
-    public function setLogo(string $logo): self
-    {
-        $this->logo = $logo;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return '#EXTLOGO: ' . $this->getLogo();
-    }
-
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
-    public static function isMatch(string $lineStr): bool
-    {
-        return 0 === \stripos($lineStr, '#EXTLOGO:');
     }
 }

@@ -3,6 +3,7 @@
 namespace M3uParser;
 
 use M3uParser\Tag\ExtInf;
+use M3uParser\Tag\ExtLogo;
 use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtTv;
 
@@ -31,7 +32,7 @@ trait TagsManagerTrait
     }
 
     /**
-     * Add default tags (EXTINF and EXTTV)
+     * Add default tags (EXTINF, EXTTV, EXTLOGO)
      *
      * @throws Exception
      * @return $this
@@ -40,6 +41,7 @@ trait TagsManagerTrait
     {
         $this->addTag(ExtInf::class);
         $this->addTag(ExtTv::class);
+        $this->addTag(ExtLogo::class);
         return $this;
     }
 

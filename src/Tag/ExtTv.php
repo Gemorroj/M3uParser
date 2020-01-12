@@ -2,6 +2,9 @@
 
 namespace M3uParser\Tag;
 
+/**
+ * @see https://github.com/Gemorroj/M3uParser/issues/5
+ */
 class ExtTv implements ExtTagInterface
 {
     /**
@@ -34,7 +37,6 @@ class ExtTv implements ExtTagInterface
 
     /**
      * @param string $lineStr
-     * @see https://github.com/Gemorroj/M3uParser/issues/5
      */
     protected function makeData(string $lineStr): void
     {
@@ -45,7 +47,7 @@ example:
 #EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png
          */
 
-        $tmp = \substr($lineStr, 7);
+        $tmp = \substr($lineStr, \strlen('#EXTTV:'));
         $split = \explode(';', $tmp, 4);
 
         $this->setTags(\array_map('trim', \explode(',', $split[0])));

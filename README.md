@@ -98,6 +98,10 @@ foreach ($data as $entry) {
                     echo $tag . "\n";
                 }
                 break;
+
+            case $extTag instanceof \M3uParser\Tag\ExtLogo: // If EXTLOGO tag
+                echo $extTag->getLogo() . "\n";
+                break;
         }
     }
 }
@@ -111,6 +115,7 @@ use M3uParser\M3uData;
 use M3uParser\M3uEntry;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTv;
+use M3uParser\Tag\ExtLogo;
 
 $entry = new M3uEntry();
 $entry->setPath('test-path');
@@ -127,6 +132,10 @@ $entry->addExtTag(
         ->setXmlTvId('xml-tv-id')
         ->setTags(['hd', 'sd'])
 );
+$entry->addExtTag(
+    (new ExtLogo())
+        ->setLogo('https://example.org/logo.png')
+);
 
 $data = new M3uData();
 $data->setAttribute('test-name', 'test-value');
@@ -137,6 +146,7 @@ echo $data;
 #EXTM3U test-name="test-value"
 #EXTINF: 123 test-attr="test-attrname", extinf-title
 #EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png
+#EXTLOGO: https://example.org/logo.png
 test-path
 */
 ```

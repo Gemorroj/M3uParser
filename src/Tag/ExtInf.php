@@ -41,7 +41,7 @@ EXTINF format:
 example:
 #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD
          */
-        $dataLineStr = \substr($lineStr, 8);
+        $dataLineStr = \substr($lineStr, \strlen('#EXTINF:'));
 
         // Parse duration and title with regex
         \preg_match('/^(-?\d+)\s*(?:(?:[^=]+=["\'][^"\']*["\'])|(?:[^=]+=[^ ]*))*,(.*)$/', $dataLineStr, $matches);

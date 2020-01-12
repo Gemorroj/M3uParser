@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class M3uDataTest extends TestCase
 {
-    public function testEntryToString()
+    public function testEntryToString(): void
     {
         $expectedString = '#EXTM3U test-name="test-value"' . "\n";
         $expectedString .= '#EXTINF: 123 test-attr="test-attrname", extinf-title' . "\n";
@@ -44,7 +44,7 @@ class M3uDataTest extends TestCase
     /**
      * @see https://github.com/Gemorroj/M3uParser/pull/14
      */
-    public function testEntriesToString()
+    public function testEntriesToString(): void
     {
         $expectedString = '#EXTM3U test-name="test-value"' . "\n";
         $expectedString .= '#EXTINF: 123 test-attr="test-attrname1", extinf-title1' . "\n";

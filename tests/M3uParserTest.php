@@ -2,17 +2,14 @@
 namespace M3uParser\Tests;
 
 use M3uParser\Exception as M3uParserException;
-use M3uParser\M3uData as M3uParserData;
 use M3uParser\M3uEntry as M3uParserEntry;
 use M3uParser\M3uParser;
-use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTagInterface;
-use M3uParser\Tag\ExtTv;
 use PHPUnit\Framework\TestCase;
 
 class M3uParserTest extends TestCase
 {
-    public function testParseFileFail()
+    public function testParseFileFail(): void
     {
         $this->expectException(M3uParserException::class);
 
@@ -21,107 +18,7 @@ class M3uParserTest extends TestCase
         $m3uParser->parseFile('fake_file');
     }
 
-    public function testParseFileExtInf()
-    {
-        $m3uParser = new M3uParser();
-        $m3uParser->addDefaultTags();
-        $data = $m3uParser->parseFile(__DIR__ . '/fixtures/extinf.m3u');
-
-        self::assertInstanceOf(M3uParserData::class, $data);
-        self::assertCount(4, $data);
-
-        self::assertContainsOnlyInstancesOf(M3uParserEntry::class, $data);
-
-        // basic
-        /** @var M3uParserEntry $firstEntry */
-        $firstEntry = $data[0];
-
-        self::assertEquals('Alternative\everclear_SMFTA.mp3', $firstEntry->getPath());
-
-        /** @var ExtTagInterface[] $extTags */
-        $extTags = $firstEntry->getExtTags();
-        self::assertCount(1, $extTags);
-
-        /** @var ExtInf $extInf */
-        $extInf = $extTags[0];
-        self::assertInstanceOf(ExtInf::class, $extInf);
-
-        self::assertEquals('Everclear - So Much For The Afterglow', $extInf->getTitle());
-        self::assertEquals(233, $extInf->getDuration());
-
-        self::assertEquals([], $extInf->getAttributes());
-
-
-        // cyrillic
-        /** @var M3uParserEntry $secondEntry */
-        $secondEntry = $data[1];
-
-        self::assertEquals('http://176.51.55.8:1234/udp/233.7.70.200:5000', $secondEntry->getPath());
-
-        /** @var ExtTagInterface[] $extTags */
-        $extTags = $secondEntry->getExtTags();
-        self::assertCount(1, $extTags);
-
-        /** @var ExtInf $extInf */
-        $extInf = $extTags[0];
-        self::assertInstanceOf(ExtInf::class, $extInf);
-
-        self::assertEquals('Первый канал HD', $extInf->getTitle());
-        self::assertEquals(-1, $extInf->getDuration());
-
-        self::assertEquals([], $extInf->getAttributes());
-
-
-        // attributes
-        /** @var M3uParserEntry $thirdEntry */
-        $thirdEntry = $data[2];
-
-        self::assertEquals('http://109.225.233.1:30000/udp/239.255.10.160:5500', $thirdEntry->getPath());
-
-        /** @var ExtTagInterface[] $extTags */
-        $extTags = $thirdEntry->getExtTags();
-        self::assertCount(1, $extTags);
-
-        /** @var ExtInf $extInf */
-        $extInf = $extTags[0];
-        self::assertInstanceOf(ExtInf::class, $extInf);
-
-        self::assertEquals('Первый канал HD', $extInf->getTitle());
-        self::assertEquals(-1, $extInf->getDuration());
-
-        self::assertEquals([
-            'tvg-logo' => 'Первый канал',
-            'group-title' => 'Эфирные каналы',
-            'tvg-name' => 'Первый_HD',
-            'deinterlace' => '4',
-        ], $extInf->getAttributes());
-
-        // Comma in attribute value or title
-        /** @var M3uParserEntry $fourthEntry */
-        $fourthEntry = $data[3];
-
-        self::assertEquals('http://117.210.233.1:3000/tcp/2', $fourthEntry->getPath());
-
-        /** @var ExtTagInterface[] $extTags */
-        $extTags = $fourthEntry->getExtTags();
-        self::assertCount(1, $extTags);
-
-        /** @var ExtInf $extInf */
-        $extInf = $extTags[0];
-        self::assertInstanceOf(ExtInf::class, $extInf);
-
-        self::assertEquals('Test with, comma 1/2', $extInf->getTitle());
-        self::assertEquals(-1, $extInf->getDuration());
-
-        self::assertEquals([
-            'tvg-logo' => 'https://pngimage.net/wp-content/uploads/2018/05/iptv-png.png',
-            'group-title' => '===test group title 1/2',
-            'tvg-name' => 'Test with, comma 1/2'
-        ], $extInf->getAttributes());
-    }
-
-
-    public function testParseFileExtM3u()
+    public function testParseFileExtM3u(): void
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
@@ -137,7 +34,7 @@ class M3uParserTest extends TestCase
     }
 
 
-    public function testParseFileComment()
+    public function testParseFileComment(): void
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
@@ -150,7 +47,7 @@ class M3uParserTest extends TestCase
         self::assertEmpty($entry->getExtTags());
     }
 
-    public function testParseFileNoTags()
+    public function testParseFileNoTags(): void
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
@@ -163,33 +60,7 @@ class M3uParserTest extends TestCase
         self::assertEmpty($entry->getExtTags());
     }
 
-
-    public function testParseFileExtTv()
-    {
-        $m3uParser = new M3uParser();
-        $m3uParser->addDefaultTags();
-        $data = $m3uParser->parseFile(__DIR__ . '/fixtures/exttv.m3u');
-
-        /** @var M3uParserEntry $entry */
-        $entry = $data[0];
-
-        self::assertEquals('rtp://@232.2.201.53:5003', $entry->getPath());
-
-        /** @var ExtTagInterface[] $extTags */
-        $extTags = $entry->getExtTags();
-        self::assertCount(1, $extTags);
-
-        /** @var ExtTv $extTv */
-        $extTv = $extTags[0];
-        self::assertInstanceOf(ExtTv::class, $extTv);
-
-        self::assertEquals(['Slovenski', 'HD'], $extTv->getTags());
-        self::assertEquals('slv', $extTv->getLanguage());
-        self::assertEquals('SLO1HD', $extTv->getXmlTvId());
-        self::assertNull($extTv->getIconUrl());
-    }
-
-    public function testParseFileCombinedExtTags()
+    public function testParseFileCombinedExtTags(): void
     {
         $m3uParser = new M3uParser();
         $m3uParser->addDefaultTags();
@@ -207,7 +78,7 @@ class M3uParserTest extends TestCase
         self::assertContainsOnlyInstancesOf(ExtTagInterface::class, $extTags);
     }
 
-    public function testParseFileExtCustomTag()
+    public function testParseFileExtCustomTag(): void
     {
         $m3uParser = new M3uParser();
         $m3uParser->addTag(ExtCustomTag::class);

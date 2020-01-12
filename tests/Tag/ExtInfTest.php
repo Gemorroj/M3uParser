@@ -1,0 +1,109 @@
+<?php
+namespace M3uParser\Tests\Tag;
+
+use M3uParser\M3uEntry as M3uParserEntry;
+use M3uParser\M3uParser;
+use M3uParser\Tag\ExtInf;
+use M3uParser\Tag\ExtTagInterface;
+use PHPUnit\Framework\TestCase;
+
+class ExtInfTest extends TestCase
+{
+    public function testParseFileExtInf(): void
+    {
+        $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
+        $data = $m3uParser->parseFile(__DIR__ . '/../fixtures/extinf.m3u');
+
+        self::assertCount(4, $data);
+
+        self::assertContainsOnlyInstancesOf(M3uParserEntry::class, $data);
+
+        // basic
+        /** @var M3uParserEntry $firstEntry */
+        $firstEntry = $data[0];
+
+        self::assertEquals('Alternative\everclear_SMFTA.mp3', $firstEntry->getPath());
+
+        /** @var ExtTagInterface[] $extTags */
+        $extTags = $firstEntry->getExtTags();
+        self::assertCount(1, $extTags);
+
+        /** @var ExtInf $extInf */
+        $extInf = $extTags[0];
+        self::assertInstanceOf(ExtInf::class, $extInf);
+
+        self::assertEquals('Everclear - So Much For The Afterglow', $extInf->getTitle());
+        self::assertEquals(233, $extInf->getDuration());
+
+        self::assertEquals([], $extInf->getAttributes());
+
+
+        // cyrillic
+        /** @var M3uParserEntry $secondEntry */
+        $secondEntry = $data[1];
+
+        self::assertEquals('http://176.51.55.8:1234/udp/233.7.70.200:5000', $secondEntry->getPath());
+
+        /** @var ExtTagInterface[] $extTags */
+        $extTags = $secondEntry->getExtTags();
+        self::assertCount(1, $extTags);
+
+        /** @var ExtInf $extInf */
+        $extInf = $extTags[0];
+        self::assertInstanceOf(ExtInf::class, $extInf);
+
+        self::assertEquals('Первый канал HD', $extInf->getTitle());
+        self::assertEquals(-1, $extInf->getDuration());
+
+        self::assertEquals([], $extInf->getAttributes());
+
+
+        // attributes
+        /** @var M3uParserEntry $thirdEntry */
+        $thirdEntry = $data[2];
+
+        self::assertEquals('http://109.225.233.1:30000/udp/239.255.10.160:5500', $thirdEntry->getPath());
+
+        /** @var ExtTagInterface[] $extTags */
+        $extTags = $thirdEntry->getExtTags();
+        self::assertCount(1, $extTags);
+
+        /** @var ExtInf $extInf */
+        $extInf = $extTags[0];
+        self::assertInstanceOf(ExtInf::class, $extInf);
+
+        self::assertEquals('Первый канал HD', $extInf->getTitle());
+        self::assertEquals(-1, $extInf->getDuration());
+
+        self::assertEquals([
+            'tvg-logo' => 'Первый канал',
+            'group-title' => 'Эфирные каналы',
+            'tvg-name' => 'Первый_HD',
+            'deinterlace' => '4',
+        ], $extInf->getAttributes());
+
+        // Comma in attribute value or title
+        /** @var M3uParserEntry $fourthEntry */
+        $fourthEntry = $data[3];
+
+        self::assertEquals('http://117.210.233.1:3000/tcp/2', $fourthEntry->getPath());
+
+        /** @var ExtTagInterface[] $extTags */
+        $extTags = $fourthEntry->getExtTags();
+        self::assertCount(1, $extTags);
+
+        /** @var ExtInf $extInf */
+        $extInf = $extTags[0];
+        self::assertInstanceOf(ExtInf::class, $extInf);
+
+        self::assertEquals('Test with, comma 1/2', $extInf->getTitle());
+        self::assertEquals(-1, $extInf->getDuration());
+
+        self::assertEquals([
+            'tvg-logo' => 'https://pngimage.net/wp-content/uploads/2018/05/iptv-png.png',
+            'group-title' => '===test group title 1/2',
+            'tvg-name' => 'Test with, comma 1/2'
+        ], $extInf->getAttributes());
+    }
+}

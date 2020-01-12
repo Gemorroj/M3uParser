@@ -10,7 +10,7 @@ class TagsManagerTraitTest extends TestCase
 {
     use TagsManagerTrait;
 
-    public function testTags()
+    public function testTags(): void
     {
         $this->addTag(ExtInf::class);
 
@@ -21,7 +21,7 @@ class TagsManagerTraitTest extends TestCase
     }
 
 
-    public function testClearTags()
+    public function testClearTags(): void
     {
         $this->addTag(ExtInf::class);
         $this->clearTags();
@@ -33,7 +33,7 @@ class TagsManagerTraitTest extends TestCase
     }
 
 
-    public function testErrorTags()
+    public function testErrorTags(): void
     {
         $this->expectException(Exception::class);
         $this->addTag(self::class);

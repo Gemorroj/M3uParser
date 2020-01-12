@@ -8,7 +8,7 @@ class TagAttributesTraitTest extends TestCase
 {
     use TagAttributesTrait;
 
-    public function testAttributes()
+    public function testAttributes(): void
     {
         $this->initAttributes('tvg-ID="" tvg-name="MEDI 1 SAT" group-title="ARABIC" tvg-name-custom=Первый_HD');
 

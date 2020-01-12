@@ -1,18 +1,19 @@
 <?php
 
-namespace M3uParser\Tests;
+namespace M3uParser\Tag;
 
-use M3uParser\Tag\ExtTagInterface;
-
-class ExtCustomTag implements ExtTagInterface
+/**
+ * @see https://github.com/Gemorroj/M3uParser/issues/20
+ */
+class ExtLogo implements ExtTagInterface
 {
     /**
      * @var string
      */
-    private $data;
+    private $logo;
 
     /**
-     * #EXTCUSTOMTAG:data
+     * #EXTLOGO:http://cdn1.siol.tv/logo/93x78/slo2.png
      * @param string $lineStr
      */
     public function __construct(?string $lineStr = null)
@@ -28,32 +29,33 @@ class ExtCustomTag implements ExtTagInterface
     protected function makeData(string $lineStr): void
     {
         /*
-EXTCUSTOMTAG format:
-#EXTCUSTOMTAG:data
+EXTLOGO format:
+#EXTLOGO:logo
 example:
-#EXTCUSTOMTAG:123
+#EXTLOGO:http://cdn1.siol.tv/logo/93x78/slo2.png
          */
 
-        $data = \substr($lineStr, \strlen('#EXTCUSTOMTAG:'));
+        $tmp = \substr($lineStr, \strlen('#EXTLOGO:'));
+        $logo = \trim($tmp);
 
-        $this->setData(\trim($data));
+        $this->setLogo($logo);
     }
 
     /**
      * @return string
      */
-    public function getData(): string
+    public function getLogo(): string
     {
-        return $this->data;
+        return $this->logo;
     }
 
     /**
-     * @param string $data
+     * @param string $logo
      * @return $this
      */
-    public function setData(string $data): self
+    public function setLogo(string $logo): self
     {
-        $this->data = $data;
+        $this->logo = $logo;
         return $this;
     }
 
@@ -62,7 +64,7 @@ example:
      */
     public function __toString(): string
     {
-        return '#EXTCUSTOMTAG: ' . $this->getData();
+        return '#EXTLOGO: ' . $this->getLogo();
     }
 
     /**
@@ -71,6 +73,6 @@ example:
      */
     public static function isMatch(string $lineStr): bool
     {
-        return 0 === \stripos($lineStr, '#EXTCUSTOMTAG:');
+        return 0 === \stripos($lineStr, '#EXTLOGO:');
     }
 }

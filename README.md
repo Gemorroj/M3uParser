@@ -26,6 +26,7 @@ use M3uParser\M3uParser;
 $m3uParser = new M3uParser();
 $m3uParser->addDefaultTags();
 $data = $m3uParser->parseFile('path_to_file.m3u');
+// or $data = $m3uParser->parse('playlist content');
 
 print_r($data->getAttributes());
 /*
@@ -186,7 +187,7 @@ class ExtCustomTag implements ExtTagInterface
     /**
      * @param string $lineStr
      */
-    protected function makeData($lineStr)
+    protected function makeData(string $lineStr): void
     {
         /*
 EXTCUSTOMTAG format:
@@ -203,7 +204,7 @@ example:
     /**
      * @return string
      */
-    public function getData()
+    public function getData(): string
     {
         return $this->data;
     }
@@ -212,7 +213,7 @@ example:
      * @param string $data
      * @return $this
      */
-    public function setData($data)
+    public function setData(string $data): self
     {
         $this->data = $data;
         return $this;

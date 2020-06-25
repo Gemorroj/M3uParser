@@ -19,6 +19,8 @@ install:
     - cinst composer -y --ia "/DEV=%PHP_DIR%"
     - cd "%PHP_DIR%"
     - copy /Y php.ini-development php.ini
+    - echo extension_dir=ext >> php.ini
+    - echo extension=php_openssl.dll >> php.ini
     - refreshenv
     - php -v
     - composer self-update

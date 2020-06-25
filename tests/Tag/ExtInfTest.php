@@ -22,7 +22,7 @@ class ExtInfTest extends TestCase
         $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__.'/../fixtures/extinf.m3u');
 
-        self::assertCount(4, $data);
+        self::assertCount(5, $data);
 
         self::assertContainsOnlyInstancesOf(M3uParserEntry::class, $data);
 

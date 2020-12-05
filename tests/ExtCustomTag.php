@@ -13,8 +13,6 @@ class ExtCustomTag implements ExtTagInterface
 
     /**
      * #EXTCUSTOMTAG:data.
-     *
-     * @param string $lineStr
      */
     public function __construct(?string $lineStr = null)
     {

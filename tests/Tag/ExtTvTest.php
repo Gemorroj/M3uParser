@@ -4,7 +4,6 @@ namespace M3uParser\Tests\Tag;
 
 use M3uParser\M3uData;
 use M3uParser\M3uEntry;
-use M3uParser\M3uEntry as M3uParserEntry;
 use M3uParser\M3uParser;
 use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtTv;
@@ -22,7 +21,7 @@ class ExtTvTest extends TestCase
         $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__.'/../fixtures/exttv.m3u');
 
-        /** @var M3uParserEntry $entry */
+        /** @var M3uEntry $entry */
         $entry = $data[0];
 
         self::assertEquals('rtp://@232.2.201.53:5003', $entry->getPath());

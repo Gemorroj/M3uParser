@@ -4,7 +4,6 @@ namespace M3uParser\Tests\Tag;
 
 use M3uParser\M3uData;
 use M3uParser\M3uEntry;
-use M3uParser\M3uEntry as M3uParserEntry;
 use M3uParser\M3uParser;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTagInterface;
@@ -16,6 +15,20 @@ use PHPUnit\Framework\TestCase;
  */
 class ExtInfTest extends TestCase
 {
+    public function testParseIssue23(): void
+    {
+        $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
+        $data = $m3uParser->parseFile(__DIR__.'/../fixtures/issue23.m3u');
+
+        /** @var M3uEntry $entry */
+        $entry = $data[0];
+        /** @var ExtInf $extInf */
+        $extInf = $entry->getExtTags()[0];
+
+        self::assertSame(5.279, $extInf->getDuration());
+    }
+
     public function testParseExtInf(): void
     {
         $m3uParser = new M3uParser();
@@ -24,10 +37,10 @@ class ExtInfTest extends TestCase
 
         self::assertCount(5, $data);
 
-        self::assertContainsOnlyInstancesOf(M3uParserEntry::class, $data);
+        self::assertContainsOnlyInstancesOf(M3uEntry::class, $data);
 
         // basic
-        /** @var M3uParserEntry $firstEntry */
+        /** @var M3uEntry $firstEntry */
         $firstEntry = $data[0];
 
         self::assertEquals('Alternative\everclear_SMFTA.mp3', $firstEntry->getPath());
@@ -46,7 +59,7 @@ class ExtInfTest extends TestCase
         self::assertEquals([], $extInf->getAttributes());
 
         // cyrillic
-        /** @var M3uParserEntry $secondEntry */
+        /** @var M3uEntry $secondEntry */
         $secondEntry = $data[1];
 
         self::assertEquals('http://176.51.55.8:1234/udp/233.7.70.200:5000', $secondEntry->getPath());
@@ -65,7 +78,7 @@ class ExtInfTest extends TestCase
         self::assertEquals([], $extInf->getAttributes());
 
         // attributes
-        /** @var M3uParserEntry $thirdEntry */
+        /** @var M3uEntry $thirdEntry */
         $thirdEntry = $data[2];
 
         self::assertEquals('http://109.225.233.1:30000/udp/239.255.10.160:5500', $thirdEntry->getPath());
@@ -89,7 +102,7 @@ class ExtInfTest extends TestCase
         ], $extInf->getAttributes());
 
         // Comma in attribute value or title
-        /** @var M3uParserEntry $fourthEntry */
+        /** @var M3uEntry $fourthEntry */
         $fourthEntry = $data[3];
 
         self::assertEquals('http://117.210.233.1:3000/tcp/2', $fourthEntry->getPath());

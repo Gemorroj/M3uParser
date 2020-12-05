@@ -50,14 +50,14 @@ class ExtInf implements ExtTagInterface
     /**
      * @return $this
      */
-    public function setDuration(int $duration): self
+    public function setDuration(float $duration): self
     {
         $this->duration = $duration;
 
         return $this;
     }
 
-    public function getDuration(): int
+    public function getDuration(): float
     {
         return $this->duration;
     }
@@ -82,9 +82,9 @@ example:
         $dataLineStr = \trim($dataLineStr);
 
         // Parse duration and title with regex
-        \preg_match('/^(-?\d+)\s*(?:(?:[^=]+=["\'][^"\']*["\'])|(?:[^=]+=[^ ]*))*,(.*)$/', $dataLineStr, $matches);
+        \preg_match('/^(-?[\d\.]+)\s*(?:(?:[^=]+=["\'][^"\']*["\'])|(?:[^=]+=[^ ]*))*,(.*)$/', $dataLineStr, $matches);
 
-        $this->setDuration((int) $matches[1]);
+        $this->setDuration((float) $matches[1]);
         $this->setTitle(\trim($matches[2]));
 
         // Attributes are remaining string after remove duration and title

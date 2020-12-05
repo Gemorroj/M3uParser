@@ -3,7 +3,7 @@
 namespace M3uParser\Tests;
 
 use M3uParser\Exception as M3uParserException;
-use M3uParser\M3uEntry as M3uParserEntry;
+use M3uParser\M3uEntry;
 use M3uParser\M3uParser;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
@@ -44,7 +44,7 @@ class M3uParserTest extends TestCase
         $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__.'/fixtures/comment.m3u');
 
-        /** @var M3uParserEntry $entry */
+        /** @var M3uEntry $entry */
         $entry = $data[0];
 
         self::assertEquals('http://nullwave.barricade.lan:8000/club', $entry->getPath());
@@ -57,7 +57,7 @@ class M3uParserTest extends TestCase
         $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__.'/fixtures/notags.m3u');
 
-        /** @var M3uParserEntry $entry */
+        /** @var M3uEntry $entry */
         $entry = $data[0];
 
         self::assertEquals('http://scfire-ntc-aa07.stream.aol.com:80/stream/1048', $entry->getPath());
@@ -70,7 +70,7 @@ class M3uParserTest extends TestCase
         $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__.'/fixtures/combined.m3u');
 
-        /** @var M3uParserEntry $entry */
+        /** @var M3uEntry $entry */
         $entry = $data[0];
 
         self::assertEquals('rtp://@232.2.201.53:5003', $entry->getPath());
@@ -88,7 +88,7 @@ class M3uParserTest extends TestCase
         $m3uParser->addTag(ExtCustomTag::class);
         $data = $m3uParser->parseFile(__DIR__.'/fixtures/customtag.m3u');
 
-        /** @var M3uParserEntry $entry */
+        /** @var M3uEntry $entry */
         $entry = $data[0];
 
         self::assertEquals('http://nullwave.barricade.lan:8000/club', $entry->getPath());

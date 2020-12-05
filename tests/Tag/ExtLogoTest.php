@@ -4,7 +4,6 @@ namespace M3uParser\Tests\Tag;
 
 use M3uParser\M3uData;
 use M3uParser\M3uEntry;
-use M3uParser\M3uEntry as M3uParserEntry;
 use M3uParser\M3uParser;
 use M3uParser\Tag\ExtLogo;
 use M3uParser\Tag\ExtTagInterface;
@@ -22,7 +21,7 @@ class ExtLogoTest extends TestCase
         $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__.'/../fixtures/extlogo.m3u');
 
-        /** @var M3uParserEntry $entry */
+        /** @var M3uEntry $entry */
         $entry = $data[0];
 
         self::assertEquals('Alternative\everclear_SMFTA.mp3', $entry->getPath());

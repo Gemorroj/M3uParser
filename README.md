@@ -2,8 +2,7 @@
 
 [![License](https://poser.pugx.org/gemorroj/m3u-parser/license)](https://packagist.org/packages/gemorroj/m3u-parser)
 [![Latest Stable Version](https://poser.pugx.org/gemorroj/m3u-parser/v/stable)](https://packagist.org/packages/gemorroj/m3u-parser)
-[![Build Status Travis](https://secure.travis-ci.org/Gemorroj/M3uParser.png?branch=master)](https://travis-ci.org/Gemorroj/M3uParser)
-[![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/elqxwcdihjhu0gvp?svg=true)](https://ci.appveyor.com/project/Gemorroj/m3uparser)
+[![Continuous Integration](https://github.com/Gemorroj/M3uParser/workflows/Continuous%20Integration/badge.svg?branch=master)](https://github.com/Gemorroj/M3uParser/actions?query=workflow%3A%22Continuous+Integration%22)
 
 
 ### Requirements:

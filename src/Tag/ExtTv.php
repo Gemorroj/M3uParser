@@ -20,7 +20,7 @@ class ExtTv implements ExtTagInterface
      */
     private $xmlTvId;
     /**
-     * @var null|string
+     * @var string|null
      */
     private $iconUrl;
 

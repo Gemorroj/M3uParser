@@ -15,7 +15,7 @@ class M3uEntry
      */
     private $extTags = [];
     /**
-     * @var null|string
+     * @var string|null
      */
     private $path;
 

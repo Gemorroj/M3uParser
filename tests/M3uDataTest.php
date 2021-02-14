@@ -9,10 +9,6 @@ use M3uParser\Tag\ExtLogo;
 use M3uParser\Tag\ExtTv;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class M3uDataTest extends TestCase
 {
     public function testComplexDefaultEntryToString(): void

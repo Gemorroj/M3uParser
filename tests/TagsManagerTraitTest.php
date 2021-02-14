@@ -7,10 +7,6 @@ use M3uParser\Tag\ExtInf;
 use M3uParser\TagsManagerTrait;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class TagsManagerTraitTest extends TestCase
 {
     use TagsManagerTrait;

@@ -4,6 +4,10 @@ namespace M3uParser\Tests;
 
 use M3uParser\Tag\ExtTagInterface;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class ExtCustomTag implements ExtTagInterface
 {
     /**

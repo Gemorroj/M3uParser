@@ -5,10 +5,6 @@ namespace M3uParser\Tests;
 use M3uParser\Exception;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class ExceptionTest extends TestCase
 {
     public function test(): void

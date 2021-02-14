@@ -8,10 +8,6 @@ use M3uParser\M3uParser;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class M3uParserTest extends TestCase
 {
     public function testParseFileFail(): void

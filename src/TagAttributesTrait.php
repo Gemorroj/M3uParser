@@ -2,6 +2,9 @@
 
 namespace M3uParser;
 
+/**
+ * @see http://l189-238-14.cn.ru/api-doc/m3u-extending.html
+ */
 trait TagAttributesTrait
 {
     /**
@@ -58,7 +61,8 @@ trait TagAttributesTrait
         $out = '';
 
         foreach ($this->getAttributes() as $name => $value) {
-            $out .= $name.'="'.$value.'" '; //todo: quote
+            $escapedValue = \addcslashes($value, '"');
+            $out .= "$name=\"$escapedValue\" ";
         }
 
         return \rtrim($out);

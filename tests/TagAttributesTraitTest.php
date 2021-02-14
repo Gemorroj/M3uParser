@@ -31,7 +31,7 @@ class TagAttributesTraitTest extends TestCase
     public function testMakeAttributes(): void
     {
         $this->setAttribute('tvg-ID', '');
-        $this->setAttribute('ext-tag', 'some"quoted'); // fixme: parse escaped quotes
+        $this->setAttribute('ext-tag', 'some"quoted');
         $this->setAttribute('tvg-name-custom', 'Первый HD');
 
         $result = $this->getAttributesString();

@@ -17,8 +17,7 @@ trait TagAttributesTrait
      */
     public function initAttributes(string $attrString): void
     {
-        $this->parseQuotedAttributes($attrString);
-        $this->parseNotQuotedAttributes($attrString);
+        $this->parseAttributes($attrString);
     }
 
     public function getAttributes(): array
@@ -68,21 +67,15 @@ trait TagAttributesTrait
         return \rtrim($out);
     }
 
-    private function parseQuotedAttributes(string $attrString): void
+    private function parseAttributes(string $attrString): void
     {
-        \preg_match_all('/([a-zA-Z0-9\-]+)="([^"]*)"/', $attrString, $matches, \PREG_SET_ORDER);
+        \preg_match_all('/([^=" ]+)=("(?:\\\"|[^"])*"|(?:\\\"|[^=" ])+)/', $attrString, $matches, \PREG_SET_ORDER);
 
-        foreach ($matches as $match) {
-            $this->setAttribute($match[1], $match[2]);
-        }
-    }
+        foreach ($matches as $matchPair) {
+            $key = $matchPair[1];
+            $value = \stripslashes(\preg_replace('/"(.*)"/', '$1', $matchPair[2]));
 
-    private function parseNotQuotedAttributes(string $attrString): void
-    {
-        \preg_match_all('/([a-zA-Z0-9\-]+)=([^ "]+)/', $attrString, $matches, \PREG_SET_ORDER);
-
-        foreach ($matches as $match) {
-            $this->setAttribute($match[1], $match[2]);
+            $this->setAttribute($key, $value);
         }
     }
 }

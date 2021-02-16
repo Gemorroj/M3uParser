@@ -73,7 +73,7 @@ trait TagAttributesTrait
 
         foreach ($matches as $matchPair) {
             $key = $matchPair[1];
-            $value = \stripslashes(\preg_replace('/"(.*)"/', '$1', $matchPair[2]));
+            $value = \stripslashes(\trim($matchPair[2], '"'));
 
             $this->setAttribute($key, $value);
         }

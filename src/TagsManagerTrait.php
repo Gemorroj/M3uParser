@@ -10,20 +10,24 @@ use M3uParser\Tag\ExtTv;
 trait TagsManagerTrait
 {
     /**
-     * @var array
+     * @var class-string<ExtTagInterface>[]
      */
     private $tags = [];
 
     /**
      * Add tag.
      *
-     * @param string $tag class name must be implement ExtTagInterface interface
+     * @param class-string<ExtTagInterface> $tag class name. Must implements ExtTagInterface interface
      *
      * @return $this
      */
     public function addTag(string $tag): self
     {
-        if (!\in_array(ExtTagInterface::class, \class_implements($tag), true)) {
+        $implements = \class_implements($tag);
+        if (false === $implements) {
+            throw new Exception(\sprintf('Unknown tag %s', $tag));
+        }
+        if (!\in_array(ExtTagInterface::class, $implements, true)) {
             throw new Exception(\sprintf('The class %s must be implement interface %s', $tag, ExtTagInterface::class));
         }
 
@@ -61,7 +65,7 @@ trait TagsManagerTrait
     /**
      * Get all active tags.
      *
-     * @return string[]
+     * @return class-string<ExtTagInterface>[]
      */
     protected function getTags(): array
     {

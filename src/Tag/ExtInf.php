@@ -13,7 +13,7 @@ class ExtInf implements ExtTagInterface
      */
     private $title;
     /**
-     * @var int
+     * @var float
      */
     private $duration;
 

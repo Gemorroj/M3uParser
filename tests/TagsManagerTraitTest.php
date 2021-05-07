@@ -35,6 +35,6 @@ class TagsManagerTraitTest extends TestCase
     public function testErrorTags(): void
     {
         $this->expectException(Exception::class);
-        $this->addTag(self::class);
+        $this->addTag(self::class); // @phpstan-ignore-line
     }
 }

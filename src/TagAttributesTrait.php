@@ -8,7 +8,7 @@ namespace M3uParser;
 trait TagAttributesTrait
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
     private $attributes = [];
 
@@ -20,6 +20,9 @@ trait TagAttributesTrait
         $this->parseAttributes($attrString);
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getAttributes(): array
     {
         return $this->attributes;
@@ -36,6 +39,8 @@ trait TagAttributesTrait
     }
 
     /**
+     * @param array<string, string> $attributes
+     *
      * @return $this
      */
     public function setAttributes(array $attributes): self

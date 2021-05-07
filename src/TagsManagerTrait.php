@@ -17,18 +17,18 @@ trait TagsManagerTrait
     /**
      * Add tag.
      *
-     * @param class-string<ExtTagInterface> $tag class name. Must implements ExtTagInterface interface
+     * @param class-string<ExtTagInterface> $tag class name. Must implements the ExtTagInterface interface
      *
      * @return $this
      */
     public function addTag(string $tag): self
     {
-        $implements = \class_implements($tag);
+        $implements = @\class_implements($tag);
         if (false === $implements) {
-            throw new Exception(\sprintf('Unknown tag %s', $tag));
+            throw new Exception(\sprintf('Unknown class %s', $tag));
         }
         if (!\in_array(ExtTagInterface::class, $implements, true)) {
-            throw new Exception(\sprintf('The class %s must be implement interface %s', $tag, ExtTagInterface::class));
+            throw new Exception(\sprintf('The class %s must implements the %s interface', $tag, ExtTagInterface::class));
         }
 
         $this->tags[] = $tag;

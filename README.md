@@ -165,6 +165,7 @@ implement `ExtTagInterface` interface
 use M3uParser\M3uParser;
 use M3uParser\Tag\ExtTagInterface;
 
+// create custom tag
 class ExtCustomTag implements ExtTagInterface
 {
     /**
@@ -174,7 +175,6 @@ class ExtCustomTag implements ExtTagInterface
 
     /**
      * #EXTCUSTOMTAG:data
-     * @param string $lineStr
      */
     public function __construct(?string $lineStr = null)
     {
@@ -183,9 +183,6 @@ class ExtCustomTag implements ExtTagInterface
         }
     }
 
-    /**
-     * @param string $lineStr
-     */
     protected function makeData(string $lineStr): void
     {
         /*
@@ -200,45 +197,31 @@ example:
         $this->setData(\trim($data));
     }
 
-    /**
-     * @return string
-     */
     public function getData(): string
     {
         return $this->data;
     }
 
-    /**
-     * @param string $data
-     * @return $this
-     */
     public function setData(string $data): self
     {
         $this->data = $data;
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return '#EXTCUSTOMTAG: ' . $this->getData();
     }
 
-    /**
-     * @param string $lineStr
-     * @return bool
-     */
     public static function isMatch(string $lineStr): bool
     {
         return 0 === \stripos($lineStr, '#EXTCUSTOMTAG:');
     }
 }
 
+// use custom tag
 $m3uParser = new M3uParser();
-// add custom tag
-$m3uParser->addTag(ExtCustomTag::class);
+$m3uParser->addTag(ExtCustomTag::class); // add custom tag
 $data = $m3uParser->parseFile('path_to_file.m3u');
 
 print_r($data);

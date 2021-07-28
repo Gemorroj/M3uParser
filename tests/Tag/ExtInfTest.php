@@ -128,7 +128,7 @@ class ExtInfTest extends TestCase
     public function testGenerateExtInf(): void
     {
         $expectedString = '#EXTM3U'."\n";
-        $expectedString .= '#EXTINF: 123 test-attr="test-attrname", extinf-title'."\n";
+        $expectedString .= '#EXTINF:123 test-attr="test-attrname", extinf-title'."\n";
         $expectedString .= 'test-path';
 
         $entry = new M3uEntry();

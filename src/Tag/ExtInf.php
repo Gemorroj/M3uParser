@@ -29,7 +29,7 @@ class ExtInf implements ExtTagInterface
 
     public function __toString(): string
     {
-        return '#EXTINF: '.$this->getDuration().' '.$this->getAttributesString().', '.$this->getTitle();
+        return '#EXTINF:'.$this->getDuration().' '.$this->getAttributesString().', '.$this->getTitle();
     }
 
     /**

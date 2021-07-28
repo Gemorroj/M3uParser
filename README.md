@@ -210,7 +210,7 @@ example:
 
     public function __toString(): string
     {
-        return '#EXTCUSTOMTAG: ' . $this->getData();
+        return '#EXTCUSTOMTAG:' . $this->getData();
     }
 
     public static function isMatch(string $lineStr): bool

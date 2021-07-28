@@ -24,7 +24,7 @@ class ExtLogo implements ExtTagInterface
 
     public function __toString(): string
     {
-        return '#EXTLOGO: '.$this->getLogo();
+        return '#EXTLOGO:'.$this->getLogo();
     }
 
     public function getLogo(): string

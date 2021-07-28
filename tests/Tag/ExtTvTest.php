@@ -43,7 +43,7 @@ class ExtTvTest extends TestCase
     public function testGenerateExtTv(): void
     {
         $expectedString = '#EXTM3U'."\n";
-        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
+        $expectedString .= '#EXTTV:hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
         $expectedString .= 'test-path';
 
         $entry = new M3uEntry();

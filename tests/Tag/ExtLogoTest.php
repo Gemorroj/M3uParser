@@ -40,7 +40,7 @@ class ExtLogoTest extends TestCase
     public function testGenerateExtLogo(): void
     {
         $expectedString = '#EXTM3U'."\n";
-        $expectedString .= '#EXTLOGO: http://example.org/logo.png'."\n";
+        $expectedString .= '#EXTLOGO:http://example.org/logo.png'."\n";
         $expectedString .= 'test-path';
 
         $entry = new M3uEntry();

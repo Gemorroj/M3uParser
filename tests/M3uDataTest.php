@@ -15,8 +15,8 @@ class M3uDataTest extends TestCase
     {
         $expectedString = '#EXTM3U test-name="test-value"'."\n";
         $expectedString .= '#EXTINF:123 test-attr="test-attrname", extinf-title'."\n";
-        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
-        $expectedString .= '#EXTLOGO: https://example.org/logo.png'."\n";
+        $expectedString .= '#EXTTV:hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
+        $expectedString .= '#EXTLOGO:https://example.org/logo.png'."\n";
         $expectedString .= 'test-path';
 
         $entry = new M3uEntry();
@@ -53,12 +53,12 @@ class M3uDataTest extends TestCase
     {
         $expectedString = '#EXTM3U test-name="test-value"'."\n";
         $expectedString .= '#EXTINF:123 test-attr="test-attrname1", extinf-title1'."\n";
-        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
-        $expectedString .= '#EXTLOGO: https://example.org/logo.png'."\n";
+        $expectedString .= '#EXTTV:hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
+        $expectedString .= '#EXTLOGO:https://example.org/logo.png'."\n";
         $expectedString .= 'test-path1'."\n";
         $expectedString .= '#EXTINF:123 test-attr="test-attrname2", extinf-title2'."\n";
-        $expectedString .= '#EXTTV: hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
-        $expectedString .= '#EXTLOGO: https://example.org/logo.png'."\n";
+        $expectedString .= '#EXTTV:hd,sd;ru;xml-tv-id;https://example.org/icon.png'."\n";
+        $expectedString .= '#EXTLOGO:https://example.org/logo.png'."\n";
         $expectedString .= 'test-path2';
 
         $entry1 = new M3uEntry();

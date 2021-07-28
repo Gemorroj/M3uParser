@@ -36,7 +36,7 @@ class ExtTv implements ExtTagInterface
 
     public function __toString(): string
     {
-        return '#EXTTV: '.\implode(',', $this->getTags()).';'.$this->getLanguage().';'.$this->getXmlTvId().($this->getIconUrl() ? ';'.$this->getIconUrl() : '');
+        return '#EXTTV:'.\implode(',', $this->getTags()).';'.$this->getLanguage().';'.$this->getXmlTvId().($this->getIconUrl() ? ';'.$this->getIconUrl() : '');
     }
 
     /**

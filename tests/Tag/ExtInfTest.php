@@ -145,4 +145,13 @@ class ExtInfTest extends TestCase
 
         self::assertEquals($expectedString, (string) $data);
     }
+
+    public function testQuotes(): void
+    {
+        $testString = '#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="" tvg-chno="7529" channel-id="7529" group-title="S: (HULU) The Handmaid\'s Tale",The Handmaid\'s Tale S01 E01';
+
+        $extInf = new ExtInf($testString);
+
+        self::assertEquals($testString, (string) $extInf);
+    }
 }

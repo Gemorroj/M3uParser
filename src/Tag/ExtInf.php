@@ -84,7 +84,7 @@ example:
         $dataLineStr = \trim($dataLineStr);
 
         // Parse duration and title with regex
-        \preg_match('/^(-?[\d\.]+)\s*(?:(?:[^=]+=["\'][^"\']*["\'])|(?:[^=]+=[^ ]*))*,(.*)$/', $dataLineStr, $matches);
+        \preg_match('/^(-?[\d\.]+)\s*(?:(?:[^=]+=["][^"]*["])|(?:[^=]+=[^ ]*))*,(.*)$/', $dataLineStr, $matches);
 
         $this->setDuration((float) $matches[1]);
         $this->setTitle(\trim($matches[2]));

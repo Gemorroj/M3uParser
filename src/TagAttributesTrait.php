@@ -10,7 +10,7 @@ trait TagAttributesTrait
     /**
      * @var array<string, string>
      */
-    private $attributes = [];
+    private array $attributes = [];
 
     /**
      * example string: tvg-ID="" tvg-name="MEDI 1 SAT" tvg-logo="" group-title="ARABIC".
@@ -40,8 +40,6 @@ trait TagAttributesTrait
 
     /**
      * @param array<string, string> $attributes
-     *
-     * @return $this
      */
     public function setAttributes(array $attributes): self
     {
@@ -50,9 +48,6 @@ trait TagAttributesTrait
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setAttribute(string $name, string $value): self
     {
         $this->attributes[$name] = $value;

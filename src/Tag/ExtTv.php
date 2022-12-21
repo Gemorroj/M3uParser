@@ -10,19 +10,10 @@ class ExtTv implements ExtTagInterface
     /**
      * @var string[]
      */
-    private $tags;
-    /**
-     * @var string
-     */
-    private $language;
-    /**
-     * @var string
-     */
-    private $xmlTvId;
-    /**
-     * @var string|null
-     */
-    private $iconUrl;
+    private array $tags = [];
+    private string $language;
+    private string $xmlTvId;
+    private ?string $iconUrl = null;
 
     /**
      * #EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png.
@@ -49,8 +40,6 @@ class ExtTv implements ExtTagInterface
 
     /**
      * @param string[] $tags
-     *
-     * @return $this
      */
     public function setTags(array $tags): self
     {
@@ -64,9 +53,6 @@ class ExtTv implements ExtTagInterface
         return $this->language;
     }
 
-    /**
-     * @return $this
-     */
     public function setLanguage(string $language): self
     {
         $this->language = $language;
@@ -79,9 +65,6 @@ class ExtTv implements ExtTagInterface
         return $this->xmlTvId;
     }
 
-    /**
-     * @return $this
-     */
     public function setXmlTvId(string $xmlTvId): self
     {
         $this->xmlTvId = $xmlTvId;
@@ -94,9 +77,6 @@ class ExtTv implements ExtTagInterface
         return $this->iconUrl;
     }
 
-    /**
-     * @return $this
-     */
     public function setIconUrl(?string $iconUrl): self
     {
         $this->iconUrl = $iconUrl;

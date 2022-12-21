@@ -6,18 +6,12 @@ use M3uParser\Tag\ExtTagInterface;
 
 class M3uEntry
 {
-    /**
-     * @var string
-     */
-    protected $lineDelimiter = "\n";
+    protected string $lineDelimiter = "\n";
     /**
      * @var ExtTagInterface[]
      */
-    private $extTags = [];
-    /**
-     * @var string|null
-     */
-    private $path;
+    private array $extTags = [];
+    private ?string $path = null;
 
     public function __toString(): string
     {
@@ -39,9 +33,6 @@ class M3uEntry
         return $this->extTags;
     }
 
-    /**
-     * @return $this
-     */
     public function addExtTag(ExtTagInterface $extTag): self
     {
         $this->extTags[] = $extTag;
@@ -51,8 +42,6 @@ class M3uEntry
 
     /**
      * Remove all previously defined tags.
-     *
-     * @return $this
      */
     public function clearExtTags(): self
     {
@@ -66,9 +55,6 @@ class M3uEntry
         return $this->path;
     }
 
-    /**
-     * @return $this
-     */
     public function setPath(string $path): self
     {
         $this->path = $path;

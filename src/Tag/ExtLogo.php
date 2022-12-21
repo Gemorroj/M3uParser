@@ -7,10 +7,7 @@ namespace M3uParser\Tag;
  */
 class ExtLogo implements ExtTagInterface
 {
-    /**
-     * @var string
-     */
-    private $logo;
+    private string $logo;
 
     /**
      * #EXTLOGO:http://cdn1.siol.tv/logo/93x78/slo2.png.
@@ -32,9 +29,6 @@ class ExtLogo implements ExtTagInterface
         return $this->logo;
     }
 
-    /**
-     * @return $this
-     */
     public function setLogo(string $logo): self
     {
         $this->logo = $logo;

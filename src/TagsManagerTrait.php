@@ -12,14 +12,12 @@ trait TagsManagerTrait
     /**
      * @var class-string<ExtTagInterface>[]
      */
-    private $tags = [];
+    private array $tags = [];
 
     /**
      * Add tag.
      *
      * @param class-string<ExtTagInterface> $tag class name. Must implements the ExtTagInterface interface
-     *
-     * @return $this
      */
     public function addTag(string $tag): self
     {
@@ -38,8 +36,6 @@ trait TagsManagerTrait
 
     /**
      * Add default tags (EXTINF, EXTTV, EXTLOGO).
-     *
-     * @return $this
      */
     public function addDefaultTags(): self
     {
@@ -52,8 +48,6 @@ trait TagsManagerTrait
 
     /**
      * Remove all previously defined tags.
-     *
-     * @return $this
      */
     public function clearTags(): self
     {

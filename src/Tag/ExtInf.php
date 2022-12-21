@@ -8,14 +8,8 @@ class ExtInf implements ExtTagInterface
 {
     use TagAttributesTrait;
 
-    /**
-     * @var string
-     */
-    private $title;
-    /**
-     * @var float
-     */
-    private $duration;
+    private string $title;
+    private float $duration;
 
     /**
      * #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD.
@@ -34,9 +28,6 @@ class ExtInf implements ExtTagInterface
         return '#EXTINF:'.$this->getDuration().('' === $attributesString ? '' : ' '.$attributesString).','.$this->getTitle();
     }
 
-    /**
-     * @return $this
-     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -49,9 +40,6 @@ class ExtInf implements ExtTagInterface
         return $this->title;
     }
 
-    /**
-     * @return $this
-     */
     public function setDuration(float $duration): self
     {
         $this->duration = $duration;

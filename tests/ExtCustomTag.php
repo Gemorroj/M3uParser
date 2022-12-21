@@ -6,14 +6,12 @@ use M3uParser\Tag\ExtTagInterface;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class ExtCustomTag implements ExtTagInterface
 {
-    /**
-     * @var string
-     */
-    private $data;
+    private string $data = '';
 
     /**
      * #EXTCUSTOMTAG:data.
@@ -35,9 +33,6 @@ class ExtCustomTag implements ExtTagInterface
         return $this->data;
     }
 
-    /**
-     * @return $this
-     */
     public function setData(string $data): self
     {
         $this->data = $data;

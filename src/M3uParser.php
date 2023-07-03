@@ -99,7 +99,7 @@ class M3uParser
 
     protected function removeBom(string &$str): void
     {
-        if (0 === \strpos($str, "\xEF\xBB\xBF")) {
+        if (\str_starts_with($str, "\xEF\xBB\xBF")) {
             $str = \substr($str, 3);
         }
     }

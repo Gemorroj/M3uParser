@@ -18,7 +18,7 @@ class ExtTv implements ExtTagInterface
     /**
      * #EXTTV:nacionalni,hd;slovenski;SLO1;http://cdn1.siol.tv/logo/93x78/slo2.png.
      */
-    public function __construct(?string $lineStr = null)
+    public function __construct(string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->makeData($lineStr);

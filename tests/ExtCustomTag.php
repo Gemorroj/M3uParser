@@ -16,7 +16,7 @@ class ExtCustomTag implements ExtTagInterface
     /**
      * #EXTCUSTOMTAG:data.
      */
-    public function __construct(?string $lineStr = null)
+    public function __construct(string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->makeData($lineStr);

@@ -2,11 +2,9 @@
 
 namespace M3uParser\Tag;
 
-interface ExtTagInterface
+interface ExtTagInterface extends \Stringable
 {
-    public function __construct(?string $lineStr = null);
-
-    public function __toString(): string;
+    public function __construct(string $lineStr = null);
 
     public static function isMatch(string $lineStr): bool;
 }

@@ -3,7 +3,7 @@
 namespace M3uParser;
 
 /** @extends \ArrayIterator<int, M3uEntry> */
-class M3uData extends \ArrayIterator
+class M3uData extends \ArrayIterator implements \Stringable
 {
     use TagAttributesTrait;
 

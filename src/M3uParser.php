@@ -120,6 +120,6 @@ class M3uParser
             }
         }
 
-        return !$matched && 0 === \strpos($lineStr, '#') && !$this->isExtM3u($lineStr);
+        return !$matched && \str_starts_with($lineStr, '#') && !$this->isExtM3u($lineStr);
     }
 }

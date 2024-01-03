@@ -4,7 +4,7 @@ namespace M3uParser;
 
 use M3uParser\Tag\ExtTagInterface;
 
-class M3uEntry
+class M3uEntry implements \Stringable
 {
     protected string $lineDelimiter = "\n";
     /**

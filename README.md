@@ -20,6 +20,8 @@ composer require gemorroj/m3u-parser
 
 ```php
 <?php
+declare(strict_types=1);
+
 use M3uParser\M3uParser;
 
 $m3uParser = new M3uParser();
@@ -131,6 +133,8 @@ foreach ($data as $entry) {
 
 ```php
 <?php
+declare(strict_types=1);
+
 use M3uParser\M3uData;
 use M3uParser\M3uEntry;
 use M3uParser\Tag\ExtInf;

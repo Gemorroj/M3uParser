@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace M3uParser;
 
 /** @extends \ArrayIterator<int, M3uEntry> */

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace M3uParser\Tag;
 
 use M3uParser\TagAttributesTrait;
@@ -40,9 +42,9 @@ class ExtInf implements ExtTagInterface
         return $this->title;
     }
 
-    public function setDuration(float $duration): self
+    public function setDuration(float|int $duration): self
     {
-        $this->duration = $duration;
+        $this->duration = (float) $duration;
 
         return $this;
     }

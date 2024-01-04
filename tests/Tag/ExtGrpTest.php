@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace M3uParser\Tests\Tag;
 
 use M3uParser\M3uData;

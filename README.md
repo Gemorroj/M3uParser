@@ -114,6 +114,10 @@ foreach ($data as $entry) {
             case $extTag instanceof \M3uParser\Tag\Playlist: // If PLAYLIST tag
                 echo $extTag->getValue() . "\n";
                 break;
+
+            case $extTag instanceof \M3uParser\Tag\ExtTitle: // If EXTTITLE tag
+                echo $extTag->getValue() . "\n";
+                break;
         }
     }
 }
@@ -161,8 +165,12 @@ $entry->addExtTag(
         ->setValue('Rock')
 );
 $entry->addExtTag(
-    (new ExtPlaylist())
+    (new Playlist())
         ->setValue('My favorite playlist')
+);
+$entry->addExtTag(
+    (new ExtTitle())
+        ->setValue('title')
 );
 
 $data = new M3uData();
@@ -178,6 +186,7 @@ echo $data;
 #EXTVLCOPT:http-user-agent=M2uParser
 #EXTGRP:Rock
 #PLAYLIST:My favorite playlist
+#EXTTITLE:title
 test-path
 */
 ```

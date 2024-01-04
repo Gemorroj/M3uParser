@@ -3,14 +3,14 @@
 namespace M3uParser\Tag;
 
 /**
- * @see https://github.com/Gemorroj/M3uParser/issues/28
+ * @see https://github.com/Gemorroj/M3uParser/issues/29
  */
-class ExtGrp implements ExtTagInterface
+class Playlist implements ExtTagInterface
 {
     private string $value;
 
     /**
-     * #EXTGRP:music.
+     * #PLAYLIST:My favorite music.
      */
     public function __construct(string $lineStr = null)
     {
@@ -21,7 +21,7 @@ class ExtGrp implements ExtTagInterface
 
     public function __toString(): string
     {
-        return '#EXTGRP:'.$this->getValue();
+        return '#PLAYLIST:'.$this->getValue();
     }
 
     public function setValue(string $value): self
@@ -38,18 +38,18 @@ class ExtGrp implements ExtTagInterface
 
     public static function isMatch(string $lineStr): bool
     {
-        return 0 === \stripos($lineStr, '#EXTGRP:');
+        return 0 === \stripos($lineStr, '#PLAYLIST:');
     }
 
     protected function make(string $lineStr): void
     {
         /*
-EXTGRP format:
-#EXTGRP:<value>
+PLAYLIST format:
+#PLAYLIST:<value>
 example:
-#EXTGRP:Rock
+#PLAYLIST:My favorite music
          */
-        $dataLineStr = \substr($lineStr, \strlen('#EXTGRP:'));
+        $dataLineStr = \substr($lineStr, \strlen('#PLAYLIST:'));
         $dataLineStr = \trim($dataLineStr);
 
         $this->setValue($dataLineStr);

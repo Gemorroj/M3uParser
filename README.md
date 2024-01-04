@@ -106,8 +106,12 @@ foreach ($data as $entry) {
             case $extTag instanceof \M3uParser\Tag\ExtVlcOpt: // If EXTVLCOPT tag
                 echo $extTag->getKey() . ':' . $extTag->getValue() . "\n";
                 break;
-                
+
             case $extTag instanceof \M3uParser\Tag\ExtGrp: // If EXTGRP tag
+                echo $extTag->getValue() . "\n";
+                break;
+
+            case $extTag instanceof \M3uParser\Tag\Playlist: // If PLAYLIST tag
                 echo $extTag->getValue() . "\n";
                 break;
         }
@@ -126,6 +130,7 @@ use M3uParser\Tag\ExtTv;
 use M3uParser\Tag\ExtLogo;
 use M3uParser\Tag\ExtVlcOpt;
 use M3uParser\Tag\ExtGrp;
+use M3uParser\Tag\Playlist;
 
 $entry = new M3uEntry();
 $entry->setPath('test-path');
@@ -155,6 +160,10 @@ $entry->addExtTag(
     (new ExtGrp())
         ->setValue('Rock')
 );
+$entry->addExtTag(
+    (new ExtPlaylist())
+        ->setValue('My favorite playlist')
+);
 
 $data = new M3uData();
 $data->setAttribute('test-name', 'test-value');
@@ -168,6 +177,7 @@ echo $data;
 #EXTLOGO:https://example.org/logo.png
 #EXTVLCOPT:http-user-agent=M2uParser
 #EXTGRP:Rock
+#PLAYLIST:My favorite playlist
 test-path
 */
 ```

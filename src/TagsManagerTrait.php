@@ -8,6 +8,7 @@ use M3uParser\Tag\ExtLogo;
 use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtTv;
 use M3uParser\Tag\ExtVlcOpt;
+use M3uParser\Tag\Playlist;
 
 trait TagsManagerTrait
 {
@@ -37,7 +38,7 @@ trait TagsManagerTrait
     }
 
     /**
-     * Add default tags (EXTINF, EXTTV, EXTLOGO, EXTVLCOPT, EXTGRP).
+     * Add default tags (EXTINF, EXTTV, EXTLOGO, EXTVLCOPT, EXTGRP, PLAYLIST).
      */
     public function addDefaultTags(): self
     {
@@ -46,6 +47,7 @@ trait TagsManagerTrait
         $this->addTag(ExtLogo::class);
         $this->addTag(ExtVlcOpt::class);
         $this->addTag(ExtGrp::class);
+        $this->addTag(Playlist::class);
 
         return $this;
     }

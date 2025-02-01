@@ -14,7 +14,7 @@ class ExtAlbumArtUrl implements ExtTagInterface
     /**
      * #EXTALBUMARTURL:https://store.example.com/download/A32X5yz-1.jpg.
      */
-    public function __construct(string $lineStr = null)
+    public function __construct(?string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->make($lineStr);

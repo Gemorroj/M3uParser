@@ -15,7 +15,7 @@ class ExtVlcOpt implements ExtTagInterface
     /**
      * #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 6.1; rv:61.0) Gecko/20100101 Firefox/61.0.
      */
-    public function __construct(string $lineStr = null)
+    public function __construct(?string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->make($lineStr);

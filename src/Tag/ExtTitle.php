@@ -14,7 +14,7 @@ class ExtTitle implements ExtTagInterface
     /**
      * #EXTTITLE:super-song.
      */
-    public function __construct(string $lineStr = null)
+    public function __construct(?string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->make($lineStr);

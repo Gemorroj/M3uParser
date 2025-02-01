@@ -14,7 +14,7 @@ class ExtGrp implements ExtTagInterface
     /**
      * #EXTGRP:music.
      */
-    public function __construct(string $lineStr = null)
+    public function __construct(?string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->make($lineStr);

@@ -16,7 +16,7 @@ class ExtInf implements ExtTagInterface
     /**
      * #EXTINF:-1 tvg-name=Первый_HD tvg-logo="Первый канал" deinterlace=4 group-title="Эфирные каналы",Первый канал HD.
      */
-    public function __construct(string $lineStr = null)
+    public function __construct(?string $lineStr = null)
     {
         if (null !== $lineStr) {
             $this->make($lineStr);

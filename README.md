@@ -139,7 +139,7 @@ foreach ($data as $entry) {
 
             case $extTag instanceof \M3uParser\Tag\ExtImg: // If EXTIMG tag
                 echo $extTag->getValue() . "\n";
-                break;****
+                break;
         }
     }
 }

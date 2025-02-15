@@ -23,15 +23,15 @@ class ExtLogo implements ExtTagInterface
 
     public function __toString(): string
     {
-        return '#EXTLOGO:'.$this->getLogo();
+        return '#EXTLOGO:'.$this->getValue();
     }
 
-    public function getLogo(): string
+    public function getValue(): string
     {
         return $this->logo;
     }
 
-    public function setLogo(string $logo): self
+    public function setValue(string $logo): self
     {
         $this->logo = $logo;
 
@@ -55,6 +55,6 @@ example:
         $tmp = \substr($lineStr, \strlen('#EXTLOGO:'));
         $logo = \trim($tmp);
 
-        $this->setLogo($logo);
+        $this->setValue($logo);
     }
 }

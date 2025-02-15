@@ -32,7 +32,7 @@ class ExtLogoTest extends TestCase
         $extLogo = $extTags[0];
         self::assertInstanceOf(ExtLogo::class, $extLogo);
 
-        self::assertEquals('http://example.org/logo.png', $extLogo->getLogo());
+        self::assertEquals('http://example.org/logo.png', $extLogo->getValue());
     }
 
     public function testGenerateExtLogo(): void
@@ -45,7 +45,7 @@ class ExtLogoTest extends TestCase
         $entry->setPath('test-path');
         $entry->addExtTag(
             (new ExtLogo())
-                ->setLogo('http://example.org/logo.png')
+                ->setValue('http://example.org/logo.png')
         );
 
         $data = new M3uData();

@@ -102,7 +102,7 @@ foreach ($data as $entry) {
                 break;
 
             case $extTag instanceof \M3uParser\Tag\ExtLogo: // If EXTLOGO tag
-                echo $extTag->getLogo() . "\n";
+                echo $extTag->getValue() . "\n";
                 break;
 
             case $extTag instanceof \M3uParser\Tag\ExtVlcOpt: // If EXTVLCOPT tag
@@ -183,7 +183,7 @@ $entry->addExtTag(
 );
 $entry->addExtTag(
     (new ExtLogo())
-        ->setLogo('https://example.org/logo.png')
+        ->setValue('https://example.org/logo.png')
 );
 $entry->addExtTag(
     (new ExtVlcOpt())

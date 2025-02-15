@@ -38,7 +38,7 @@ class M3uDataTest extends TestCase
         );
         $entry->addExtTag(
             (new ExtLogo())
-                ->setLogo('https://example.org/logo.png')
+                ->setValue('https://example.org/logo.png')
         );
 
         $data = new M3uData();
@@ -80,7 +80,7 @@ class M3uDataTest extends TestCase
         );
         $entry1->addExtTag(
             (new ExtLogo())
-                ->setLogo('https://example.org/logo.png')
+                ->setValue('https://example.org/logo.png')
         );
 
         $entry2 = new M3uEntry();
@@ -100,7 +100,7 @@ class M3uDataTest extends TestCase
         );
         $entry2->addExtTag(
             (new ExtLogo())
-                ->setLogo('https://example.org/logo.png')
+                ->setValue('https://example.org/logo.png')
         );
 
         $data = new M3uData([$entry1, $entry2]);

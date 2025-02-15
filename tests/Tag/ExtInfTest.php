@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtInfTest extends TestCase
 {
     public function testParseIssue23(): void

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * Used to specify the artist or creator associated with a particular media file, the #EXTART directive contributes to enhanced metadata management within the playlist.
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/31
  */
 class ExtArt implements ExtTagInterface

@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtArt;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtArtTest extends TestCase
 {
     public function testParseExtArt(): void

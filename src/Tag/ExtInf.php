@@ -6,6 +6,9 @@ namespace M3uParser\Tag;
 
 use M3uParser\TagAttributesTrait;
 
+/**
+ * This directive is used to define specific track information such as the duration and title of a media file. It plays a crucial role in providing details about each entry in the playlist.
+ */
 class ExtInf implements ExtTagInterface
 {
     use TagAttributesTrait;

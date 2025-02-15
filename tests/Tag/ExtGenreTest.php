@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtGenre;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtGenreTest extends TestCase
 {
     public function testParseExtGenre(): void

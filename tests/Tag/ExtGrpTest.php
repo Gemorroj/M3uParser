@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtGrp;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtGrpTest extends TestCase
 {
     public function testParseExtGrp(): void

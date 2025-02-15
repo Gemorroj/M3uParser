@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\Playlist;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class PlaylistTest extends TestCase
 {
     public function testParsePlaylist(): void

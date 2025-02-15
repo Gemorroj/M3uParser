@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtAlb;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtAlbTest extends TestCase
 {
     public function testParseExtAlb(): void

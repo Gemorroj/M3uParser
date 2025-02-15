@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtLogo;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtLogoTest extends TestCase
 {
     public function testParseExtLogo(): void

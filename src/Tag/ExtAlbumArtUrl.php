@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * URL that can be used to fetch an album art image for the tracks. An album art URL can be specified either as a single URL for every track (assuming the tracks are all from the same album), or as a separate URL for each track in the list (assuming the tracks are from multiple albums).
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/34
  */
 class ExtAlbumArtUrl implements ExtTagInterface

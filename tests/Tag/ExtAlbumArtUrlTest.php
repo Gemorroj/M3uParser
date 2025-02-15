@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtAlbumArtUrl;
 use M3uParser\Tag\ExtTagInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtAlbumArtUrlTest extends TestCase
 {
     public function testParseExtAlbumArtUrl(): void

@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtTv;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtTvTest extends TestCase
 {
     public function testParseExtTv(): void

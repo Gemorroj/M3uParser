@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * VLC specific attribute.
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/27
  */
 class ExtVlcOpt implements ExtTagInterface

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * This directive provides album information, which can be valuable for organizing music playlists according to albums or compilation releases.
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/30
  */
 class ExtAlb implements ExtTagInterface

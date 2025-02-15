@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * Playlist display title.
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/29
  */
 class Playlist implements ExtTagInterface

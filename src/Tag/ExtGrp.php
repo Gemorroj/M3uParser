@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * The directive allows for named grouping of media files within the playlist, facilitating organization and categorization based on different criteria.
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/28
  */
 class ExtGrp implements ExtTagInterface

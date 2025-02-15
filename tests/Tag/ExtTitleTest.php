@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtTitle;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtTitleTest extends TestCase
 {
     public function testParseExtTitle(): void

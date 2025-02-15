@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * Defines language and groups TV programs are in.
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/5
  */
 class ExtTv implements ExtTagInterface

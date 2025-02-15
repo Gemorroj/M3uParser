@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * Genre information can be included in an M3U IPTV playlist using this directive, allowing for genre-based sorting and filtering of multimedia content.
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/32
  */
 class ExtGenre implements ExtTagInterface

@@ -11,11 +11,6 @@ use M3uParser\Tag\ExtTagInterface;
 use M3uParser\Tag\ExtVlcOpt;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class ExtVlcOptTest extends TestCase
 {
     public function testParseExtVlcOpt(): void

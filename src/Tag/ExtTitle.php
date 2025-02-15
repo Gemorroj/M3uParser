@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace M3uParser\Tag;
 
 /**
+ * Title for the tracks included in the playlist.
+ *
  * @see https://github.com/Gemorroj/M3uParser/issues/33
  */
 class ExtTitle implements ExtTagInterface

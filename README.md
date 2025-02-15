@@ -132,6 +132,10 @@ foreach ($data as $entry) {
             case $extTag instanceof \M3uParser\Tag\ExtArt: // If EXTART tag
                 echo $extTag->getValue() . "\n";
                 break;
+
+            case $extTag instanceof \M3uParser\Tag\ExtAlb: // If EXTALB tag
+                echo $extTag->getValue() . "\n";
+                break;
         }
     }
 }
@@ -155,6 +159,7 @@ use M3uParser\Tag\ExtTitle;
 use M3uParser\Tag\ExtAlbumArtUrl;
 use M3uParser\Tag\ExtGenre;
 use M3uParser\Tag\ExtArt;
+use M3uParser\Tag\ExtAlb;
 
 $entry = new M3uEntry();
 $entry->setPath('test-path');
@@ -204,6 +209,10 @@ $entry->addExtTag(
     (new ExtArt())
         ->setValue('some artist')
 );
+$entry->addExtTag(
+    (new ExtAlb())
+        ->setValue('some album')
+);
 
 $data = new M3uData();
 $data->setAttribute('test-name', 'test-value');
@@ -222,6 +231,7 @@ echo $data;
 #EXTALBUMARTURL:https://store.example.com/download/A32X5yz-1.jpg
 #EXTGENRE:Rock
 #EXTART:some artist
+#EXTALB:some album
 test-path
 */
 ```

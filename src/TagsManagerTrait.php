@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace M3uParser;
 
 use M3uParser\Tag\ExtAlbumArtUrl;
+use M3uParser\Tag\ExtGenre;
 use M3uParser\Tag\ExtGrp;
 use M3uParser\Tag\ExtInf;
 use M3uParser\Tag\ExtLogo;
@@ -42,7 +43,7 @@ trait TagsManagerTrait
     }
 
     /**
-     * Add default tags (EXTINF, EXTTV, EXTLOGO, EXTVLCOPT, EXTGRP, PLAYLIST, EXTTITLE, EXTALBUMARTURL).
+     * Add default tags (EXTINF, EXTTV, EXTLOGO, EXTVLCOPT, EXTGRP, PLAYLIST, EXTTITLE, EXTALBUMARTURL, EXTGENRE).
      */
     public function addDefaultTags(): self
     {
@@ -54,6 +55,7 @@ trait TagsManagerTrait
         $this->addTag(Playlist::class);
         $this->addTag(ExtTitle::class);
         $this->addTag(ExtAlbumArtUrl::class);
+        $this->addTag(ExtGenre::class);
 
         return $this;
     }

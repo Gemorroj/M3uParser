@@ -33,7 +33,7 @@ class ExtInfTest extends TestCase
         $m3uParser->addDefaultTags();
         $data = $m3uParser->parseFile(__DIR__.'/../fixtures/extinf.m3u');
 
-        self::assertCount(5, $data);
+        self::assertCount(6, $data);
 
         self::assertContainsOnlyInstancesOf(M3uEntry::class, $data);
 
@@ -120,6 +120,48 @@ class ExtInfTest extends TestCase
             'tvg-logo' => 'https://pngimage.net/wp-content/uploads/2018/05/iptv-png.png',
             'group-title' => '===test group title 1/2',
             'tvg-name' => 'Test with, comma 1/2',
+        ], $extInf->getAttributes());
+
+        // Spaces
+        /** @var M3uEntry $fiveEntry */
+        $fiveEntry = $data[4];
+
+        self::assertEquals('http://127.0.0.1:3000', $fiveEntry->getPath());
+
+        /** @var ExtTagInterface[] $extTags */
+        $extTags = $fiveEntry->getExtTags();
+        self::assertCount(1, $extTags);
+
+        /** @var ExtInf $extInf */
+        $extInf = $extTags[0];
+        self::assertInstanceOf(ExtInf::class, $extInf);
+
+        self::assertEquals('Test with space', $extInf->getTitle());
+        self::assertEquals(-1, $extInf->getDuration());
+
+        self::assertEquals([
+            'tvg-name' => 'Test with space',
+        ], $extInf->getAttributes());
+
+        // empty
+        /** @var M3uEntry $sixEntry */
+        $sixEntry = $data[5];
+
+        self::assertEquals('name.mp3', $sixEntry->getPath());
+
+        /** @var ExtTagInterface[] $extTags */
+        $extTags = $sixEntry->getExtTags();
+        self::assertCount(1, $extTags);
+
+        /** @var ExtInf $extInf */
+        $extInf = $extTags[0];
+        self::assertInstanceOf(ExtInf::class, $extInf);
+
+        self::assertEquals('', $extInf->getTitle());
+        self::assertEquals(-1, $extInf->getDuration());
+
+        self::assertEquals([
+            'tvg-name' => 'Test empty name',
         ], $extInf->getAttributes());
     }
 

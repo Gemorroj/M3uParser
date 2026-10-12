@@ -22,7 +22,7 @@ class ExtCustomTag implements ExtTagInterface
 
     public function __toString(): string
     {
-        return '#EXTCUSTOMTAG: '.$this->getData();
+        return '#EXTCUSTOMTAG:'.$this->getData();
     }
 
     public function getData(): string

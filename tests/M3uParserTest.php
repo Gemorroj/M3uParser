@@ -62,6 +62,18 @@ class M3uParserTest extends TestCase
         self::assertEmpty($entry->getExtTags());
     }
 
+    public function testParseEntryWithoutPath(): void
+    {
+        $m3uParser = new M3uParser();
+        $m3uParser->addDefaultTags();
+
+        $data = $m3uParser->parse("#EXTM3U\n#EXTINF:-1,title\n");
+
+        self::assertCount(1, $data);
+        self::assertSame('', $data[0]->getPath());
+        self::assertSame("#EXTM3U\n#EXTINF:-1,title", (string) $data);
+    }
+
     public function testParseFileCombinedExtTags(): void
     {
         $m3uParser = new M3uParser();

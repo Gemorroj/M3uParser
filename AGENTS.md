@@ -20,6 +20,7 @@ PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --diff
 
 ## Conventions
 
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
 - Keep `src/` framework-free, no new runtime dependencies.
 - Follow existing tag pattern: `src/Tag/*` implements `ExtTagInterface` (`isMatch()`, `__toString()`, parse in `__construct(?string $lineStr)`).
 - Register new tags via `M3uParser::addTag()` / `addDefaultTags()` (see `src/TagsManagerTrait.php`).
